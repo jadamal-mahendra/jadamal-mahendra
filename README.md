@@ -36,5 +36,5 @@ Description of the project and its features.
 ## How to Reach Me
 
 - Email: jadamalmahendra@gmail.com
-- LinkedIn: [your-linkedin-url](https://www.linkedin.com/in/jadamal-mahendra-629b4513a/)
+- LinkedIn: https://www.linkedin.com/in/jadamal-mahendra-629b4513a/
 - Twitter: https://twitter.com/mj_choudhry
