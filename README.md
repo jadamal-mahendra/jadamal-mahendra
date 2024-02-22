@@ -13,28 +13,9 @@ I'm a software developer with experience in web development, database design, an
 - MongoDB
 - MySQL
 
-## My Projects
-
-### [Project Name 1](https://github.com/your-username/project-name-1)
-
-![Project Name 1 Screenshot](./images/project-name-1.png)
-
-Description of the project and its features.
-
-### [Project Name 2](https://github.com/your-username/project-name-2)
-
-![Project Name 2 Screenshot](./images/project-name-2.png)
-
-Description of the project and its features.
-
-### [Project Name 3](https://github.com/your-username/project-name-3)
-
-![Project Name 3 Screenshot](./images/project-name-3.png)
-
-Description of the project and its features.
 
 ## How to Reach Me
 
 - Email: jadamalmahendra@gmail.com
-- LinkedIn: https://www.linkedin.com/in/jadamal-mahendra-629b4513a/
+- LinkedIn: https://www.linkedin.com/in/jadamalmahendra/
 - Twitter: https://twitter.com/mj_choudhry
