@@ -82,31 +82,31 @@ export const content = {
     skills_content: [
       {
         name: "React js",
-        para: "Lorem ipsum text  dummy",
+        para: "I specialize in building interactive user interfaces and single-page applications using React.js",
         logo: reactjs,
         level: 4,
       },
       {
         name: "React Native",
-        para: "Lorem ipsum text  dummy",
+        para: "Experienced in developing cross-platform mobile applications using React Native framework.",
         logo: reactjs,
         level: 4,
       },
       {
         name: "Node js",
-        para: "Lorem ipsum text  dummy",
+        para: "Proficient in server-side development with Node.js, creating scalable and efficient backend systems.",
         logo: nodejs,
         level: 4,
       },
       {
         name: "GraphQL",
-        para: "Lorem ipsum text  dummy",
+        para: "Skilled in designing and implementing GraphQL APIs for efficient data fetching and manipulation.",
         logo: graphql,
         level: 4,
       },
       {
         name: "Material UI",
-        para: "Lorem ipsum text  dummy",
+        para: "Familiar with designing and implementing responsive and visually appealing UI components using Material UI.",
         logo: mui,
         level: 4,
       },
@@ -119,17 +119,17 @@ export const content = {
     service_content: [
       {
         title: "Web Development",
-        para: "In publishing and graphic design, Lorem ipsum is a placeholder text commonly used to demonstrate the visual form of a document elying on mean",
+        para: "From concept to deployment, I offer comprehensive web development services tailored to your needs.",
         logo: services_logo1,
       },
       {
         title: "Mobile Development",
-        para: "In publishing and graphic design, Lorem ipsum is a placeholder text commonly used to demonstrate the visual form of a document elying on mean",
+        para: "Develop high-quality mobile applications for both iOS and Android platforms, ensuring a seamless user experience.",
         logo: services_logo2,
       },
       {
         title: "Web3 / DAPP Development",
-        para: "In publishing and graphic design, Lorem ipsum is a placeholder text commonly used to demonstrate the visual form of a document elying on mean",
+        para: " Specialize in decentralized application development using Web3 technologies, providing secure and decentralized solutions.",
         logo: services_logo3,
       },
     ],
@@ -159,28 +159,28 @@ export const content = {
     testimonials_content: [
       {
         review:
-          "“In publishing and graphic design, Lorem ipsum is a placeholder text commonly used to demonstra”",
+          "“Mahendra delivered exceptional work, exceeding our expectations. Highly recommended!”",
         img: avatar1,
-        name: "JOHN DOE",
-      },
-      {
-        review:
-          "“In publishing and graphic design, Lorem ipsum is a placeholder text commonly used to demonstra”",
-        img: avatar2,
-        name: "Tom Alex",
-      },
-      {
-        review:
-          "“In publishing and graphic design, Lorem ipsum is a placeholder text commonly used to demonstra”",
-        img: avatar3,
         name: "Johnny",
       },
-      {
-        review:
-          "“In publishing and graphic design, Lorem ipsum is a placeholder text commonly used to demonstra”",
-        img: avatar4,
-        name: "ROBBIN",
-      },
+      // {
+      //   review:
+      //     "“In publishing and graphic design, Lorem ipsum is a placeholder text commonly used to demonstra”",
+      //   img: avatar2,
+      //   name: "Tom Alex",
+      // },
+      // {
+      //   review:
+      //     "“In publishing and graphic design, Lorem ipsum is a placeholder text commonly used to demonstra”",
+      //   img: avatar3,
+      //   name: "Johnny",
+      // },
+      // {
+      //   review:
+      //     "“In publishing and graphic design, Lorem ipsum is a placeholder text commonly used to demonstra”",
+      //   img: avatar4,
+      //   name: "ROBBIN",
+      // },
     ],
   },
   Hireme: {
@@ -188,7 +188,7 @@ export const content = {
     subtitle: "FOR YOUR PROJECTS",
     image1: Hireme_person,
     image2: Hireme_person2,
-    para: "In publishing and graphic design, Lorem ipsum is a placeholder text commonly used to demonstrate the visual form of a document elying on mean",
+    para: "As an experienced web developer with over 5 years of hands-on experience, I offer expertise in building dynamic and responsive websites and applications tailored to your specific needs. Whether you're looking to create a stunning portfolio website, a robust e-commerce platform, or a cutting-edge web application, I have the skills and dedication to bring your vision to life. Let's collaborate on your next project and turn your ideas into reality.",
     btnText: "Hire Me",
   },
   Contact: {
@@ -213,6 +213,6 @@ export const content = {
     ],
   },
   Footer: {
-    text: "All © Copy Right Reserved 2022",
+    text: "All © Copy Right Reserved 2024",
   },
 };
