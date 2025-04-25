@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="800px" height="800px" viewBox="0 0 64 64" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <g id="developer" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <path d="M32,64 C49.673112,64 64,49.673112 64,32 C64,14.326888 49.673112,0 32,0 C14.326888,0 0,14.326888 0,32 C0,49.673112 14.326888,64 32,64 Z" id="background" fill="#F2F2F2"></path>
+        <g id="laptop" transform="translate(12.000000, 20.000000)">
+            <rect id="screen" fill="#4F4F4F" x="4" y="2" width="32" height="20" rx="2"></rect>
+            <path d="M40,22 L40,24 C40,25.1045695 39.1045695,26 38,26 L2,26 C0.8954305,26 0,25.1045695 0,24 L0,22 L40,22 Z" id="keyboard" fill="#333333"></path>
+            <rect id="code" fill="#00BCD4" x="8" y="6" width="24" height="12" rx="1"></rect>
+            <path d="M12,10 L16,10 L16,11 L12,11 L12,10 Z M18,10 L24,10 L24,11 L18,11 L18,10 Z M12,13 L20,13 L20,14 L12,14 L12,13 Z M22,13 L28,13 L28,14 L22,14 L22,13 Z" id="code-lines" fill="#FFFFFF"></path>
+        </g>
+        <g id="person" transform="translate(24.000000, 8.000000)">
+            <circle id="head" fill="#FFD7C3" cx="8" cy="6" r="6"></circle>
+            <path d="M8,12 C3.581722,12 0,15.581722 0,20 L0,28 L16,28 L16,20 C16,15.581722 12.418278,12 8,12 Z" id="body" fill="#4F4F4F"></path>
+            <path d="M4,6 C4.55228475,6 5,5.55228475 5,5 C5,4.44771525 4.55228475,4 4,4 C3.44771525,4 3,4.44771525 3,5 C3,5.55228475 3.44771525,6 4,6 Z" id="eye-left" fill="#333333"></path>
+            <path d="M12,6 C12.5522847,6 13,5.55228475 13,5 C13,4.44771525 12.5522847,4 12,4 C11.4477153,4 11,4.44771525 11,5 C11,5.55228475 11.4477153,6 12,6 Z" id="eye-right" fill="#333333"></path>
+            <path d="M8,9 C9.1045695,9 10,8.1045695 10,7 L6,7 C6,8.1045695 6.8954305,9 8,9 Z" id="mouth" fill="#333333"></path>
+        </g>
+    </g>
+</svg>

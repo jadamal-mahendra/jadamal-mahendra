@@ -1,38 +1,30 @@
 // import components
 import Hero from "./components/Hero";
 import Navbar from "./Layouts/Navbar";
-import Skills from "./components/Skills";
-import Service from "./components/Services";
-import Projects from "./components/Projects";
-import Testimonials from "./components/Testimonials";
-import Hireme from "./components/Hireme";
+// Removed commented-out imports
+import Experience from "./components/Experience"; // Added Experience
+import Awards from "./components/Awards";
 import Contact from "./components/Contact";
-import { useEffect } from "react";
-// Animation package
-import Aos from "aos";
-import "aos/dist/aos.css";
+// import { useEffect } from "react";
+// import content
+// import { content } from "./Content";
+
+// Import custom CSS (assuming it's needed globally or we use modules later)
+import "./index.css"; 
 
 const App = () => {
-  useEffect(() => {
-    Aos.init({
-      duration: 1800,
-      offset: 100,
-      disable: "mobile",
-    });
-  }, []);
   return (
-    <div className="">
+    <div className="overflow-hidden">
       <Navbar />
       <Hero />
-      <Skills />
-      <Service />
-      <Projects />
-      <Testimonials />
-      <Hireme />
+      {/* Removed commented-out components */}
+      <Experience /> {/* Added Experience component */}
+      <Awards />
       <Contact />
-      <footer className="p-3 text-center">
-        <h6 className="mb-3">Mahendra Jadamal</h6>
-        <p>jadamalmahendra © All CopyRights Reserved 2023</p>
+      <footer className="app-footer">
+        <p className="app-footer-text">
+          &copy; {new Date().getFullYear()} Jadamal Mahendra. All rights reserved.
+        </p>
       </footer>
     </div>
   );

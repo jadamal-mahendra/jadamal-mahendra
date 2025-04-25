@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="800px" height="800px" viewBox="0 0 64 64" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <g id="hire-me" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <path d="M32,64 C49.673112,64 64,49.673112 64,32 C64,14.326888 49.673112,0 32,0 C14.326888,0 0,14.326888 0,32 C0,49.673112 14.326888,64 32,64 Z" id="background" fill="#E8F5E9"></path>
+        <g id="document" transform="translate(16.000000, 12.000000)">
+            <path d="M4,0 L28,0 C30.209139,0 32,1.790861 32,4 L32,40 C32,42.209139 30.209139,44 28,44 L4,44 C1.790861,44 0,42.209139 0,40 L0,4 C0,1.790861 1.790861,0 4,0 Z" id="paper" fill="#FFFFFF"></path>
+            <path d="M8,12 L24,12 L24,14 L8,14 L8,12 Z M8,18 L24,18 L24,20 L8,20 L8,18 Z M8,24 L16,24 L16,26 L8,26 L8,24 Z" id="lines" fill="#BDBDBD"></path>
+            <path d="M20,30 L26,30 C27.1045695,30 28,30.8954305 28,32 L28,34 C28,35.1045695 27.1045695,36 26,36 L20,36 C18.8954305,36 18,35.1045695 18,34 L18,32 C18,30.8954305 18.8954305,30 20,30 Z" id="button" fill="#4CAF50"></path>
+            <path d="M21,33 L25,33 L25,34 L21,34 L21,33 Z" id="button-text" fill="#FFFFFF"></path>
+            <path d="M8,6 L16,6 L16,8 L8,8 L8,6 Z" id="title" fill="#4CAF50"></path>
+        </g>
+        <g id="checkmark" transform="translate(40.000000, 32.000000)">
+            <circle id="circle" fill="#4CAF50" cx="8" cy="8" r="8"></circle>
+            <path d="M5,8 L7,10 L11,6" id="check" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+        </g>
+    </g>
+</svg>
