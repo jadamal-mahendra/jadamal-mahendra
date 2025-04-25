@@ -1,0 +1,113 @@
+/* src/components/Contact.module.css */
+
+.contactSection {
+  /* Uses global section-padding */
+  background-color: var(--color-light-bg); /* Or white */
+}
+
+.contactGrid {
+  display: grid;
+  gap: 3rem; /* gap-12 */
+}
+
+@media (min-width: 1024px) { /* lg */
+  .contactGrid {
+    grid-template-columns: repeat(2, minmax(0, 1fr)); /* lg:grid-cols-2 */
+    gap: 4rem; /* lg:gap-16 */
+    align-items: flex-start; /* Align items top */
+  }
+}
+
+/* Contact Info Section */
+.contactInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem; /* space-y-6 */
+}
+
+.infoItem {
+  display: flex;
+  align-items: center;
+  gap: 1rem; /* gap-4 */
+}
+
+.infoIcon {
+  color: var(--color-accent);
+  font-size: 1.5rem; /* Adjust size as needed */
+  flex-shrink: 0;
+}
+
+.infoText {
+  font-size: 1rem; /* text-base */
+  color: var(--color-subtle-text);
+  transition: color 0.3s ease;
+}
+
+.infoItem a .infoText:hover {
+  color: var(--color-accent);
+  text-decoration: underline;
+}
+
+/* Contact Form Section */
+.contactForm {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem; /* space-y-4 */
+}
+
+.formGroup {
+  display: flex;
+  flex-direction: column;
+}
+
+/* Visually hidden label (if desired for accessibility) */
+.formLabelSr {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
+.formControl {
+  padding: 0.75rem 1rem; /* py-3 px-4 */
+  background-color: var(--color-white);
+  border: 1px solid var(--color-border-light);
+  border-radius: 0.375rem; /* rounded-md */
+  color: var(--color-dark-primary);
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  font-size: 1rem;
+}
+
+.formControl::placeholder {
+  color: var(--color-subtle-text);
+  opacity: 0.8;
+}
+
+.formControl:focus {
+  outline: none;
+  border-color: var(--color-accent);
+  box-shadow: 0 0 0 2px var(--color-accent) / 0.3;
+}
+
+.textarea {
+  min-height: 120px; /* Adjust as needed */
+  resize: vertical; /* Allow vertical resize */
+}
+
+/* Style the button within the form */
+.formButton {
+  /* Uses global .btn styles */
+  align-self: flex-start; /* Align button left */
+  margin-top: 0.5rem; /* mt-2 */
+}
+
+@media (min-width: 640px) { /* sm */
+  .formButton {
+     /* Example: width: auto; */
+  }
+} 

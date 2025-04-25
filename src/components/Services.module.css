@@ -1,0 +1,66 @@
+/* src/components/Services.module.css */
+
+/* Keep section padding consistent if defined globally, or add here */
+.servicesSection {
+  /* Example: padding: var(--section-padding-y, 4rem) 0; */
+  /* Add a subtle background if desired */
+  /* background-color: #f9f9f9; */
+}
+
+/* Use existing container styles or define */
+/* .container { ... } */
+
+/* Use existing title styles or define */
+/* .sectionTitle { ... } */
+/* .sectionSubtitle { ... } */
+
+.servicesGrid {
+  display: grid;
+  /* Adjust columns based on screen size */
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); 
+  gap: 2rem; /* Spacing between cards */
+  margin-top: 2rem;
+}
+
+.serviceItem {
+  background-color: #ffffff; /* White background for the card */
+  padding: 2rem; /* Internal padding */
+  border-radius: 8px; /* Rounded corners */
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08); /* Subtle shadow */
+  text-align: center; /* Center content */
+  transition: transform 0.3s ease, box-shadow 0.3s ease; /* Hover effect */
+}
+
+.serviceItem:hover {
+  transform: translateY(-5px); /* Slight lift on hover */
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.12); /* Enhanced shadow on hover */
+}
+
+.serviceIcon {
+  margin-bottom: 1.5rem; /* Space below icon */
+  /* Set a consistent size for the icon container */
+  display: inline-flex; /* Helps with centering/sizing */
+  align-items: center;
+  justify-content: center;
+  /* Style the icon itself via its parent or direct selector if needed */
+  color: var(--primary-color, #007bff); /* Use theme color */
+}
+
+/* Style the TechIcon specifically if needed */
+.serviceIcon svg { 
+  width: 50px; 
+  height: 50px;
+}
+
+.serviceTitle {
+  font-size: 1.25rem; /* Larger title */
+  font-weight: 600;
+  margin-bottom: 0.75rem; /* Space below title */
+  color: #333;
+}
+
+.serviceDescription {
+  font-size: 0.95rem;
+  color: #555; /* Slightly lighter text */
+  line-height: 1.6;
+} 

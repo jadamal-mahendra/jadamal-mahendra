@@ -2,111 +2,107 @@ import { createElement, useRef } from "react";
 import { content } from "../Content";
 import emailjs from "@emailjs/browser";
 import toast, { Toaster } from "react-hot-toast";
+import styles from './Contact.module.css'; // Import CSS Module
 // Import Lucide icons if needed for social links (already imported in Content.js)
 
 const Contact = () => {
-  const { Contact } = content;
+  const { Contact: contactData } = content;
   const form = useRef();
 
   // Sending Email
   const sendEmail = (e) => {
     e.preventDefault();
 
-    // IMPORTANT: Replace with your actual EmailJS Service ID, Template ID, and Public Key
-    const serviceId = "service_3wiqat4"; // Replace with your Service ID
-    const templateId = "template_eflkmpl"; // Replace with your Template ID
-    const publicKey = "Mv6JRTa_Bdyfoa6cx"; // Replace with your Public Key (User ID)
-
     emailjs
-      .sendForm(serviceId, templateId, form.current, publicKey)
+      .sendForm(
+        import.meta.env.VITE_EMAILJS_SERVICE_ID, // Access from env
+        import.meta.env.VITE_EMAILJS_TEMPLATE_ID,
+        form.current,
+        import.meta.env.VITE_EMAILJS_PUBLIC_KEY
+      )
       .then(
         (result) => {
-          console.log("EmailJS Success:", result.text);
+          console.log(result.text);
+          // Clear inputs
           form.current.reset();
-          toast.success("Message sent successfully!");
+          toast.success("Email sent successfully!");
         },
         (error) => {
-          console.error("EmailJS Error:", error.text);
-          toast.error(`Failed to send message: ${error.text || 'Unknown error'}`);
+          console.log(error.text);
+          toast.error("Failed to send email. Please try again later.");
         }
       );
   };
 
   return (
-    <section className="section-padding contact-section" id="contact">
-      <Toaster position="top-right" />
-      <div className="contact-grid container mx-auto">
-        <h2 className="section-title">
-          {Contact.title}
+    <section className={`${styles.contactSection} section-padding`} id="contact">
+      <Toaster />
+      <div className="container">
+        <h2 className="section-title" data-aos="fade-down">
+          {contactData.title}
         </h2>
-        <h4 className="section-subtitle">
-          {Contact.subtitle}
+        <h4 className="section-subtitle" data-aos="fade-down">
+          {contactData.subtitle}
         </h4>
-        
-        <form
-          ref={form}
-          onSubmit={sendEmail}
-          className="contact-form"
-        >
-          <div>
-            <label htmlFor="from_name" className="form-label-sr">Name</label>
-            <input
-              type="text"
-              id="from_name"
-              name="from_name"
-              placeholder="Your Name"
-              required
-              className="form-input"
-            />
-          </div>
-          <div>
-            <label htmlFor="user_email" className="form-label-sr">Email</label>
-            <input
-              type="email"
-              id="user_email"
-              name="user_email"
-              placeholder="Your Email Address"
-              required
-              className="form-input"
-            />
-          </div>
-          <div>
-            <label htmlFor="message" className="form-label-sr">Message</label>
-            <textarea
-              id="message"
-              name="message"
-              placeholder="Your Message"
-              rows="5"
-              className="form-textarea"
-              required
-            ></textarea>
-          </div>
-          <button
-            type="submit"
-            className="btn"
-          >
-            Send Message
-          </button>
-        </form>
-        
-        <div className="contact-info">
-          {Contact.social_media.map((item, i) => (
-            <div key={i} className="contact-item">
-               <div className="contact-icon">
-                 {createElement(item.icon, { size: 24 })}
-               </div>
-               <div>
-                 <a 
-                   href={item.link} 
-                   target="_blank" 
-                   rel="noopener noreferrer"
-                   className="contact-link"
-                 >
+        <br />
+        <div className={styles.contactGrid}>
+          {/* Contact Info */}
+          <div className={styles.contactInfo} data-aos="fade-right">
+            {contactData.social_media.map((item, i) => (
+              <div key={i} className={styles.infoItem}>
+                 <a href={item.link} target="_blank" rel="noopener noreferrer" className={styles.infoIcon}>
+                   {createElement(item.icon)}
+                 </a>
+                 <a href={item.link} target="_blank" rel="noopener noreferrer" className={styles.infoText}>
                    {item.text}
                  </a>
-               </div>
+              </div>
+            ))}
+          </div>
+
+          {/* Contact Form */}
+          <form
+            ref={form}
+            onSubmit={sendEmail}
+            className={styles.contactForm}
+            data-aos="fade-left"
+          >
+            <div className={styles.formGroup}>
+              <label htmlFor="from_name" className={styles.formLabelSr}>Name</label>
+              <input
+                type="text"
+                id="from_name"
+                name="from_name"
+                placeholder="Your Name"
+                required
+                className={styles.formControl}
+              />
             </div>
-          ))}
+            <div className={styles.formGroup}>
+              <label htmlFor="user_email" className={styles.formLabelSr}>Email</label>
+              <input
+                type="email"
+                id="user_email"
+                name="user_email"
+                placeholder="Your Email Address"
+                required
+                className={styles.formControl}
+              />
+            </div>
+            <div className={styles.formGroup}>
+              <label htmlFor="message" className={styles.formLabelSr}>Message</label>
+              <textarea
+                id="message"
+                name="message"
+                placeholder="Your Message"
+                className={`${styles.formControl} ${styles.textarea}`}
+                required
+              ></textarea>
+            </div>
+            <button type="submit" className={`${styles.formButton} btn`}>
+              Send Message
+            </button>
+          </form>
         </div>
       </div>
     </section>

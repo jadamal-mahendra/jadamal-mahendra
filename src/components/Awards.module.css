@@ -1,0 +1,82 @@
+/* src/components/Awards.module.css */
+
+.awardsSection {
+  /* Uses global section-padding */
+  background-color: var(--color-white); /* Or alternate background */
+}
+
+.awardsGrid {
+  display: grid;
+  gap: 1.5rem; /* gap-6 */
+}
+
+@media (min-width: 768px) { /* md */
+  .awardsGrid {
+     grid-template-columns: repeat(2, minmax(0, 1fr)); /* md:grid-cols-2 */
+     gap: 2rem; /* md:gap-8 */
+  }
+}
+
+.awardItem {
+  background-color: var(--color-light-bg); /* Light background for card */
+  padding: 1.5rem; /* p-6 */
+  border-radius: 0.5rem; /* rounded-lg */
+  border-left: 4px solid var(--color-accent); /* Accent border */
+  transition: box-shadow 0.3s ease;
+}
+
+.awardItem:hover {
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.07);
+}
+
+/* Icon styling if you add icons */
+.awardIcon {
+  color: var(--color-accent);
+  margin-bottom: 1rem; /* mb-4 */
+  /* Add size etc. */
+}
+
+.awardDetails { 
+  /* Container for text content */
+}
+
+.awardName {
+  /* Uses base h5 styles */
+  font-size: 1.25rem; /* xl */
+  margin-bottom: 0.25rem; /* mb-1 */
+  color: var(--color-dark-primary);
+}
+
+.awardOrgDate {
+  display: flex;
+  flex-direction: column; /* Stack on mobile */
+  gap: 0.1rem; /* Small gap */
+  margin-bottom: 0.75rem; /* mb-3 */
+}
+
+@media (min-width: 640px) { /* sm */
+  .awardOrgDate {
+    flex-direction: row; /* Side-by-side on larger screens */
+    justify-content: space-between;
+    align-items: center;
+  }
+}
+
+.awardOrg {
+  font-size: 0.9rem; /* sm */
+  font-weight: 500;
+  color: var(--color-subtle-text);
+}
+
+.awardDate {
+  font-size: 0.8rem; /* xs */
+  color: var(--color-accent);
+  font-weight: 500;
+}
+
+.awardDescription {
+  /* Uses base p styles, potentially adjusted */
+  font-size: 0.9rem;
+  color: var(--color-subtle-text);
+  margin-bottom: 0; /* Remove default p margin */
+} 

@@ -1,0 +1,155 @@
+/* src/Layouts/Navbar.module.css */
+
+.navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
+  z-index: 50; /* Ensure it's above other content */
+  background-color: transparent; 
+  transition: background-color 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+  padding-top: 0.75rem; /* py-3 */
+  padding-bottom: 0.75rem;
+}
+
+.navbar.scrolled {
+  background-color: rgba(255, 255, 255, 0.9); /* Semi-transparent white REQUIRED for blur */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  backdrop-filter: blur(8px); /* Apply the blur effect */
+  -webkit-backdrop-filter: blur(8px); /* Safari prefix */
+}
+
+.navbarContainer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  /* Use global .container for max-width and padding */
+}
+
+/* Keep using global .container styles by applying both classes */
+
+.navbarBrand {
+  font-size: 1.5rem; /* text-2xl */
+  font-weight: 700; /* bold */
+  color: var(--color-dark-primary);
+}
+
+@media (min-width: 768px) { /* md */
+  .navbarBrand {
+    font-size: 1.875rem; /* md:text-3xl */
+  }
+}
+
+.navbarLinksDesktop {
+  display: none; /* Hidden on mobile by default */
+}
+
+@media (min-width: 768px) { /* md */
+  .navbarLinksDesktop {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem; /* gap-6 */
+  }
+}
+
+@media (min-width: 1024px) { /* lg */
+  .navbarLinksDesktop {
+    gap: 2rem; /* lg:gap-8 */
+  }
+}
+
+.navbarLink {
+  font-size: 0.9rem; /* text-sm */
+  font-weight: 500; /* medium */
+  color: var(--color-dark-primary);
+  transition: color 0.3s ease;
+  position: relative; /* For active indicator */
+  padding-bottom: 0.25rem; /* Space for indicator */
+}
+
+@media (min-width: 1024px) { /* lg */
+  .navbarLink {
+    font-size: 1rem; /* lg:text-base */
+  }
+}
+
+.navbarLink:hover,
+.navbarLink.active {
+  color: var(--color-accent);
+}
+
+/* Active indicator (optional underline) */
+.navbarLink.active::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background-color: var(--color-accent);
+}
+
+.navbarCta {
+  margin-left: 0.5rem; /* ml-2 */
+  /* Uses global .btn styles, potentially adjusted */
+}
+
+.navbarMobileToggle {
+  display: block;
+  background: none;
+  border: none;
+  color: var(--color-dark-primary);
+  cursor: pointer;
+  padding: 0.5rem;
+  z-index: 60; /* Above overlay */
+}
+
+@media (min-width: 768px) { /* md */
+  .navbarMobileToggle {
+    display: none; /* Hide on medium screens and up */
+  }
+}
+
+.navbarMobileOverlay {
+  position: fixed;
+  top: 0;
+  right: -100%; /* Start off-screen */
+  width: 75%; /* Adjust width as needed */
+  max-width: 300px;
+  height: 100%;
+  background-color: var(--color-white);
+  box-shadow: -4px 0 15px rgba(0, 0, 0, 0.1);
+  transition: right 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94); /* Smooth transition */
+  z-index: 55; /* Below toggle, above content */
+  padding: 6rem 2rem 2rem; /* Top padding to clear navbar */
+}
+
+.navbarMobileOverlay.open {
+  right: 0; /* Slide in */
+}
+
+@media (min-width: 768px) { /* md */
+  .navbarMobileOverlay {
+    display: none; /* Hide on medium screens and up */
+  }
+}
+
+.navbarMobileLinks {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem; /* gap-6 */
+  align-items: flex-start; /* Align text left */
+}
+
+.navbarMobileLinks .navbarLink {
+  font-size: 1.125rem; /* lg */
+  width: 100%;
+  text-align: left;
+}
+
+.navbarMobileLinks .btn {
+  width: 100%;
+  text-align: center;
+  margin-top: 1rem;
+} 

@@ -1,6 +1,8 @@
+import React from 'react';
 import { content } from "../Content";
 // Removed Swiper imports
 import { LuAward } from "react-icons/lu"; // Example icon
+import styles from './Awards.module.css'; // Import CSS Module
 
 const Awards = () => {
   // Ensure this matches the key in Content.js
@@ -12,33 +14,36 @@ const Awards = () => {
   }
 
   return (
-    <section id="awards" className="section-padding awards-section">
+    <section 
+      id="awards" 
+      className={`${styles.awardsSection} section-padding`}
+      data-aos="fade-up" // Add AOS attribute
+    >
       <div className="container mx-auto">
         {/* Section Title & Subtitle */}
-        <h2 className="section-title">
+        <h2 className="section-title" data-aos="fade-up">
           {Awards.title}
         </h2>
-        <h4 className="section-subtitle">
+        <h4 className="section-subtitle" data-aos="fade-up">
           {Awards.subtitle}
         </h4>
 
         {/* Awards List/Grid - Simple list for now */}
-        <div className="awards-list">
+        <div className={styles.awardsGrid} data-aos="fade-up" data-aos-delay="100">
           {Awards.awards_content.map((award, i) => (
-            <div key={i} className="award-card">
+            <div key={i} className={styles.awardItem}>
               {/* Icon */}
-              <div className="award-icon">
+              <div className={styles.awardIcon}>
                 <LuAward size={28} /> 
               </div>
               {/* Award Details */}
-              <div className="award-details">
-                <h5>{award.name}</h5>
-                <p className="organization-date">
-                  {award.organization} - {award.date}
-                </p>
-                <p className="description">
-                  {award.description}
-                </p>
+              <div className={styles.awardDetails}>
+                <h5 className={styles.awardName}>{award.name}</h5>
+                <div className={styles.awardOrgDate}>
+                  <span className={styles.awardOrg}>{award.organization}</span>
+                  <span className={styles.awardDate}>{award.date}</span>
+                </div>
+                <p className={styles.awardDescription}>{award.description}</p>
               </div>
             </div>
           ))}

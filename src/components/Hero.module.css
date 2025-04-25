@@ -1,0 +1,195 @@
+/* src/components/Hero.module.css */
+
+.heroSection {
+  /* Uses global .section-padding */
+  background-color: var(--color-white); /* Example background */
+  position: relative;
+}
+
+.heroGrid {
+  display: grid;
+  gap: 2rem; /* gap-8 */
+  align-items: center;
+}
+
+@media (min-width: 768px) { /* md */
+  .heroGrid {
+    grid-template-columns: repeat(2, minmax(0, 1fr)); /* md:grid-cols-2 */
+    gap: 4rem; /* md:gap-16 */
+  }
+}
+
+.heroContent {
+  text-align: center;
+}
+
+@media (min-width: 768px) { /* md */
+  .heroContent {
+    text-align: left; /* md:text-left */
+  }
+}
+
+.heroIntro {
+  font-size: 1.125rem; /* lg */
+  font-weight: 500; /* medium */
+  color: var(--color-accent);
+  margin-bottom: 0.5rem; /* mb-2 */
+  text-transform: uppercase;
+}
+
+@media (min-width: 768px) { /* md */
+  .heroIntro {
+    font-size: 1.25rem; /* md:text-xl */
+  }
+}
+
+.heroName {
+  /* Uses base h1 styles */
+  margin-bottom: 0.75rem; /* mb-3 */
+  background: linear-gradient(90deg, #06223F, #0ea5e9); /* Example gradient */
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  text-fill-color: transparent;
+}
+
+.heroTitle {
+  /* Uses base h2 styles */
+  margin-bottom: 1.5rem; /* mb-6 */
+  color: var(--color-subtle-text);
+}
+
+@media (min-width: 768px) { /* md */
+  .heroTitle {
+    margin-bottom: 2rem; /* md:mb-8 */
+  }
+}
+
+/* Description uses base p styles */
+.heroDescription {
+   /* Use global p styles or define here if specific */
+   /* Example: max-width: 36rem; md:max-w-md */
+   margin-bottom: 1.5rem; /* mb-6 */
+}
+
+@media (min-width: 768px) { /* md */
+  .heroDescription {
+    margin-bottom: 2rem; /* md:mb-8 */
+  }
+}
+
+.heroButtons {
+  display: flex;
+  flex-wrap: wrap; /* Allow wrapping on small screens */
+  gap: 0.75rem; /* gap-3 */
+  justify-content: center;
+}
+
+@media (min-width: 640px) { /* sm */
+  .heroButtons {
+    gap: 1rem; /* sm:gap-4 */
+  }
+}
+
+@media (min-width: 768px) { /* md */
+  .heroButtons {
+    justify-content: flex-start; /* md:justify-start */
+  }
+}
+
+.heroButtonSecondary {
+  background-color: var(--color-white);
+  color: var(--color-accent);
+  border: 1px solid var(--color-accent);
+}
+
+.heroButtonSecondary:hover {
+  background-color: var(--color-accent) / 0.1; /* Light accent background */
+  color: var(--color-accent-hover);
+  border-color: var(--color-accent-hover);
+}
+
+.heroImageContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 2rem; /* Add space on mobile */
+}
+
+@media (min-width: 768px) { /* md */
+  .heroImageContainer {
+    margin-top: 0;
+  }
+}
+
+.heroImage {
+  max-width: 80%; /* Adjust as needed */
+  height: auto;
+  border-radius: 1rem; /* Optional */
+  /* Add subtle animation or effect if desired */
+}
+
+@media (min-width: 1024px) { /* lg */
+  .heroImage {
+    max-width: 100%; /* Allow larger image on large screens */
+  }
+}
+
+/* Skills Marquee Styles */
+.skillsMarqueeContainer {
+  margin-top: 3rem; /* mt-12 */
+  overflow: hidden; /* Hide overflowing content */
+  position: relative; /* For pseudo-elements if needed */
+  padding: 1rem 0; /* Add some vertical padding */
+  /* Optional: background: #eee; */
+}
+
+@media (min-width: 768px) { /* md */
+  .skillsMarqueeContainer {
+    margin-top: 4rem; /* md:mt-16 */
+  }
+}
+
+.skillsRow {
+  display: flex;
+  width: max-content; /* Ensure it goes beyond screen width */
+}
+
+.skillsRow2{
+  margin-left: 30px;
+}
+.skillsRowContent {
+  display: flex;
+  align-items: center;
+  gap: 2rem; /* Adjust gap between icons */
+  padding: 0 1rem; /* Add horizontal padding */
+}
+
+
+/* Pause animation on hover */
+.skillsMarqueeContainer:hover .skillsRowContent {
+  animation-play-state: paused;
+}
+
+
+.skillItemMarquee {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  flex-shrink: 0; /* Prevent items from shrinking */
+  /* Optional: background: white; padding: 0.5rem; border-radius: 4px; */
+}
+
+/* Style the TechIcon within the marquee */
+.skillItemMarquee svg {
+  width: 35px; /* Adjust size - changed from 40px */
+  height: 35px; /* Adjust size - changed from 40px */
+  color: var(--color-subtle-text); /* Example color */
+  transition: color 0.3s ease;
+}
+
+.skillItemMarquee:hover svg {
+  color: var(--color-accent); /* Highlight on hover */
+} 

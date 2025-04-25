@@ -15,10 +15,12 @@
     "aos": "^2.3.4",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "react-helmet-async": "^2.0.5",
     "react-hot-toast": "^2.4.0",
     "react-icons": "^4.12.0",
     "react-modal": "^3.16.1",
     "react-pdf": "^9.2.1",
+    "react-scroll-parallax": "^3.4.5",
     "swiper": "^8.4.4",
     "tech-stack-icons": "^2.1.0"
   },

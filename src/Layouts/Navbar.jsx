@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { content } from "../Content";
 import { LuMenu, LuX } from "react-icons/lu";
+import styles from './Navbar.module.css';
 
 const Navbar = () => {
   const { nav, hero } = content;
@@ -17,41 +18,41 @@ const Navbar = () => {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  // Helper function to generate class names
+  // Helper function to generate class names dynamically
   const getNavClasses = () => {
-    let classes = "navbar";
+    let classNames = [styles.navbar];
     if (isScrolled) {
-      classes += " scrolled";
+      classNames.push(styles.scrolled);
     }
-    return classes;
+    return classNames.join(' ');
   };
 
   const getMobileOverlayClasses = () => {
-    let classes = "navbar-mobile-overlay";
+    let classNames = [styles.navbarMobileOverlay];
     if (showMenu) {
-      classes += " open";
+      classNames.push(styles.open);
     }
-    return classes;
+    return classNames.join(' ');
   };
 
   const getNavLinkClass = (index) => {
-    let classes = "navbar-link";
+    let classNames = [styles.navbarLink];
     if (index === active) {
-      classes += " active";
+      classNames.push(styles.active);
     }
-    return classes;
+    return classNames.join(' ');
   };
 
   return (
     <nav className={getNavClasses()}>
-      <div className="navbar-container container">
+      <div className={`${styles.navbarContainer} container`}>
         {/* Logo/Name */}
-        <a href="#home" className="navbar-brand">
+        <a href="#home" className={styles.navbarBrand} onClick={() => setActive(0)}>
           {hero.firstName} {hero.LastName}
         </a>
 
         {/* Desktop Navigation */}
-        <div className="navbar-links-desktop">
+        <div className={styles.navbarLinksDesktop}>
           {nav.map((item, i) => (
             <a
               key={i}
@@ -62,14 +63,14 @@ const Navbar = () => {
               {item.link.substring(1).charAt(0).toUpperCase() + item.link.substring(2)}
             </a>
           ))}
-          <a href="#contact" onClick={() => setActive(nav.length)} className="btn navbar-cta">
+          <a href="#contact" onClick={() => setActive(nav.length)} className={`${styles.navbarCta} btn`}>
             Contact Me
           </a>
         </div>
 
         {/* Mobile Menu Button */}
         <button
-          className="navbar-mobile-toggle"
+          className={styles.navbarMobileToggle}
           onClick={() => setShowMenu(!showMenu)}
           aria-label={showMenu ? "Close menu" : "Open menu"}
           aria-expanded={showMenu}
@@ -79,7 +80,7 @@ const Navbar = () => {
 
         {/* Mobile Menu Overlay */}
         <div className={getMobileOverlayClasses()}>
-          <div className="navbar-mobile-links">
+          <div className={styles.navbarMobileLinks}>
             {nav.map((item, i) => (
               <a
                 key={i}
@@ -93,7 +94,7 @@ const Navbar = () => {
                 {item.link.substring(1).charAt(0).toUpperCase() + item.link.substring(2)}
               </a>
             ))}
-            <a href="#contact" onClick={() => { setActive(nav.length); setShowMenu(false);}} className="btn">
+            <a href="#contact" onClick={() => { setActive(nav.length); setShowMenu(false);}} className={`${styles.navbarLink} btn`}>
               Contact Me
             </a>
           </div>

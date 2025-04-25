@@ -1,0 +1,228 @@
+/* src/components/Experience.module.css */
+
+.experienceSection {
+  /* Uses global section-padding */
+  background-color: var(--color-light-bg); /* Or a subtle gradient */
+}
+
+/* Optional background gradient */
+.experienceBgGradient {
+  /* Example: 
+  background: linear-gradient(180deg, var(--color-light-bg) 0%, var(--color-white) 100%); 
+  */
+}
+
+.timelineContainer {
+  position: relative;
+  max-width: 56rem; /* max-w-2xl or 3xl */
+  margin: 2rem auto 0; /* mt-8 */
+}
+
+/* Vertical timeline line */
+.timelineContainer::before {
+  content: '';
+  position: absolute;
+  width: 3px;
+  background-color: var(--color-border-light); 
+  top: 0;
+  bottom: 0;
+  left: 20px; /* Position based on logo size */
+  transform: translateX(-50%);
+}
+
+@media (min-width: 768px) { /* md */
+  .timelineContainer::before {
+    left: 50%; /* Center line on desktop */
+  }
+}
+
+.timelineItem {
+  position: relative;
+  margin-bottom: 2.5rem; /* Adjust spacing */
+}
+
+@media (min-width: 768px) { /* md */
+  .timelineItem {
+    width: 50%;
+    padding-left: 50px; /* Space from center line */
+    margin-bottom: 3rem;
+  }
+  .timelineItem:nth-child(odd) {
+    left: 0;
+    padding-right: 50px; /* Space from center line */
+    padding-left: 0;
+    text-align: right;
+  }
+  .timelineItem:nth-child(even) {
+    left: 50%;
+  }
+}
+
+.timelineLogoHolder {
+  position: absolute;
+  left: 21.5px; /* Align with line center on mobile - Adjusted from 20px */
+  top: 0;
+  transform: translateX(-50%);
+  z-index: 10;
+  background-color: var(--color-light-bg); /* Match section bg */
+  width: 40px; /* Adjust size */
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 3px solid var(--color-white); /* Optional border */
+  box-shadow: 0 0 0 3px var(--color-accent); /* Accent ring */
+}
+
+@media (min-width: 768px) { /* md */
+  .timelineLogoHolder {
+    left: 50%; /* Center on desktop */
+    width: 50px; /* Slightly larger on desktop */
+    height: 50px;
+  }
+  .timelineItem:nth-child(odd) .timelineLogoHolder {
+     /* No change needed if centered */
+  }
+  .timelineItem:nth-child(even) .timelineLogoHolder {
+     /* No change needed if centered */
+  }
+}
+
+.timelineLogoHolder img {
+  width: 70%; /* Adjust logo size within circle */
+  height: 70%;
+  object-fit: contain;
+  border-radius: 50%; /* Ensure logo fits circle */
+}
+
+/* Style for fallback text if image fails */
+.timelineLogoHolder span {
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: var(--color-accent);
+}
+
+.timelineCard {
+  position: relative;
+  background-color: var(--color-white);
+  padding: 1.5rem;
+  border-radius: 0.5rem; /* rounded-lg */
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+  margin-left: 45px; /* Space from logo */
+}
+
+@media (min-width: 768px) { /* md */
+  .timelineCard {
+    margin-left: 0; /* Reset margin */
+  }
+}
+
+.titleLocation {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 0.5rem; /* mb-2 */
+}
+
+@media (min-width: 768px) { /* md */
+  .timelineItem:nth-child(odd) .titleLocation {
+     align-items: flex-end; /* Align right */
+  }
+  .timelineItem:nth-child(even) .titleLocation {
+     align-items: flex-start; /* Align left */
+  }
+}
+
+.titleLocation h5 { /* Job Title */
+  /* Use global h5 or define */
+  font-size: 1.125rem; /* lg */
+  font-weight: 600;
+  color: var(--color-dark-primary);
+  margin-bottom: 0.1rem;
+}
+
+@media (min-width: 768px) { /* md */
+  .titleLocation h5 {
+    font-size: 1.25rem; /* xl */
+  }
+}
+
+.titleLocation span { /* Location */
+  font-size: 0.875rem; /* sm */
+  color: var(--color-subtle-text);
+}
+
+.companyLink {
+  font-weight: 500;
+  color: var(--color-accent);
+  text-decoration: none;
+  display: inline-block;
+  margin-bottom: 0.25rem; /* mb-1 */
+  transition: color 0.2s ease;
+}
+
+.companyLink:hover {
+  color: var(--color-accent-hover);
+  text-decoration: underline;
+}
+
+.date {
+  font-size: 0.875rem; /* sm */
+  font-weight: 500;
+  color: var(--color-accent);
+  margin-bottom: 1rem; /* mb-4 */
+}
+
+@media (min-width: 768px) { /* md */
+  .timelineItem:nth-child(odd) .date {
+     /* Keep text-align: right from parent */
+  }
+}
+
+.techStack {
+  margin-bottom: 1rem; /* mb-4 */
+}
+
+.techStack strong {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--color-dark-primary);
+}
+
+.techStack span {
+  font-size: 0.875rem;
+  color: var(--color-subtle-text);
+}
+
+@media (min-width: 768px) { /* md */
+  .timelineItem:nth-child(odd) .techStack {
+    /* Keep text-align: right from parent */
+  }
+}
+
+.descriptionList {
+  list-style: none; /* Remove default bullets */
+  padding-left: 0;
+  margin-top: 0.5rem;
+  margin-bottom: 0;
+  font-size: 0.9rem; /* text-sm */
+  color: var(--color-subtle-text);
+  text-align: left; /* Ensure list items are left-aligned */
+}
+
+.descriptionList li {
+  position: relative;
+  padding-left: 1.2em; /* Space for bullet */
+  margin-bottom: 0.3rem; /* space-y-1 approx */
+}
+
+/* Custom bullet point */
+.descriptionList li::before {
+  content: '•'; /* Bullet character */
+  position: absolute;
+  left: 0;
+  top: 0;
+  color: var(--color-accent);
+  font-weight: bold;
+  font-size: 1em;
+} 

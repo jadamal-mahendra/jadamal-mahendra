@@ -1,17 +1,8 @@
 // import illustrations
 import web_developer_illustration from "./assets/images/illustrations/web_developer.svg";
-import hire_me_illustration from "./assets/images/illustrations/hire_me.svg";
 
-// Skills images
-// import reactjs from "./assets/images/Skills/react.png";
-// import nodejs from "./assets/images/Skills/node.png";
-// import graphql from "./assets/images/Skills/GraphQL.png";
-// import mui from "./assets/images/Skills/mui.png";
 
-// Services images
-import services_logo1 from "./assets/images/Services/logo1.png";
-import services_logo2 from "./assets/images/Services/mobileDev.png";
-import services_logo3 from "./assets/images/Services/web3.png";
+
 
 // Resume PDF path (from public directory)
 const resume_pdf = "/assets/Jadamal-Mahendra.pdf";
@@ -40,7 +31,6 @@ const calculateYearsOfExperience = () => {
 // import icons from react-icons
 import { GrMail } from "react-icons/gr";
 import { MdArrowForward, MdCall } from "react-icons/md";
-import { BsInstagram } from "react-icons/bs";
 import { TbSmartHome } from "react-icons/tb";
 import { BiUser } from "react-icons/bi";
 import { RiServiceLine } from "react-icons/ri";
@@ -69,16 +59,8 @@ export const content = {
       icon: TbSmartHome,
     },
     {
-      link: "#skills",
-      icon: BiUser,
-    },
-    {
       link: "#services",
       icon: RiServiceLine,
-    },
-    {
-      link: "#resume",
-      icon: HiOutlineDocumentText,
     },
     {
       link: "#contact",
@@ -177,30 +159,33 @@ export const content = {
     ],
     icon: MdArrowForward,
   },
-  // Removed services section
-  /*
+  // Uncomment services section
   services: {
     title: "Services",
     subtitle: "WHAT I OFFER",
     service_content: [
       {
-        title: "Web Development",
-        para: "From concept to deployment, I offer comprehensive web development services tailored to your needs.",
-        logo: services_logo1,
+        title: "Frontend Development",
+        para: "Building scalable, high-performance UIs with React, Next.js, TypeScript, and Microfrontend architectures. Expertise in state management (Redux) and UI libraries (MUI, Fluent UI).",
+        logo: "reactjs", // Use tech-stack-icons name
       },
       {
-        title: "Mobile Development",
-        para: "Develop high-quality mobile applications for both iOS and Android platforms, ensuring a seamless user experience.",
-        logo: services_logo2,
+        title: "Backend & API Development",
+        para: "Developing robust backend systems and APIs using Node.js, Express, and GraphQL. Experienced with Prisma, SQL, and NoSQL databases for efficient data handling.",
+        logo: "nodejs", // Use tech-stack-icons name
       },
       {
-        title: "Web3 / DAPP Development",
-        para: " Specialize in decentralized application development using Web3 technologies, providing secure and decentralized solutions.",
-        logo: services_logo3,
+        title: "Mobile App Development",
+        para: "Creating cross-platform mobile applications with React Native, integrating native features and ensuring seamless user experiences across iOS and Android.",
+        logo: "reactnative", // Use tech-stack-icons name (or 'reactjs' if unavailable)
+      },
+      {
+        title: "Web3 & Blockchain Solutions",
+        para: "Designing and implementing decentralized applications (dApps), smart contracts (Solidity), and NFT marketplaces using Web3.js and related technologies.",
+        logo: "solidity", // Use tech-stack-icons name (check availability)
       },
     ],
   },
-  */
 
   // Removed Hireme section
   /*
