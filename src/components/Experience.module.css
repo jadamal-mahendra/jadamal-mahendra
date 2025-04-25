@@ -44,27 +44,44 @@
 @media (min-width: 768px) { /* md */
   .timelineItem {
     width: 50%;
-    padding-left: 50px; /* Space from center line */
     margin-bottom: 3rem;
   }
   .timelineItem:nth-child(odd) {
     left: 0;
-    padding-right: 50px; /* Space from center line */
+    padding-right: 50px;
     padding-left: 0;
-    text-align: right;
   }
   .timelineItem:nth-child(even) {
     left: 50%;
+    padding-left: 50px;
+    padding-right: 0;
+  }
+
+  .timelineCard {
+    margin-left: 0; /* Reset mobile margin */
+    max-width: 560px; /* Constrain card width - Increased from 480px */
+    width: 100%;
+    text-align: left; /* Ensure card content is always LTR */
+  }
+
+  .timelineItem:nth-child(odd) .timelineCard {
+    margin-left: auto; /* Push card to the right */
+    margin-right: 0;
+  }
+  
+  .timelineItem:nth-child(even) .timelineCard {
+    margin-left: 0;
+    margin-right: auto;
   }
 }
 
 .timelineLogoHolder {
   position: absolute;
-  left: 21.5px; /* Align with line center on mobile - Adjusted from 20px */
-  top: 0;
-  transform: translateX(-50%);
+  left: 20px; /* Align with line - Reverted back from 21.5px */
+  top: 50%; /* Changed from top: 0 */
+  transform: translate(-50%, -50%); /* Added Y translation for vertical centering */
   z-index: 10;
-  background-color: var(--color-light-bg); /* Match section bg */
+  background-color: var(--color-dark-primary); /* Match section bg */
   width: 40px; /* Adjust size */
   height: 40px;
   border-radius: 50%;
@@ -76,16 +93,20 @@
 }
 
 @media (min-width: 768px) { /* md */
-  .timelineLogoHolder {
-    left: 50%; /* Center on desktop */
-    width: 50px; /* Slightly larger on desktop */
-    height: 50px;
-  }
+  /* Remove the generic desktop .timelineLogoHolder rule 
+     as positioning is now specific to odd/even */
+
   .timelineItem:nth-child(odd) .timelineLogoHolder {
-     /* No change needed if centered */
+     left: 100%; /* Position left edge at parent's right edge (center line) */
+     /* Inherits top: 50%, transform: translate(-50%, -50%) */
+     width: 50px; 
+     height: 50px;
   }
   .timelineItem:nth-child(even) .timelineLogoHolder {
-     /* No change needed if centered */
+     left: 0; /* Position left edge at parent's left edge (center line) */
+     /* Inherits top: 50%, transform: translate(-50%, -50%) */
+     width: 50px; 
+     height: 50px;
   }
 }
 
@@ -126,10 +147,21 @@
 
 @media (min-width: 768px) { /* md */
   .timelineItem:nth-child(odd) .titleLocation {
-     align-items: flex-end; /* Align right */
+     align-items: flex-start; /* Keep titles LTR */
   }
   .timelineItem:nth-child(even) .titleLocation {
      align-items: flex-start; /* Align left */
+  }
+
+  /* Adjust text alignment within odd items if needed */
+  .timelineItem:nth-child(odd) .titleLocation {
+     align-items: flex-start; /* Keep titles LTR */
+  }
+  .timelineItem:nth-child(odd) .date {
+     text-align: left; /* Keep dates LTR */
+  }
+  .timelineItem:nth-child(odd) .techStack {
+    text-align: left; /* Keep tech stack LTR */
   }
 }
 
