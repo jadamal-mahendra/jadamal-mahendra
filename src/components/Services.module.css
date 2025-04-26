@@ -4,7 +4,7 @@
 .servicesSection {
   /* Example: padding: var(--section-padding-y, 4rem) 0; */
   /* Add a subtle background if desired */
-  /* background-color: #f9f9f9; */
+  /* background-color: var(--color-background); */ /* REMOVED - Controlled by Home.jsx wrapper */
 }
 
 /* Use existing container styles or define */
@@ -23,6 +23,20 @@
   grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); 
   gap: 2rem; /* Spacing between cards */
   margin-top: 2rem;
+}
+
+.serviceCard {
+  /* Uses .glow-card from index.css */
+  /* background-color: var(--color-card-bg); */ /* REMOVED - Handled by .glow-card */
+  border: 1px solid var(--color-card-border);
+  border-radius: 12px;
+  padding: 2rem;
+  text-align: center;
+  transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease;
+  height: 100%; /* Ensure cards in a row have same height */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .serviceItem {
@@ -49,31 +63,33 @@
   /* box-shadow: ... */ /* Keep or remove original shadow hover */
 }
 
-.serviceIcon {
-  margin-bottom: 1.5rem; /* Space below icon */
-  /* Set a consistent size for the icon container */
-  display: inline-flex; /* Helps with centering/sizing */
+.serviceIconContainer {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  display: flex;
   align-items: center;
   justify-content: center;
-  /* Style the icon itself via its parent or direct selector if needed */
-  color: var(--primary-color, #007bff); /* Use theme color */
+  margin-bottom: 1.5rem;
+  /* Use accent color with slight transparency */
+  background-color: rgba(from var(--color-accent) r g b / 0.1);
 }
 
-/* Style the TechIcon specifically if needed */
-.serviceIcon svg { 
-  width: 50px; 
-  height: 50px;
+.serviceIcon {
+  width: 30px;
+  height: 30px;
+  color: var(--color-accent);
 }
 
 .serviceTitle {
-  font-size: 1.25rem; /* Larger title */
+  font-size: 1.25rem;
   font-weight: 600;
-  margin-bottom: 0.75rem; /* Space below title */
-  color: #333;
+  margin-bottom: 0.75rem;
+  color: var(--color-heading);
 }
 
 .serviceDescription {
   font-size: 0.95rem;
-  color: #555; /* Slightly lighter text */
+  color: var(--color-text-secondary);
   line-height: 1.6;
 } 

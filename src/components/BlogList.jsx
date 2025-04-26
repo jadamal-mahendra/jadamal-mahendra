@@ -42,7 +42,6 @@ const BlogList = () => {
         <meta name="description" content={pageDescription} />
       </Helmet>
       <div className="container">
-        <Navbar />
          <h2 className="section-title" data-aos="fade-up">
           {headingTitle}
         </h2>

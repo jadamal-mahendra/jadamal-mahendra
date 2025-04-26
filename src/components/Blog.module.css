@@ -242,7 +242,7 @@
 
 /* Optional: Add a subtle hover effect */
 .postCard:hover {
-    transform: translateY(-3px);
+  transform: translateY(-3px);
 }
 
 /* Styles for the title link if needed */
@@ -263,8 +263,8 @@
 /* Individual tag style */
 .tagItem {
   display: inline-block;
-  background-color: var(--color-tag-bg, #e2e8f0); /* Use variable or fallback */
-  color: var(--color-tag-text, var(--color-text-secondary)); /* Use variable or fallback */
+  background-color: var(--color-tag-bg);
+  color: var(--color-accent);
   padding: 0.25rem 0.75rem;
   border-radius: 9999px; /* Pill shape */
   font-size: 0.8rem;
@@ -276,8 +276,8 @@
 }
 
 .tagItem:hover {
-  background-color: var(--color-tag-hover-bg, #cbd5e1); /* Use variable or fallback */
-  color: var(--color-tag-hover-text, var(--color-text-primary));
+  background-color: var(--color-tag-hover-bg);
+  color: var(--color-accent);
 }
 
 /* Styles for code blocks using react-syntax-highlighter */
@@ -295,8 +295,8 @@
   position: absolute;
   top: 0.75em; /* Adjust position */
   right: 0.75em;
-  background-color: var(--color-copy-button-bg, #555); /* Darker background */
-  color: var(--color-copy-button-text, #eee);
+  background-color: var(--color-copy-button-bg);
+  color: var(--color-copy-button-text);
   border: none;
   padding: 0.3em 0.6em;
   border-radius: 4px;
@@ -313,7 +313,7 @@
 }
 
 .copyButton:hover {
-  background-color: var(--color-copy-button-hover-bg, #777);
+  background-color: var(--color-copy-button-hover-bg);
 }
 
 /* Style for inline code (optional, if you want it different from blocks) */

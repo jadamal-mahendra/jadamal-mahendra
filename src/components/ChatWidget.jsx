@@ -269,7 +269,9 @@ const ChatWidget = () => {
               alt="Jadamal Mahendra" 
               className={styles.headerImage} 
             />
-            <h3 style={{fontSize: '1.2rem' , color: '#fff'}}>Jadamal Mahendra</h3>
+            <div style={{ flexGrow: 1, display: 'flex', alignItems: 'center' }}>
+              <h3 style={{fontSize: '1.2rem' , color: 'var(--color-white)' }}>Jadamal Mahendra</h3>
+            </div>
           </div>
           <div className={styles.headerActions}> {/* Wrapper for buttons */}
               {/* Send Transcript Button */} 

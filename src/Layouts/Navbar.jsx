@@ -1,10 +1,10 @@
 import { useState, useEffect } from "react";
 import { useLocation } from 'react-router-dom';
 import { content } from "../Content";
-import { LuMenu, LuX } from "react-icons/lu";
+import { LuMenu, LuX, LuSun, LuMoon } from "react-icons/lu";
 import styles from './Navbar.module.css';
 
-const Navbar = () => {
+const Navbar = ({ currentTheme, toggleTheme }) => {
   const { nav, hero } = content;
   const [showMenu, setShowMenu] = useState(false);
   const location = useLocation();
@@ -89,6 +89,14 @@ const Navbar = () => {
           <a href={getCorrectHref('/blog')} className={getNavLinkClass('/blog')}>
             Blog
           </a>
+          {/* Theme Toggle Button (Desktop) */}
+          <button
+            onClick={toggleTheme}
+            className={styles.themeToggleButton} 
+            aria-label={`Switch to ${currentTheme === 'light' ? 'dark' : 'light'} mode`}
+          >
+            {currentTheme === 'light' ? <LuMoon size={20} /> : <LuSun size={20} />}
+          </button>
           <a href={getCorrectHref('#contact')} className={getCtaButtonClass()}>
             Contact Me
           </a>
@@ -122,6 +130,17 @@ const Navbar = () => {
             <a href={getCorrectHref('/blog')} onClick={() => setShowMenu(false)} className={getNavLinkClass('/blog')}>
               Blog
             </a>
+            {/* Theme Toggle Button (Mobile) */}
+            <button
+              onClick={() => { toggleTheme(); setShowMenu(false); }}
+              className={styles.themeToggleButtonMobile} 
+              aria-label={`Switch to ${currentTheme === 'light' ? 'dark' : 'light'} mode`}
+            >
+              {currentTheme === 'light' ? <LuMoon size={22} /> : <LuSun size={22} />}
+              <span style={{ marginLeft: '0.5rem' }}>
+                Switch to {currentTheme === 'light' ? 'Dark' : 'Light'} Mode
+              </span>
+            </button>
             <a href={getCorrectHref('#contact')} onClick={() => setShowMenu(false)} className={getCtaButtonClass(true)}>
               Contact Me
             </a>

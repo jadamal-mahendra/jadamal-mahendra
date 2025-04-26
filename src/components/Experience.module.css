@@ -2,19 +2,19 @@
 
 .experienceSection {
   /* Uses global section-padding */
-  background-color: var(--color-light-bg); /* Or a subtle gradient */
+  /* background-color: var(--color-background); */ /* REMOVED - Controlled by Home.jsx wrapper */
 }
 
 /* Optional background gradient */
 .experienceBgGradient {
   /* Example: 
-  background: linear-gradient(180deg, var(--color-light-bg) 0%, var(--color-white) 100%); 
+  background: linear-gradient(180deg, var(--color-background) 0%, var(--color-card-bg) 100%); 
   */
 }
 
 .timelineContainer {
   position: relative;
-  max-width: 56rem; 
+  /* max-width: 56rem;  */
   margin: 2rem auto 0; 
 }
 
@@ -45,7 +45,7 @@
   content: '';
   position: absolute;
   width: 3px;
-  background-color: var(--color-border-light); 
+  background-color: var(--color-card-border); 
   top: 0;
   bottom: 0;
   left: 20px;
@@ -140,6 +140,7 @@
     max-width: 560px; /* Constrain card width - Increased from 480px */
     width: 100%;
     text-align: left; /* Ensure card content is always LTR */
+    min-width: 500px
   }
 
   .timelineItem:nth-child(odd) .timelineCard {
@@ -159,14 +160,14 @@
   top: 50%; 
   transform: translate(-50%, -50%); 
   z-index: 10;
-  background-color: var(--color-dark-primary); 
+  background-color: var(--color-accent);
   width: 40px; 
   height: 40px;
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
-  border: 3px solid var(--color-white); 
+  border: 3px solid var(--color-background);
   overflow: visible; /* Ensure overflow is not hidden */
 }
 
@@ -199,25 +200,34 @@
 }
 
 .timelineLogoHolder img {
-  width: 70%; /* Adjust logo size within circle */
-  height: 70%;
-  object-fit: contain;
-  border-radius: 50%; /* Ensure logo fits circle */
+  /* width: 70%; */ 
+  /* height: 70%; */
+  /* object-fit: contain; */
+  /* border-radius: 50%; */
 }
 
-/* Style for fallback text if image fails */
-.timelineLogoHolder span {
+/* NEW: Style for the image tag */
+.timelineLogoImage {
+  width: 70%;
+  height: 70%;
+  object-fit: contain;
+  border-radius: 50%;
+}
+
+/* Style for fallback text if image fails or isn't provided */
+.timelineLogoFallback {
   font-size: 1.2rem;
   font-weight: bold;
-  color: var(--color-accent);
+  color: var(--color-white);
 }
 
 .timelineCard {
   position: relative;
-  background-color: var(--color-white);
+  /* background-color: var(--color-card-bg); */ /* REMOVED - Handled by .glow-card */
   padding: 1.5rem;
   border-radius: 0.5rem;
   margin-left: 45px;
+  border: 1px solid var(--color-card-border);
 }
 
 @media (min-width: 768px) { /* md */
@@ -253,10 +263,9 @@
 }
 
 .titleLocation h5 { /* Job Title */
-  /* Use global h5 or define */
   font-size: 1.125rem; /* lg */
   font-weight: 600;
-  color: var(--color-dark-primary);
+  color: var(--color-heading);
   margin-bottom: 0.1rem;
 }
 
@@ -268,7 +277,7 @@
 
 .titleLocation span { /* Location */
   font-size: 0.875rem; /* sm */
-  color: var(--color-subtle-text);
+  color: var(--color-text-secondary);
 }
 
 .companyLink {
@@ -305,12 +314,12 @@
 .techStack strong {
   font-size: 0.875rem;
   font-weight: 600;
-  color: var(--color-dark-primary);
+  color: var(--color-heading);
 }
 
 .techStack span {
   font-size: 0.875rem;
-  color: var(--color-subtle-text);
+  color: var(--color-text-secondary);
 }
 
 @media (min-width: 768px) { /* md */
@@ -325,7 +334,7 @@
   margin-top: 0.5rem;
   margin-bottom: 0;
   font-size: 0.9rem; /* text-sm */
-  color: var(--color-subtle-text);
+  color: var(--color-text-secondary);
   text-align: left; /* Ensure list items are left-aligned */
 }
 
@@ -344,4 +353,33 @@
   color: var(--color-accent);
   font-weight: bold;
   font-size: 1em;
+}
+
+.timelineLineBefore {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 0;
+  bottom: 0;
+  transform: translateX(-50%);
+  width: 4px;
+  /* background: linear-gradient(
+    to bottom,
+    rgba(14, 165, 233, 0.9) 0%, 
+    rgba(14, 165, 233, 0.7) 20%,
+    rgba(14, 165, 233, 0.3) 60%,
+    rgba(14, 165, 233, 0.1) 90%,
+    transparent 100%
+  ); */
+  /* UPDATED: Use var() with alpha - requires var(--color-accent) to be hex/rgb */
+  /* Assuming --color-accent is #0ea5e9 for light, #38bdf8 for dark */
+  /* We might need to define --color-accent-rgb for better compatibility */
+  background: linear-gradient(
+    to bottom,
+    rgba(from var(--color-accent) r g b / 0.9) 0%, /* Using 'from' for relative colors */
+    rgba(from var(--color-accent) r g b / 0.7) 20%,
+    rgba(from var(--color-accent) r g b / 0.3) 60%,
+    rgba(from var(--color-accent) r g b / 0.1) 90%,
+    transparent 100%
+  );
 } 

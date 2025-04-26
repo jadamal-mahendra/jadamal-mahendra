@@ -7,13 +7,13 @@ import useGlowEffect from '../hooks/useGlowEffect'; // Import the hook
 import { throttle } from '../utils/throttle'; // Import throttle utility
 
 const Experience = () => {
-  // Use the new Experience key from Content.js
-  const { Experience } = content;
+  const { Experience: ExperienceData } = content; // Rename to avoid conflict
   const containerRef = useRef(null); // Add ref for the container
   const sectionRef = useRef(null); // Ref for the whole section element
 
-  // Use the custom hook
-  useGlowEffect(containerRef, `.${styles.timelineCard}`);
+  // Use the custom hook with the correct selector
+  // useGlowEffect(containerRef, `.${styles.timelineCard}`); // Old selector
+  useGlowEffect(containerRef, '.glow-card'); // Correct global selector
 
   // --- Scroll Progress Effect Hook ---
   useEffect(() => {
@@ -82,10 +82,10 @@ const Experience = () => {
       if (timelineContainer) timelineContainer.style.removeProperty('--scroll-progress');
     };
 
-  }, []);
+  }, [ExperienceData]); // Add dependency if scroll logic depends on data
 
   // Handle cases where data might be missing
-  if (!Experience || !Experience.experience_content) {
+  if (!ExperienceData || !ExperienceData.experience_content) {
     return null; 
   }
 
@@ -106,10 +106,10 @@ const Experience = () => {
       
       <div className="container mx-auto relative"> {/* Added relative for potential background elements */} 
         <h2 className="section-title" data-aos="fade-up">
-          {Experience.title}
+          {ExperienceData.title}
         </h2>
         <h4 className="section-subtitle" data-aos="fade-up">
-          {Experience.subtitle}
+          {ExperienceData.subtitle}
         </h4>
 
         {/* Attach ref to the timeline container */}
@@ -122,7 +122,7 @@ const Experience = () => {
           </div>
 
           {/* Map the experience items - these are siblings to timelineVisuals */}
-          {Experience.experience_content.map((exp, i) => (
+          {ExperienceData.experience_content.map((exp, i) => (
             <div 
               key={i} 
               className={styles.timelineItem}
@@ -133,12 +133,21 @@ const Experience = () => {
               {/* Logo Holder */}
               <div className={styles.timelineLogoHolder}>
                 {exp.logo ? (
-                  <img 
-                    src={exp.logo} 
-                    alt={`${exp.company} logo`} 
-                  />
+                  // Check if logo is a string (path or data URL)
+                  typeof exp.logo === 'string' ? (
+                    <img 
+                      src={exp.logo} 
+                      alt={`${exp.company} logo`} 
+                      // Add class if specific styling needed, e.g., for size
+                      className={styles.timelineLogoImage}
+                    />
+                  ) : (
+                    // Assume it's a component if not a string
+                    <exp.logo /> // Needs className if styling via CSS Module
+                  )
                 ) : (
-                  <span>?</span>
+                  // Fallback if no logo provided
+                  <span className={styles.timelineLogoFallback}>?</span>
                 )}
               </div>
               

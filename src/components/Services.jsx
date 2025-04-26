@@ -4,6 +4,7 @@ import { Helmet } from 'react-helmet-async';
 // import TechIcon from 'tech-stack-icons'; // Removed import
 import styles from './Services.module.css'; // Import CSS Module
 import useGlowEffect from '../hooks/useGlowEffect'; // Import the hook
+import ServiceCard from './ServiceCard'; // Import ServiceCard
 
 // Optional: Import icons if you prefer them over image paths
 // import { FaCode, FaMobileAlt, FaCube } from 'react-icons/fa'; 
@@ -12,8 +13,9 @@ const Services = () => {
   const { services } = content;
   const containerRef = useRef(null);
 
-  // Use the custom hook
-  useGlowEffect(containerRef, `.${styles.serviceItem}`);
+  // Use the custom hook with the correct selector
+  // useGlowEffect(containerRef, `.${styles.serviceItem}`); // Old selector
+  useGlowEffect(containerRef, '.glow-card'); // Correct global selector
 
   return (
     <section id="services" className={`${styles.servicesSection} section-padding`}>
@@ -36,26 +38,32 @@ const Services = () => {
         </h4>
         <br />
 
-        {/* Services Grid */}
+        {/* Services Grid - Apply ref here */}
         <div ref={containerRef} className={styles.servicesGrid} data-aos="fade-up">
           {services.service_content.map((service, i) => (
+            // Render the ServiceCard component
+            <ServiceCard 
+              key={i}
+              title={service.title} 
+              para={service.para}
+              LogoComponent={service.logo} // Pass logo as LogoComponent
+              // Add data-aos attributes directly to the card if needed
+              data-aos="fade-up" 
+              data-aos-delay={i * 100}
+            />
+            /* Old inline structure - REMOVED
             <div key={i} className={`${styles.serviceItem} glow-card`} data-aos="fade-up" data-aos-delay={i * 100}>
-              {/* Use logo component from content */}
               <div className={styles.serviceIcon}>
                 {service.logo ? (
-                  // <service.logo className={styles.serviceSvgIcon} /> // Render imported SVG component
-                  <img src={service.logo} className={styles.serviceSvgIcon} alt={service.title || 'Service icon'} /> // Use img tag
+                  <img src={service.logo} className={styles.serviceSvgIcon} alt={service.title || 'Service icon'} />
                 ) : (
-                  <span>Icon</span> // Optional fallback
+                  <span>Icon</span>
                 )}
               </div>
-              
-              {/* Option 2: Icon Component (Uncomment imports and mapping above) */}
-              {/* <div className="service-icon">{serviceIcons[i]}</div> */}
-              
               <h5 className={styles.serviceTitle}>{service.title}</h5>
               <p className={styles.serviceDescription}>{service.para}</p>
             </div>
+            */
           ))}
         </div>
       </div>

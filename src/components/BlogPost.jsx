@@ -111,7 +111,6 @@ const BlogPost = () => {
         {/* <meta name="description" content={post.content.substring(0, 150) + '...'} /> */}
       </Helmet>
       <div className="container">
-      <Navbar />
 
         <article className={styles.postArticle}>
           <header className={styles.postHeader}>

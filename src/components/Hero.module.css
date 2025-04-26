@@ -2,8 +2,9 @@
 
 .heroSection {
   /* Uses global .section-padding */
-  background-color: var(--color-white); /* Example background */
+  /* background-color: var(--color-background); */ /* REMOVED - Controlled by Home.jsx wrapper */
   position: relative;
+  transition: background-color 0.3s ease; /* Added */
 }
 
 .heroGrid {
@@ -46,7 +47,7 @@
 .heroName {
   /* Uses base h1 styles */
   margin-bottom: 0.75rem; /* mb-3 */
-  background: linear-gradient(90deg, #06223F, #0ea5e9); /* Example gradient */
+  background: linear-gradient(90deg, var(--color-text-primary), var(--color-accent)); /* Use variables */
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -56,7 +57,8 @@
 .heroTitle {
   /* Uses base h2 styles */
   margin-bottom: 1.5rem; /* mb-6 */
-  color: var(--color-subtle-text);
+  color: var(--color-text-secondary); /* UPDATED */
+  transition: color 0.3s ease; /* Added */
 }
 
 @media (min-width: 768px) { /* md */
@@ -98,15 +100,17 @@
 }
 
 .heroButtonSecondary {
-  background-color: var(--color-white);
+  background-color: var(--color-card-bg); /* UPDATED - Use card bg for contrast */
   color: var(--color-accent);
   border: 1px solid var(--color-accent);
+  transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease; /* Added */
 }
 
 .heroButtonSecondary:hover {
-  background-color: var(--color-accent) / 0.1; /* Light accent background */
-  color: var(--color-accent-hover);
-  border-color: var(--color-accent-hover);
+  /* Use variables for hover - slight opacity on accent might work */
+  background-color: var(--color-accent-light); /* Use light accent bg */
+  color: var(--color-accent-dark); /* Use accent dark text */
+  border-color: var(--color-accent); /* Keep accent border or use hover */
 }
 
 .heroImageContainer {
@@ -137,11 +141,13 @@
 
 /* Skills Marquee Styles */
 .skillsMarqueeContainer {
-  margin-top: 3rem; /* mt-12 */
-  overflow: hidden; /* Hide overflowing content */
+  margin-top: 3rem;
+  overflow: hidden;
+  /* Optional background using variable */
+  /* background: var(--color-input-bg); */
+  /* background: #eee; */ /* REMOVED Comment */
   position: relative; /* For pseudo-elements if needed */
   padding: 1rem 0; /* Add some vertical padding */
-  /* Optional: background: #eee; */
 }
 
 @media (min-width: 768px) { /* md */
@@ -153,6 +159,7 @@
 .skillsRow {
   display: flex;
   width: max-content; /* Ensure it goes beyond screen width */
+  margin-bottom: 10px;
 }
 
 .skillsRow2{
@@ -176,20 +183,31 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 30px;
-  height: 30px;
-  flex-shrink: 0; /* Prevent items from shrinking */
-  /* Optional: background: white; padding: 0.5rem; border-radius: 4px; */
+  width: 50px; /* Increased size to accommodate padding */
+  height: 50px; /* Increased size */
+  flex-shrink: 0; 
+
+  /* NEW: Add background, padding, and border-radius */
+  background-color: var(--color-card-bg);
+  border-radius: 50%; /* Adjust as desired */
+  padding: 8px; /* Adjust as desired */
+  border: 1px solid var(--color-card-border); /* Optional border */
+  transition: background-color 0.3s ease, border-color 0.3s ease, transform 0.2s ease; /* Added transitions */
+}
+
+/* Optional: Add a hover effect to the container */
+.skillItemMarquee:hover {
+  background-color: var(--color-input-bg); /* Slightly different bg on hover */
+  border-color: var(--color-accent); /* Accent border on hover */
+  transform: scale(1.05); /* Slight scale effect */
 }
 
 /* Style the TechIcon within the marquee */
 .skillItemMarquee svg {
-  width: 35px; /* Adjust size - changed from 40px */
-  height: 35px; /* Adjust size - changed from 40px */
-  color: var(--color-subtle-text); /* Example color */
-  transition: color 0.3s ease;
+  width: 100%; /* Make SVG fill the padded container */
+  height: 100%; 
+  /* color changes removed */
 }
 
-.skillItemMarquee:hover svg {
-  color: var(--color-accent); /* Highlight on hover */
-} 
+/* Hover effect on SVG removed */
+/* .skillItemMarquee:hover svg { ... } */ 

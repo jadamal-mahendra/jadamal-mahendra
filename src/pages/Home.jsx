@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import Hero from "../components/Hero";
 import Services from "../components/Services";
 import Experience from "../components/Experience";
@@ -28,11 +28,30 @@ const Home = () => {
     <>
       {/* Removed Helmet - Handled per-route or globally */}
       {/* Removed Navbar - Handled by Layout */}
-      <Hero />
-      <Services />
-      <Experience />
-      <Awards />
-      <Contact />
+      {/* Section 1: Hero - Default Background */}
+      <div style={{ backgroundColor: 'var(--color-background)' }}>
+        <Hero />
+      </div>
+
+      {/* Section 2: Services - Alternate Background */}
+      <div style={{ backgroundColor: 'var(--color-background-alt)' }}>
+        <Services />
+      </div>
+
+      {/* Section 3: Experience - Default Background */}
+      <div style={{ backgroundColor: 'var(--color-background)' }}>
+        <Experience />
+      </div>
+
+      {/* Section 4: Awards - Alternate Background */}
+      <div style={{ backgroundColor: 'var(--color-background-alt)' }}>
+        <Awards />
+      </div>
+
+      {/* Section 5: Contact - Default Background */}
+      <div style={{ backgroundColor: 'var(--color-background)' }}>
+        <Contact />
+      </div>
       {/* Removed Footer - Handled by Layout */}
     </>
   );

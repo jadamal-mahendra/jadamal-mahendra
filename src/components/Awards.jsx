@@ -6,12 +6,12 @@ import { Helmet } from 'react-helmet-async';
 import useGlowEffect from '../hooks/useGlowEffect';
 
 const Awards = () => {
-  const { Awards } = content; 
+  const { Awards: AwardsData } = content;
   const containerRef = useRef(null);
 
-  useGlowEffect(containerRef, `.${styles.awardItem}`);
+  useGlowEffect(containerRef, '.glow-card');
 
-  if (!Awards || !Awards.awards_content) {
+  if (!AwardsData || !AwardsData.awards_content) {
     return null;
   }
 
@@ -27,15 +27,15 @@ const Awards = () => {
       </Helmet>
       <div className="container mx-auto">
         <h2 className="section-title" data-aos="fade-up">
-          {Awards.title}
+          {AwardsData.title}
         </h2>
         <h4 className="section-subtitle" data-aos="fade-up">
-          {Awards.subtitle}
+          {AwardsData.subtitle}
         </h4>
 
         <div ref={containerRef} className={styles.awardsGrid} data-aos="fade-up" data-aos-delay="100">
-          {Awards.awards_content.map((award, i) => (
-            <div key={i} className={`${styles.awardItem} glow-card`}>
+          {AwardsData.awards_content.map((award, i) => (
+            <div key={i} className={`${styles.awardItem}  glow-card`}>
               <div className={styles.awardIcon}>
                 <LuAward size={28} /> 
               </div>

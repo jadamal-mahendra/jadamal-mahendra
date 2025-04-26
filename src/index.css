@@ -1,13 +1,44 @@
 @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap");
 
 :root {
-  --color-dark-primary: #06223F;
-  --color-light-bg: #F8FAFC;
-  --color-accent: #0ea5e9;
-  --color-accent-hover: #0284c7;
-  --color-subtle-text: #64748b;
-  --color-border-light: #e5e7eb; /* Tailwind gray-200 */
+  /* Light Mode Colors (Default) */
+  --color-background: #F8FAFC; /* Light Gray - was --color-light-bg */
+  --color-text-primary: #06223F; /* Dark Blue - was --color-dark-primary */
+  --color-text-secondary: #64748b; /* Slate Gray - was --color-subtle-text */
+  --color-accent: #0ea5e9; /* Sky Blue */
+  --color-accent-hover: #0284c7; /* Darker Sky Blue */
+  --color-accent-light: #bae6fd; /* Light Sky Blue for hover/focus */
+  --color-accent-dark: #0369a1; /* Darker Sky Blue for text */
+  --color-card-bg: #FFFFFF; /* White */
+  --color-card-border: #e5e7eb; /* Light Gray Border - was --color-border-light */
+  --color-input-bg: #f9fafb; /* Very Light Gray */
+  --color-code-bg: #f3f4f6; /* Light Gray for code blocks */
+  --color-heading: #111827; /* Near Black for headings */
+  --color-skeleton-base: hsl(200, 20%, 80%);
+  --color-skeleton-highlight: hsl(200, 20%, 95%);
+  --color-shadow: rgba(0, 0, 0, 0.06);
+  --color-shadow-hover: rgba(0, 0, 0, 0.08);
+  --color-shadow-strong: rgba(0, 0, 0, 0.15);
   --color-white: #FFFFFF;
+  --color-black: #000000;
+
+  /* NEW Variables */
+  --color-gradient-secondary: #a855f7; /* Purple */
+  --color-gradient-tertiary: #ec4899; /* Pink */
+  --color-gradient-accent-transparent: rgba(14, 165, 233, 0.05); /* Transparent Accent for glow */
+  --color-error-bg: #fef2f2; /* Light Red */
+  --color-error-border: #fecaca; /* Red */
+  --color-error-text: #b91c1c; /* Dark Red */
+  --color-disabled-bg: #e5e7eb; /* Light Gray */
+  --color-disabled-text: #9ca3af; /* Medium Gray */
+  --color-tag-bg: #e0f2fe; /* Light Blue */
+  --color-tag-hover-bg: #bae6fd; /* Lighter Blue */
+  --color-copy-button-bg: #e5e7eb; /* Light Gray */
+  --color-copy-button-text: #374151; /* Dark Gray */
+  --color-copy-button-hover-bg: #d1d5db; /* Slightly Darker Gray */
+
+  /* Alternate Background */
+  --color-background-alt: var(--color-card-bg); /* White in light mode */
 
   /* Fonts */
   --font-sans: 'Poppins', sans-serif;
@@ -24,6 +55,45 @@
   --screen-lg: 1024px;
   --screen-xl: 1280px;
   --screen-2xl: 1536px;
+}
+
+/* Define Dark Mode Colors */
+[data-theme="dark"] {
+  --color-background: #111827; /* Very Dark Gray/Blue */
+  --color-text-primary: #F9FAFB; /* Off-white */
+  --color-text-secondary: #9ca3af; /* Medium Gray */
+  --color-accent: #38bdf8; /* Brighter Sky Blue */
+  --color-accent-hover: #0ea5e9; /* Slightly less bright */
+  --color-accent-light: #374151; /* Dark Gray for hover/focus bg */
+  --color-accent-dark: #7dd3fc; /* Lighter blue for text */
+  --color-card-bg: #1f2937; /* Dark Gray/Blue */
+  --color-card-border: #374151; /* Medium Dark Gray */
+  --color-input-bg: #374151; /* UPDATED: Use a distinct dark shade */
+  --color-code-bg: #374151; /* Medium Dark Gray */
+  --color-heading: #F9FAFB; /* Off-white */
+  --color-skeleton-base: hsl(215, 14%, 34%);
+  --color-skeleton-highlight: hsl(217, 19%, 27%);
+  --color-shadow: rgba(255, 255, 255, 0.05);
+  --color-shadow-hover: rgba(255, 255, 255, 0.08);
+  --color-shadow-strong: rgba(0, 0, 0, 0.3); /* Darker shadow */
+
+  /* NEW Variables (Dark Mode) */
+  --color-gradient-secondary: #c084fc; /* Lighter Purple */
+  --color-gradient-tertiary: #f472b6; /* Lighter Pink */
+  --color-gradient-accent-transparent: rgba(56, 189, 248, 0.06); /* Transparent Accent (Dark) */
+  --color-error-bg: #3f1a1a; /* Dark Red BG */
+  --color-error-border: #991b1b; /* Darker Red Border */
+  --color-error-text: #fecaca; /* Light Red Text */
+  --color-disabled-bg: #374151; /* Medium Dark Gray */
+  --color-disabled-text: #6b7280; /* Darker Gray */
+  --color-tag-bg: #1e3a8a; /* Dark Blue */
+  --color-tag-hover-bg: #1e40af; /* Slightly Lighter Dark Blue */
+  --color-copy-button-bg: #4b5563; /* Gray */
+  --color-copy-button-text: #d1d5db; /* Light Gray */
+  --color-copy-button-hover-bg: #525c6a; /* Slightly Lighter Gray */
+
+  /* Alternate Background (Dark Mode) */
+  --color-background-alt: var(--color-card-bg); /* Dark Gray/Blue in dark mode */
 }
 
 /* Basic Reset & Base Styles */
@@ -44,8 +114,9 @@ html {
 }
 
 body {
-  background-color: var(--color-light-bg);
-  color: var(--color-dark-primary);
+  background-color: var(--color-background);
+  color: var(--color-text-primary);
+  transition: background-color 0.3s ease, color 0.3s ease; /* Add transition */
 }
 
 img, picture, video, canvas, svg {
@@ -64,7 +135,7 @@ a {
 
 /* Base Heading/Para Styles */
 h1, h2, h3, h4, h5, h6 {
-  color: var(--color-dark-primary);
+  color: var(--color-heading);
   font-weight: 600;
   letter-spacing: -0.025em;
   margin-bottom: 0.5em;
@@ -105,20 +176,32 @@ h6 {
 
 p {
   font-size: 1rem;
-  color: var(--color-subtle-text);
+  color: var(--color-text-secondary);
   line-height: 1.625;
   margin-bottom: 1em;
 }
 
 input,
 textarea {
-  background-color: transparent;
+  background-color: var(--color-input-bg); /* UPDATED: Explicitly use variable */
   outline: none;
-  color: var(--color-dark-primary);
+  color: var(--color-text-primary);
+  border: 1px solid var(--color-card-border); /* Added border for definition */
+  padding: 0.5rem 0.75rem; /* Added padding */
+  border-radius: 4px; /* Added border radius */
+  transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease; /* Added transition */
 }
 input::placeholder,
 textarea::placeholder {
-  color: var(--color-subtle-text);
+  color: var(--color-text-secondary);
+  opacity: 0.7; /* Make placeholder slightly lighter */
+}
+
+/* Add focus styles for inputs/textarea */
+input:focus,
+textarea:focus {
+  border-color: var(--color-accent);
+  box-shadow: 0 0 0 2px var(--color-accent-light); /* Use accent-light for focus ring */
 }
 
 /* Global Utility & Helper Styles */
@@ -159,7 +242,7 @@ textarea::placeholder {
 
 .btn:focus {
   outline: none;
-  box-shadow: 0 0 0 3px var(--color-accent) / 0.5;
+  box-shadow: 0 0 0 3px var(--color-accent-light);
 }
 
 .section-padding {
@@ -172,7 +255,7 @@ textarea::placeholder {
 .section-title {
   font-size: 1.875rem;
   font-weight: 700;
-  color: var(--color-dark-primary);
+  color: var(--color-text-primary);
   margin-bottom: 0.75rem;
   text-align: center;
 }
@@ -181,7 +264,7 @@ textarea::placeholder {
 
 .section-subtitle {
   font-size: 1rem;
-  color: var(--color-subtle-text);
+  color: var(--color-text-secondary);
   margin-bottom: 2.5rem;
   text-align: center;
   max-width: 42rem;
@@ -194,10 +277,11 @@ textarea::placeholder {
 
 /* Footer Styles (Keeping globally for now) */
 .app-footer {
-  background-color: var(--color-dark-primary);
-  color: var(--color-subtle-text);
+  background-color: var(--color-card-bg); /* Use card bg for consistency */
+  color: var(--color-text-secondary);
   padding: 1.5rem 0;
   text-align: center;
+  border-top: 1px solid var(--color-card-border); /* Add border */
 }
 
 .app-footer-text {
@@ -215,28 +299,22 @@ textarea::placeholder {
 
 /* Add common styles for the glow card effect */
 
-/* Keyframes for the flowing size animation */
-@keyframes flowSize {
-  0%, 100% {
-    --gradient-size: 280px;
-  }
-  50% {
-    --gradient-size: 330px;
-  }
-}
+/* Keyframes for the flowing size animation - REMOVED */
+/* @keyframes flowSize { ... } */
 
 .glow-card {
   /* Base requirements for the effect */
   position: relative;
   z-index: 1; /* Ensure content is above ::before */
-  overflow: hidden;
+
+  /* Set base background color HERE */
+  background-color: var(--color-card-bg);
 
   /* Subtle background tint (uses --mouse-x/y set by JS) */
-  /* Important: Apply specific background-color in component CSS */
   background-image: radial-gradient(
     700px circle at var(--mouse-x, -999px) var(--mouse-y, -999px), /* Default off-screen */
-    rgba(52, 152, 219, 0.05) 0%,
-    transparent 50%
+    var(--color-gradient-accent-transparent) 0%,
+    transparent 50% /* Fade out background effect */
   );
   background-repeat: no-repeat;
   /* border-radius should be set by the specific card component */
@@ -245,34 +323,50 @@ textarea::placeholder {
 .glow-card::before {
   content: "";
   position: absolute;
-  inset: 0;
-  border-radius: inherit; /* Inherit from the specific .glow-card element */
-  padding: 2px; /* Border width */
+  inset: -2px; 
+  border-radius: inherit; 
+  padding: 2px; 
 
-  /* Define variable for gradient size */
-  --gradient-size: 300px; /* Default size */
-
-  /* Border glow gradient (uses --mouse-x/y set by JS) */
   background: radial-gradient(
-    var(--gradient-size) circle at var(--mouse-x, -999px) var(--mouse-y, -999px), /* Default off-screen */
-    rgba(52, 152, 219, 0.6) 0%,
-    rgba(52, 152, 219, 0.15) 40%,
-    transparent 65%
+    300px circle at var(--mouse-x, -999px) var(--mouse-y, -999px),
+    var(--color-accent) 0%,
+    var(--color-gradient-secondary) 30%,
+    var(--color-gradient-tertiary) 60%,
+    transparent 90%
   );
-
-  /* Mask to create the border effect */
+  
+  /* Mask (Keep this) */
   -webkit-mask:
-    linear-gradient(#fff 0 0) content-box,
-    linear-gradient(#fff 0 0);
+    linear-gradient(var(--color-white) 0 0) content-box,
+    linear-gradient(var(--color-white) 0 0);
   mask:
-    linear-gradient(#fff 0 0) content-box,
-    linear-gradient(#fff 0 0);
+    linear-gradient(var(--color-white) 0 0) content-box,
+    linear-gradient(var(--color-white) 0 0);
   -webkit-mask-composite: xor;
           mask-composite: exclude;
 
-  z-index: -1; /* Behind the content */
+  z-index: -1; 
   pointer-events: none;
 
-  /* Apply the flowing size animation */
-  animation: flowSize 3s infinite ease-in-out;
+  transition: opacity 0.4s ease-in-out;
+  opacity: 0; /* Hide by default */
 }
+
+/* Show the border glow on hover - REMOVED */
+/* 
+.glow-card:hover::before {
+  opacity: 1;
+}
+*/
+
+/* NEW: Show border glow when container is active */
+.glow-container-active .glow-card::before {
+  opacity: 1;
+}
+
+/* Remove the global transition rule if it exists */
+/* 
+*, *::before, *::after { 
+  transition: ... 
+} 
+*/

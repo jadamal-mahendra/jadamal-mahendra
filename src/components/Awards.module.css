@@ -2,7 +2,7 @@
 
 .awardsSection {
   /* Uses global section-padding */
-  background-color: var(--color-white); /* Or alternate background */
+  /* background-color: var(--color-background); */ /* REMOVED - Controlled by Home.jsx wrapper */
 }
 
 .awardsGrid {
@@ -21,6 +21,14 @@
   background-color: var(--color-light-bg);
   padding: 1.5rem;
   border-radius: 0.5rem;
+  background-color: var(--color-input-bg) !important; 
+  border: 1px solid var(--color-card-border); /* Removed !important */
+  border-radius: 12px;
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column; /* Ensure content stacks verticalśśææly */
+  align-items: flex-start; /* Align content to the start */
+  transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease;
   /* border-left: 4px solid var(--color-accent); */ /* Replaced by glow */
   /* transition: box-shadow 0.3s ease; */ /* Keep or remove */
 }
@@ -47,7 +55,7 @@
   /* Uses base h5 styles */
   font-size: 1.25rem; /* xl */
   margin-bottom: 0.25rem; /* mb-1 */
-  color: var(--color-dark-primary);
+  color: var(--color-heading);
 }
 
 .awardOrgDate {
@@ -68,7 +76,7 @@
 .awardOrg {
   font-size: 0.9rem; /* sm */
   font-weight: 500;
-  color: var(--color-subtle-text);
+  color: var(--color-text-secondary);
 }
 
 .awardDate {
@@ -80,6 +88,21 @@
 .awardDescription {
   /* Uses base p styles, potentially adjusted */
   font-size: 0.9rem;
-  color: var(--color-subtle-text);
+  color: var(--color-text-secondary);
   margin-bottom: 0; /* Remove default p margin */
+}
+
+.awardCard {
+  /* Uses .glow-card from index.css */
+  /* Ensure this background overrides .glow-card base */
+  /* Use input background for more contrast */
+  background-color: var(--color-input-bg) !important; 
+  border: 1px solid var(--color-card-border); /* Removed !important */
+  border-radius: 12px;
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column; /* Ensure content stacks verticalśśææly */
+  align-items: flex-start; /* Align content to the start */
+  transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease;
+  /* box-shadow: 0 4px 15px rgba(0, 0, 0, 0.07); */ /* REMOVED Comment */
 } 

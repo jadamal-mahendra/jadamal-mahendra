@@ -21,7 +21,22 @@ class ChatErrorBoundary extends React.Component {
       // You can render any custom fallback UI
       // Keep it simple to avoid errors within the boundary itself
       return (
-        <div style={styles.fallbackContainer}>
+        <div
+          style={{
+            position: 'fixed',
+            bottom: '1.5rem',
+            right: '1.5rem',
+            width: '300px',
+            padding: '1rem',
+            border: '1px solid var(--color-error-border)',
+            borderRadius: '8px',
+            backgroundColor: 'var(--color-error-bg)',
+            color: 'var(--color-error-text)',
+            zIndex: 999,
+            boxShadow: '0 4px 12px var(--color-shadow)',
+            fontFamily: 'sans-serif'
+          }}
+        >
           <p style={styles.fallbackText}>
             Oops! The chat widget encountered an error.
           </p>
@@ -41,20 +56,6 @@ class ChatErrorBoundary extends React.Component {
 
 // Basic inline styles for fallback UI (can be moved to CSS modules)
 const styles = {
-  fallbackContainer: {
-    position: 'fixed',
-    bottom: '1.5rem',
-    right: '1.5rem',
-    width: '300px',
-    padding: '1rem',
-    border: '1px solid #fecaca', // Red-200
-    borderRadius: '8px',
-    backgroundColor: '#fef2f2', // Red-50
-    color: '#b91c1c', // Red-700
-    zIndex: 999,
-    boxShadow: '0 4px 12px rgba(0, 0, 0, 0.1)',
-    fontFamily: 'sans-serif'
-  },
   fallbackText: {
     fontWeight: 'bold',
     margin: '0 0 0.5rem 0'

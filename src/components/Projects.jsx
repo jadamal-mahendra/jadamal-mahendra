@@ -1,61 +1,64 @@
+import React, { useRef } from 'react'; // Import useRef
 import { content } from "../Content";
-// Removed Swiper imports
-import { LuGithub, LuExternalLink } from "react-icons/lu"; // Icons for links
+import { LuGithub, LuExternalLink } from "react-icons/lu";
+import styles from './Projects.module.css';
+import useGlowEffect from '../hooks/useGlowEffect'; // Import the hook
 
 const Projects = () => {
-  const { Projects } = content;
+  const { Projects: ProjectsData } = content;
+  const containerRef = useRef(null); // Add ref for the grid
+
+  // Use the glow effect hook
+  useGlowEffect(containerRef, '.glow-card');
 
   return (
-    <section id="projects" className="section-padding bg-light_bg">
-      <div className="container mx-auto">
-        {/* Section Title & Subtitle */}
+    <section id="projects" className={styles.projectsSection}>
+      <div className="container"> 
         <h2 className="section-title">
-          {Projects.title}
+          {ProjectsData.title}
         </h2>
         <h4 className="section-subtitle">
-          {Projects.subtitle}
+          {ProjectsData.subtitle}
         </h4>
 
-        {/* Projects Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {Projects.project_content.map((project, i) => (
+        {/* Projects Grid - Add ref */}
+        <div ref={containerRef} className={styles.projectsGrid}>
+          {ProjectsData.project_content.map((project, i) => (
+            // Add glow-card class to the project card div
             <div
               key={i}
-              className="bg-white rounded-lg shadow-md overflow-hidden flex flex-col hover:shadow-lg transition-shadow duration-300 border border-gray-100"
+              className={`${styles.projectCard} glow-card`} 
             >
               <img 
                 src={project.image} 
                 alt={project.title} 
-                className="w-full h-48 object-cover" 
-                // Add a placeholder color if image fails to load
-                onError={(e) => { e.target.style.backgroundColor = '#e5e7eb'; e.target.src = '' }} 
+                className={styles.projectImage}
+                onError={(e) => { e.target.style.backgroundColor = 'var(--color-disabled-bg)'; e.target.src = '' }}
               />
-              <div className="p-6 flex flex-col flex-grow">
-                <h5 className="text-xl font-semibold text-dark_primary mb-2">{project.title}</h5>
-                <p className="text-sm text-subtle_text leading-relaxed mb-4 flex-grow">
+              <div className={styles.projectContent}>
+                <h5 className={styles.projectTitle}>{project.title}</h5>
+                <p className={styles.projectDescription}>
                   {project.description}
                 </p>
                 
-                {/* Technology Tags */}
-                <div className="mb-4 flex flex-wrap gap-2">
+                <div className={styles.tagsContainer}>
                   {project.tags?.map((tag, j) => (
                     <span 
                       key={j} 
-                      className="text-xs bg-accent/10 text-accent font-medium px-2.5 py-0.5 rounded-full"
+                      className={styles.projectTag}
                     >
                       {tag}
                     </span>
                   ))}
                 </div>
 
-                {/* Project Links */}
-                <div className="mt-auto flex items-center gap-4 pt-4 border-t border-gray-100">
+                <div className={styles.linksContainer}>
                   {project.link_live && (
                     <a 
                       href={project.link_live}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="flex items-center gap-1 text-sm text-accent hover:underline"
+                      className={styles.projectLink}
                     >
                       <LuExternalLink size={16} />
                       Live Demo
@@ -66,7 +69,7 @@ const Projects = () => {
                       href={project.link_repo}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="flex items-center gap-1 text-sm text-accent hover:underline"
+                      className={styles.projectLink}
                     >
                       <LuGithub size={16} />
                       View Code
@@ -74,7 +77,7 @@ const Projects = () => {
                   )}
                    {/* Show message if no links */} 
                   {!project.link_live && !project.link_repo && (
-                     <p className="text-xs text-subtle_text italic">Links not available</p>
+                     <p className={styles.noLinksText}>Links not available</p>
                    )}
                 </div>
               </div>

@@ -22,21 +22,21 @@
   bottom: 1.5rem;
   right: 1.5rem;
   color: var(--color-white);
-  border: 1px solid rgba(0, 0, 0, 0.05); /* Subtle border */
+  border: 1px solid var(--color-card-border);
   border-radius: 50%;
   width: 56px;
   height: 56px;
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 4px 12px var(--color-shadow-strong);
   cursor: pointer;
   transition: transform 0.2s ease-out, opacity 0.3s ease, background-color 0.2s ease;
   opacity: 1;
 }
 
 .fab:hover {
-  background-color: var(--color-accent-hover);
+  background-color: var(--color-input-bg);
   transform: scale(1.05);
 }
 
@@ -56,9 +56,9 @@
 }
 /* Chat Window */
 .chatWindow {
-  background-color: var(--color-white);
+  background-color: var(--color-card-bg);
   border-radius: 12px; /* Slightly softer radius */
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15); /* Slightly more pronounced shadow */
+  box-shadow: 0 8px 24px var(--color-shadow-strong);
   width: 100%; /* Fill container width */
   height: 100%; /* Fill container height */
   display: flex;
@@ -71,6 +71,7 @@
   opacity: 0;
   transition: transform 0.3s ease-out, opacity 0.3s ease-out;
   pointer-events: none; 
+  border: 1px solid var(--color-card-border);
 }
 
 .chatWindowOpen {
@@ -81,13 +82,14 @@
 
 /* Chat Header */
 .chatHeader {
-  background-color: var(--color-dark-primary);
+  background-color: var(--color-accent);
   color: var(--color-white);
   padding: 0.8rem 1.1rem; /* Slightly more padding */
   display: flex;
   justify-content: space-between;
   align-items: center;
   flex-shrink: 0; 
+  border-bottom: 1px solid var(--color-card-border);
 }
 
 /* NEW: Wrapper for image and name */
@@ -125,7 +127,7 @@
 }
 
 .closeButton:hover {
-  background-color: rgba(255, 255, 255, 0.2); /* Subtle background on hover */
+  background-color: rgba(from var(--color-white) r g b / 0.2);
   opacity: 1;
   transform: scale(1.1); /* Slightly larger on hover */
 }
@@ -161,7 +163,7 @@
   line-height: 1.5; /* Slightly more line spacing */
   word-wrap: break-word;
   border: none; 
-  box-shadow: 0 1px 3px rgba(0,0,0,0.06); /* Enhanced subtle shadow */
+  box-shadow: 0 1px 3px var(--color-shadow);
 }
 
 .messageContent {
@@ -179,12 +181,12 @@
 
 /* Assistant message styling */
 .assistant {
-  background-color: #ffffff; /* Use pure white for contrast */
-  color: var(--color-dark-primary);
+  background-color: var(--color-card-bg);
+  color: var(--color-text-primary);
   border-bottom-left-radius: 5px; /* Keep subtle tail */
   align-self: flex-start;
   margin-right: auto; 
-  border: 1px solid #e5e7eb; /* Add a light border to assistant messages */
+  border: 1px solid var(--color-card-border);
 }
 
 /* --- NEW: Styling for Lists within Assistant Messages --- */
@@ -198,13 +200,13 @@
 }
 
 .assistant .messageContent li {
-  background-color: rgba(14, 165, 233, 0.15); /* Light accent background */
-  color: var(--color-accent-dark); /* Darker accent text */
+  background-color: rgba(from var(--color-accent) r g b / 0.15);
+  color: var(--color-text-primary);
   padding: 0.25rem 0.6rem; /* Padding inside tag */
   border-radius: 12px; /* Pill shape */
   font-size: 0.85rem; /* Slightly smaller font */
   font-weight: 500;
-  border: 1px solid rgba(14, 165, 233, 0.2);
+  border: 1px solid rgba(from var(--color-accent) r g b / 0.2);
 }
 /* --- End List Styling --- */
 
@@ -250,8 +252,8 @@
   padding-bottom: 0.75rem; 
   padding-left: 1.1rem; /* Match messagesArea horizontal padding */
   padding-right: 1.1rem; /* Match messagesArea horizontal padding */
-  border-top: 1px solid var(--color-border-light); 
-  background-color: #f9fafb; 
+  border-top: 1px solid var(--color-card-border); 
+  background-color: var(--color-background); 
   flex-shrink: 0; 
   /* Ensure suggestions flex-wrap correctly within the container */
   display: flex; 
@@ -275,9 +277,9 @@
 }
 
 .suggestionButton {
-  background-color: var(--color-white);
-  color: var(--color-accent-dark);
-  border: 1px solid var(--color-accent-light); /* Use accent light for border */
+  background-color: var(--color-card-bg);
+  color: var(--color-text-secondary);
+  border: 1px solid var(--color-card-border);
   padding: 0.4rem 0.9rem; /* Adjusted padding */
   border-radius: 16px; /* Pill shape */
   font-size: 0.875rem;
@@ -287,9 +289,9 @@
 }
 
 .suggestionButton:hover:not(:disabled) {
-  background-color: var(--color-accent-light); /* Use accent light */
-  border-color: var(--color-accent); /* Darker border on hover */
-  color: var(--color-accent);
+  background-color: var(--color-input-bg);
+  border-color: var(--color-accent);
+  color: var(--color-text-primary);
   transform: translateY(-1px); /* Subtle lift */
 }
 
@@ -317,21 +319,22 @@
 .inputArea {
   display: flex;
   padding: 0.75rem 1.1rem; /* Adjusted padding */
-  border-top: 1px solid var(--color-border-light);
-  background-color: var(--color-white);
+  border-top: 1px solid var(--color-card-border);
+  background-color: var(--color-input-bg);
   flex-shrink: 0; 
 }
 
 .inputField {
   flex-grow: 1;
-  border: 1px solid var(--color-border-light);
+  border: 1px solid var(--color-card-border);
   border-radius: 18px; /* Match message radius */
   padding: 0.6rem 1rem; /* Adjusted padding */
   font-size: 0.95rem;
   line-height: 1.4;
   margin-right: 0.75rem;
-  background-color: #f9fafb; /* Slight off-white input bg */
+  background-color: transparent;
   transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  color: var(--color-text-primary);
 }
 
 .inputField:focus {
@@ -342,7 +345,7 @@
 
 /* Input Field: Style when disabled */
 .inputField:disabled {
-  background-color: #f3f4f6; /* Lighter gray when disabled */
+  background-color: var(--color-disabled-bg);
   cursor: not-allowed;
 }
 
@@ -362,7 +365,7 @@
 }
 
 .sendButton:hover:not(:disabled) {
-  background-color: var(--color-accent-hover);
+  background-color: var(--color-input-bg);
   transform: scale(1.05); /* Slightly larger on hover */
 }
 
@@ -373,8 +376,8 @@
 }
 
 .sendButton:disabled {
-  background-color: #cccccc; /* More distinct disabled gray */
-  color: #888888; /* Dim the icon color */
+  background-color: transparent;
+  color: var(--color-disabled-text);
   cursor: not-allowed;
   box-shadow: none; /* Remove shadow when disabled */
   transform: scale(1); /* No scale effect when disabled */
@@ -415,6 +418,7 @@
 /* Skeleton Loader Styles */
 .skeletonContainer {
   width: 100%; /* Ensure container takes full width of bubble */
+  min-width: 250px;
 }
 
 @keyframes skeletonLoading {
