@@ -1,0 +1,54 @@
+name: Generate Daily Blog Post
+
+on:
+  # schedule:
+    # Runs daily at 08:00 UTC (adjust as needed)
+    # - cron: '0 8 * * *' 
+  workflow_dispatch: # Allows manual triggering from GitHub UI
+
+jobs:
+  generate:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20' # Use Node 20 or your preferred version
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci # Use ci for cleaner installs in CI
+
+      - name: Generate new blog post
+        run: node scripts/generate-blog.mjs
+        env:
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+
+      - name: Configure Git
+        run: |
+          git config --global user.name 'github-actions[bot]'
+          git config --global user.email 'github-actions[bot]@users.noreply.github.com'
+
+      - name: Check for new blog post file
+        id: check_files
+        run: |
+          if git status --porcelain | grep ' src/content/blog/.*\.json'; then
+            echo "changes_detected=true" >> $GITHUB_OUTPUT
+          else
+            echo "changes_detected=false" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Commit and push if changes detected
+        if: steps.check_files.outputs.changes_detected == 'true'
+        run: |
+          git add src/content/blog/*.json
+          git commit -m "chore: Add generated blog post [skip ci]"
+          git push
+
+      - name: Trigger Vercel deploy hook if changes pushed
+        if: steps.check_files.outputs.changes_detected == 'true'
+        run: curl -X POST "${{ secrets.VERCEL_DEPLOY_HOOK_URL }}" 
