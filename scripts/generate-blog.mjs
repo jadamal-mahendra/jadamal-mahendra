@@ -245,21 +245,5 @@ async function generateBlogPost() {
   }
 }
 
-// --- Vercel Handler --- //
 
-export default async function handler(request, response) {
-  console.log('[Vercel Cron] Received request, starting blog generation...');
-  try {
-    await generateBlogPost();
-    console.log('[Vercel Cron] Blog generation function completed.');
-    // Send a success response
-    return response.status(200).json({ message: 'Blog generation successful' });
-  } catch (error) {
-    console.error('[Vercel Cron] Error during blog generation:', error);
-    // Send an error response
-    return response.status(500).json({ message: 'Blog generation failed', error: error.message });
-  }
-}
-
-// Comment out the direct call, as Vercel will call the handler
-// generateBlogPost(); 
+ generateBlogPost(); 
