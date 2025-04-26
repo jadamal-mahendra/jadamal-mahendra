@@ -1,0 +1,195 @@
+/* src/components/ChatWidget.module.css */
+
+/* Position the container fixed in the bottom right */
+.chatWidgetContainer {
+  position: fixed;
+  bottom: 1.5rem; 
+  right: 1.5rem;
+  z-index: 1000; /* Ensure it's above most content */
+}
+
+/* Floating Action Button (FAB) */
+.fab {
+  background-color: var(--color-accent); 
+  color: var(--color-white);
+  border: none;
+  border-radius: 50%;
+  width: 56px;
+  height: 56px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  cursor: pointer;
+  transition: transform 0.2s ease-out, opacity 0.3s ease;
+  opacity: 1;
+}
+
+.fab:hover {
+  background-color: var(--color-accent-hover);
+  transform: scale(1.05);
+}
+
+/* Hide FAB when chat window is open */
+.fabHidden {
+  transform: scale(0);
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* Chat Window */
+.chatWindow {
+  background-color: var(--color-white);
+  border-radius: 8px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+  width: 350px; /* Adjust width as needed */
+  height: 450px; /* Adjust height as needed */
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  position: absolute; /* Position relative to container */
+  bottom: 0;
+  right: 0;
+  transform: translateY(20px) scale(0.95); /* Start slightly down and smaller */
+  opacity: 0;
+  transition: transform 0.3s ease-out, opacity 0.3s ease-out;
+  pointer-events: none; /* Initially not interactive */
+}
+
+.chatWindowOpen {
+  transform: translateY(0) scale(1);
+  opacity: 1;
+  pointer-events: auto; /* Make interactive when open */
+}
+
+/* Chat Header */
+.chatHeader {
+  background-color: var(--color-dark-primary);
+  color: var(--color-white);
+  padding: 0.75rem 1rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.chatHeader h3 {
+  margin: 0;
+  font-size: 1rem;
+  font-weight: 500;
+}
+
+.closeButton {
+  background: none;
+  border: none;
+  color: var(--color-white);
+  cursor: pointer;
+  padding: 0.25rem;
+  line-height: 1;
+  opacity: 0.8;
+}
+
+.closeButton:hover {
+  opacity: 1;
+}
+
+/* Messages Area */
+.messagesArea {
+  flex-grow: 1;
+  overflow-y: auto;
+  padding: 1rem;
+  background-color: var(--color-light-bg);
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.message {
+  max-width: 80%;
+  padding: 0.5rem 0.75rem;
+  border-radius: 12px;
+  line-height: 1.4;
+  word-wrap: break-word;
+}
+
+.messageContent {
+  display: block; /* Prevents inline spacing issues */
+}
+
+/* User message styling */
+.user {
+  background-color: var(--color-accent);
+  color: var(--color-white);
+  border-bottom-right-radius: 2px; /* Tail effect */
+  align-self: flex-end; 
+  margin-left: auto; /* Push to right */
+}
+
+/* Assistant message styling */
+.assistant {
+  background-color: #e5e7eb; /* Tailwind gray-200 */
+  color: var(--color-dark-primary);
+  border-bottom-left-radius: 2px; /* Tail effect */
+  align-self: flex-start;
+  margin-right: auto; /* Push to left */
+}
+
+/* Loading indicator */
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+.loadingIcon {
+  display: inline-block; 
+  animation: spin 1s linear infinite;
+  margin: 0.25rem; /* Add some space */
+}
+.loadingIconSmall {
+    display: inline-block; 
+    animation: spin 1s linear infinite;
+}
+
+/* Input Area */
+.inputArea {
+  display: flex;
+  padding: 0.75rem;
+  border-top: 1px solid var(--color-border-light);
+  background-color: var(--color-white);
+}
+
+.inputField {
+  flex-grow: 1;
+  border: 1px solid var(--color-border-light);
+  border-radius: 15px;
+  padding: 0.5rem 0.75rem;
+  margin-right: 0.5rem;
+  font-size: 0.9rem;
+}
+
+.inputField:focus {
+  outline: none;
+  border-color: var(--color-accent);
+  box-shadow: 0 0 0 2px rgba(14, 165, 233, 0.2);
+}
+
+.sendButton {
+  background-color: var(--color-accent);
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.sendButton:hover:not(:disabled) {
+  background-color: var(--color-accent-hover);
+}
+
+.sendButton:disabled {
+  background-color: #9ca3af; /* Tailwind gray-400 */
+  cursor: not-allowed;
+} 

@@ -1,15 +1,14 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
 import ReactMarkdown from 'react-markdown';
-import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter'; // Choose Prism or default
-import { atomDark } from 'react-syntax-highlighter/dist/esm/styles/prism'; // Choose a style (e.g., atomDark)
+import { Highlight, themes } from 'prism-react-renderer';
 import { loadBlogPost } from '../utils/blogLoader';
 import { Helmet } from 'react-helmet-async';
 import styles from './Blog.module.css'; // Reuse or create specific styles
 import Navbar from '../Layouts/Navbar';
 import { LuCopy, LuCheck } from "react-icons/lu"; // Icons for copy button
 
-// Custom Code component for ReactMarkdown
+// Custom Code component for ReactMarkdown using prism-react-renderer
 const CodeBlock = ({ node, inline, className, children, ...props }) => {
   const [isCopied, setIsCopied] = useState(false);
   const match = /language-(\w+)/.exec(className || '');
@@ -22,32 +21,50 @@ const CodeBlock = ({ node, inline, className, children, ...props }) => {
       setTimeout(() => setIsCopied(false), 1500); // Reset after 1.5s
     }, (err) => {
       console.error('Failed to copy text: ', err);
-      // You could add user feedback here (e.g., toast notification)
     });
   }, [codeText]);
 
-  return !inline && match ? (
-    <div className={styles.codeBlockWrapper}> {/* Wrapper for positioning */} 
-      <SyntaxHighlighter
-        style={atomDark} // Apply the chosen theme
-        language={language}
-        PreTag="div" // Use div instead of pre for flexibility
-        {...props}
-      >
-        {codeText}
-      </SyntaxHighlighter>
-      <button 
-        onClick={handleCopy} 
-        className={styles.copyButton}
-        aria-label={isCopied ? 'Copied' : 'Copy code'}
-      >
-        {isCopied ? <LuCheck size={16}/> : <LuCopy size={16}/>}
-      </button>
-    </div>
-  ) : (
-    <code className={inline ? styles.inlineCode : className} {...props}>
-      {children}
-    </code>
+  if (inline) {
+    return <code className={styles.inlineCode} {...props}>{children}</code>;
+  }
+
+  return (
+    <Highlight code={codeText} language={language} theme={themes.dracula}>
+      {({ className: highlightClassName, style, tokens, getLineProps, getTokenProps }) => (
+        <div className={styles.codeBlockWrapper}> {/* Wrapper for positioning */}
+          <pre className={`${highlightClassName} ${styles.codeBlockPre}`} style={style}>
+            {tokens.map((line, i) => {
+              // Get line props, remove key before spreading
+              const lineProps = getLineProps({ line, key: i });
+              const lineKey = lineProps.key;
+              delete lineProps.key;
+              return (
+                // Pass key directly
+                <div key={lineKey} {...lineProps}>
+                  {line.map((token, key) => {
+                    // Get token props, remove key before spreading
+                    const tokenProps = getTokenProps({ token, key });
+                    const tokenKey = tokenProps.key;
+                    delete tokenProps.key;
+                    // Pass key directly
+                    return (
+                      <span key={tokenKey} {...tokenProps} />
+                    );
+                  })}
+                </div>
+              );
+            })}
+          </pre>
+          <button
+            onClick={handleCopy}
+            className={styles.copyButton}
+            aria-label={isCopied ? 'Copied' : 'Copy code'}
+          >
+            {isCopied ? <LuCheck size={16}/> : <LuCopy size={16}/>}
+          </button>
+        </div>
+      )}
+    </Highlight>
   );
 };
 
