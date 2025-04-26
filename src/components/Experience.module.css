@@ -14,31 +14,118 @@
 
 .timelineContainer {
   position: relative;
-  max-width: 56rem; /* max-w-2xl or 3xl */
-  margin: 2rem auto 0; /* mt-8 */
+  max-width: 56rem; 
+  margin: 2rem auto 0; 
+  /* Remove mask from main container */
+  /* mask-image: linear-gradient(...); */
+  /* -webkit-mask-image: linear-gradient(...); */
 }
 
-/* Vertical timeline line */
-.timelineContainer::before {
+/* New container for just the visual line/drop elements */
+.timelineVisuals {
+  position: absolute;
+  inset: 0; /* Cover parent */
+  z-index: 0; /* Behind timeline items */
+  pointer-events: none; /* Allow clicks through to items */
+  /* Apply mask here */
+  mask-image: linear-gradient(
+    to bottom,
+    transparent 0%,
+    black 10%,
+    black 90%,
+    transparent 100%
+  );
+  -webkit-mask-image: linear-gradient(
+    to bottom,
+    transparent 0%,
+    black 10%,
+    black 90%,
+    transparent 100%
+  );
+}
+
+/* Vertical timeline line (Background) - Target within Visuals */
+.timelineVisuals::before {
   content: '';
   position: absolute;
   width: 3px;
-  background-color: var(--color-border-light); 
+  background-color: var(--color-border-light);
   top: 0;
   bottom: 0;
-  left: 20px; /* Position based on logo size */
+  left: 20px;
   transform: translateX(-50%);
+  z-index: 0; /* Base layer within visuals */
+}
+
+/* Vertical timeline line (Progress Indicator) - Target within Visuals */
+.timelineVisuals::after {
+  content: '';
+  position: absolute;
+  width:3px; /* Slightly wider for gradient glow */
+  background-color: transparent; /* Use gradient for color/glow */
+  background-image: linear-gradient(
+    to top, /* Gradient fades upwards */
+    rgba(14, 165, 233, 0.9) 0%,   /* Stronger glow near drop */
+    rgba(14, 165, 233, 0.7) 20%,  /* Start fading */
+    rgba(14, 165, 233, 0.3) 60%,  /* More faded further up */
+    rgba(14, 165, 233, 0.1) 90%,  /* Very faint near top */
+    transparent 100%
+  );
+  top: 0;
+  bottom: auto; 
+  left: 20px; 
+  transform: translateX(-50%);
+  height: calc(var(--scroll-progress, 0) * 100%); 
+  z-index: 1; 
+  transition: height 0.1s linear;
+  /* box-shadow: 0 0 8px 2px rgba(14, 165, 233, 0.6); */ /* Removed box-shadow glow */
+  /* Optional: slight blur to soften gradient edges */
+  /* filter: blur(1px); */
+}
+
+/* Drop indicator element - Target within Visuals */
+.timelineVisuals .timelineDropIndicator {
+  position: relative; /* Changed from absolute for pseudo-element positioning */
+  width: 5px; 
+  height: 10px; 
+  background-color: var(--color-accent);
+  border-radius: 50% 50% 3px 3px / 50% 50% 8px 8px;
+  left: 20px; 
+  top: calc(var(--scroll-progress, 0) * 100% - 1px); 
+  transform: translate(-50%, -50%) rotate(180deg); 
+  z-index: 2; 
+  transition: top 0.1s linear;
+}
+
+/* Add a blurred overlay for smoother connection */
+.timelineVisuals .timelineDropIndicator::before {
+  content: '';
+  position: absolute;
+  /* Position at the connection point (bottom edge before rotation) */
+  bottom: -1px; /* Slight offset to cover seam */
+  left: 50%;
+  transform: translateX(-50%);
+  width: 3px; /* Match line width */
+  height: 4px; /* How far the gradient extends */
+  background: linear-gradient(to top, var(--color-accent) 0%, transparent 100%);
+  filter: blur(1px); /* Soften the gradient */
+  z-index: 3; /* Ensure it's above the drop's background */
+  border-radius: 1px; /* Optional slight rounding */
 }
 
 @media (min-width: 768px) { /* md */
-  .timelineContainer::before {
-    left: 50%; /* Center line on desktop */
+  /* Center visuals within the .timelineVisuals container */
+  .timelineVisuals::before,
+  .timelineVisuals::after,
+  .timelineVisuals .timelineDropIndicator {
+    left: 50%;
   }
 }
 
 .timelineItem {
-  position: relative;
-  margin-bottom: 2.5rem; /* Adjust spacing */
+  position: relative; /* Needed to establish stacking context */
+  z-index: 1; /* Ensure items are above timelineVisuals */
+  margin-bottom: 2.5rem; 
 }
 
 @media (min-width: 768px) { /* md */
@@ -77,19 +164,28 @@
 
 .timelineLogoHolder {
   position: absolute;
-  left: 20px; /* Align with line - Reverted back from 21.5px */
-  top: 50%; /* Changed from top: 0 */
-  transform: translate(-50%, -50%); /* Added Y translation for vertical centering */
+  left: 20px; 
+  top: 50%; 
+  transform: translate(-50%, -50%); 
   z-index: 10;
-  background-color: var(--color-dark-primary); /* Match section bg */
-  width: 40px; /* Adjust size */
+  background-color: var(--color-dark-primary); 
+  width: 40px; 
   height: 40px;
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
-  border: 3px solid var(--color-white); /* Optional border */
-  box-shadow: 0 0 0 3px var(--color-accent); /* Accent ring */
+  border: 3px solid var(--color-white); 
+  /* Default inactive shadow */
+  box-shadow: 0 0 0 3px var(--color-accent);
+  /* Add transition for smooth change */
+  transition: box-shadow 0.3s ease-in-out;
+}
+
+/* Style for when the scroll indicator reaches/passes the logo */
+.timelineLogoHolder.isActive {
+  /* Slightly thicker/brighter accent ring */
+  box-shadow: 0 0 0 4px var(--color-accent-hover); /* Use hover color or slightly brighter */
 }
 
 @media (min-width: 768px) { /* md */

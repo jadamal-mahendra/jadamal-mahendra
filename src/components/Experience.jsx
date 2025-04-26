@@ -1,17 +1,98 @@
-import React, { useRef } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { content } from "../Content";
 // import { Parallax } from 'react-scroll-parallax'; // Commented out
 import styles from './Experience.module.css'; // Import CSS Module
 import { Helmet } from 'react-helmet-async'; // Import Helmet
 import useGlowEffect from '../hooks/useGlowEffect'; // Import the hook
 
+// Simple throttle function (can be moved to a utils file)
+function throttle(func, delay) {
+  let timeoutId = null;
+  let lastExecTime = 0;
+  return function(...args) {
+    const context = this;
+    const currentTime = Date.now();
+    const execute = () => {
+      func.apply(context, args);
+      lastExecTime = currentTime;
+      timeoutId = null;
+    };
+    if (!timeoutId) {
+      if (currentTime - lastExecTime >= delay) {
+        execute();
+      } else {
+        timeoutId = setTimeout(execute, delay - (currentTime - lastExecTime));
+      }
+    }
+  };
+}
+
 const Experience = () => {
   // Use the new Experience key from Content.js
   const { Experience } = content;
   const containerRef = useRef(null); // Add ref for the container
+  const sectionRef = useRef(null); // Ref for the whole section element
 
   // Use the custom hook
   useGlowEffect(containerRef, `.${styles.timelineCard}`);
+
+  // --- Scroll Progress Effect Hook ---
+  useEffect(() => {
+    const timelineContainer = containerRef.current;
+    const experienceSection = sectionRef.current;
+    // Query items here ONCE
+    const timelineItems = timelineContainer?.querySelectorAll(`.${styles.timelineItem}`);
+    const logoHolders = timelineContainer?.querySelectorAll(`.${styles.timelineLogoHolder}`);
+
+    if (!timelineContainer || !experienceSection || !timelineItems || !logoHolders || timelineItems.length !== logoHolders.length) {
+        console.warn("Experience scroll effect: Missing elements or mismatch.");
+        return; // Exit if elements aren't ready or counts mismatch
+    }
+
+    const handleScroll = () => {
+      const { top, height: sectionHeight } = experienceSection.getBoundingClientRect();
+      const viewportHeight = window.innerHeight;
+      const containerHeight = timelineContainer.clientHeight;
+
+      if (containerHeight <= 0) return;
+
+      const scrollAmount = viewportHeight - top;
+      const totalScrollableHeight = sectionHeight + viewportHeight;
+      let progress = scrollAmount / totalScrollableHeight;
+      progress = Math.max(0, Math.min(1, progress)); 
+
+      // Update the main progress line variable
+      timelineContainer.style.setProperty('--scroll-progress', progress);
+
+      // Reinstate check for each logo holder
+      timelineItems.forEach((item, index) => {
+        const logoHolder = logoHolders[index];
+        if (!logoHolder) return;
+
+        const itemCenterOffset = item.offsetTop + item.clientHeight / 2;
+        const itemCenterPercent = itemCenterOffset / containerHeight;
+
+        // Add/remove 'isActive' class
+        if (progress >= itemCenterPercent) {
+          logoHolder.classList.add(styles.isActive);
+        } else {
+          logoHolder.classList.remove(styles.isActive);
+        }
+      });
+    };
+
+    const throttledScrollHandler = throttle(handleScroll, 50);
+    window.addEventListener('scroll', throttledScrollHandler);
+    handleScroll();
+
+    return () => {
+      window.removeEventListener('scroll', throttledScrollHandler);
+      // Clean up classes on unmount
+      logoHolders.forEach(holder => holder.classList.remove(styles.isActive));
+      if (timelineContainer) timelineContainer.style.removeProperty('--scroll-progress');
+    };
+
+  }, []);
 
   // Handle cases where data might be missing
   if (!Experience || !Experience.experience_content) {
@@ -20,6 +101,7 @@ const Experience = () => {
 
   return (
     <section 
+      ref={sectionRef} 
       id="experience" 
       className={`${styles.experienceSection} section-padding`}
       data-aos="fade-up"
@@ -42,6 +124,14 @@ const Experience = () => {
 
         {/* Attach ref to the timeline container */}
         <div ref={containerRef} className={styles.timelineContainer}>
+
+          {/* Container for the visual elements (lines, drop) */}
+          <div className={styles.timelineVisuals}>
+            {/* Drop indicator element moved inside visuals container */}
+            <div className={styles.timelineDropIndicator}></div>
+          </div>
+
+          {/* Map the experience items - these are siblings to timelineVisuals */}
           {Experience.experience_content.map((exp, i) => (
             <div 
               key={i} 
@@ -95,6 +185,9 @@ const Experience = () => {
               </div>
            </div>
           ))}
+          
+          {/* Drop indicator moved inside .timelineVisuals */}
+          {/* <div className={styles.timelineDropIndicator}></div> */}
         </div>
       </div>
     </section>
