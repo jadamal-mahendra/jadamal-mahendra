@@ -227,95 +227,23 @@
 
 /* Keep existing .postCard styles but configure for border-image */
 .postCard {
-  /* Keep original card styles */
-  border-radius: 8px; /* Keep the radius */
-  position: relative; /* Needed for pseudo-element positioning */
-  z-index: 1; /* Keep if needed */
-  overflow: hidden; /* Clip the pseudo-element */
-
-  /* Layer the subtle tint gradient UNDER the main background color */
-  background-image: radial-gradient(
-    /* Larger radius for a softer background effect */
-    700px circle at var(--mouse-x) var(--mouse-y),
-    /* Very subtle color, fades more gradually */
-    rgba(52, 152, 219, 0.05) 0%, /* Reduced opacity */
-    transparent 50% /* Fade out over a larger area */
-  );
-  background-repeat: no-repeat; /* Important for layered backgrounds */
-  background-color: var(--color-white); /* Keep the solid background color ON TOP */
-
+  /* Keep unique styles */
+  background-color: var(--color-white);
+  border-radius: 8px;
   text-decoration: none;
   color: inherit;
   display: flex;
   flex-direction: column;
   width: 100%;
 
-  /* Remove border-image properties */
-  /* border-image-source: radial-gradient(...); */
-  /* border-image-slice: 1; */
-
-  /* Remove the transparent border - the ::before element handles the visual border/glow */
-  /* border: 2px solid transparent; */
-
-  /* Keep optional hover transform */
+  /* Keep optional hover transform if desired */
   transition: transform 0.2s ease-out;
 }
 
-/* Add keyframes for the flowing size effect */
-@keyframes flowSize {
-  0%, 100% {
-    --gradient-size: 280px; /* Smaller size */
-  }
-  50% {
-    --gradient-size: 330px; /* Larger size */
-  }
-}
-
-/* Add the pseudo-element for the glow */
-.postCard::before {
-  content: "";
-  position: absolute;
-  inset: 0; /* Covers the entire card area */
-  border-radius: inherit; /* Inherit the parent's border-radius */
-  padding: 2px; /* Match the border width */
-
-  /* Define variable for gradient size */
-  --gradient-size: 300px; /* Default size */
-
-  background: radial-gradient(
-    /* Use the animated variable for the size */
-    var(--gradient-size) circle at var(--mouse-x) var(--mouse-y),
-    rgba(52, 152, 219, 0.6) 0%,
-    rgba(52, 152, 219, 0.15) 40%,
-    transparent 65%
-  );
-  /* background: red; */
-  -webkit-mask: /* Combined mask for rounded corners and padding */
-    linear-gradient(#fff 0 0) content-box,
-    linear-gradient(#fff 0 0);
-  mask: /* Combined mask for rounded corners and padding */
-    linear-gradient(#fff 0 0) content-box, /* Cuts out the middle (content area) */
-    linear-gradient(#fff 0 0); /* Keeps the shape */
-  -webkit-mask-composite: xor;
-          mask-composite: exclude;
-  z-index: -1;
-  pointer-events: none;
-
-  /* Remove opacity animation */
-  /* opacity: 1; */
-  /* animation: pulsateOpacity 2.5s infinite ease-in-out; */
-
-  /* Add the flowing size animation */
-  animation: flowSize 3s infinite ease-in-out; /* Adjust duration as needed */
-}
-
-/* Optional hover transform */
+/* Optional: Add a subtle hover effect */
 .postCard:hover {
-  transform: translateY(-3px);
+    transform: translateY(-3px);
 }
-
-/* Remove hover-specific border/glow classes */
-/* .postCard.isGlowing { ... } */
 
 /* Styles for the title link if needed */
 .postTitleLink {
@@ -445,12 +373,6 @@
   /* Keep any other specific styles needed for this instance, if any */
   /* Optional: Add transition for smoother appearance if desired */
   /* transition: border-image-source 0.1s ease-out; */
-}
-
-/* Optional: Add a subtle hover effect */
-.postCard:hover {
-    transform: translateY(-3px);
-    /* You might add other hover effects here */
 }
 
 /* Make sure card content is clickable if the card itself isn't a link */

@@ -1,8 +1,9 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useRef } from 'react';
 import { content } from '../Content';
 import { Helmet } from 'react-helmet-async';
 // import TechIcon from 'tech-stack-icons'; // Removed import
 import styles from './Services.module.css'; // Import CSS Module
+import useGlowEffect from '../hooks/useGlowEffect'; // Import the hook
 
 // Optional: Import icons if you prefer them over image paths
 // import { FaCode, FaMobileAlt, FaCube } from 'react-icons/fa'; 
@@ -11,34 +12,8 @@ const Services = () => {
   const { services } = content;
   const containerRef = useRef(null);
 
-  useEffect(() => {
-    const container = containerRef.current;
-    if (!container) return;
-
-    const cards = container.querySelectorAll(`.${styles.serviceItem}`);
-
-    const handleMouseMove = (e) => {
-      cards.forEach(card => {
-        const rect = card.getBoundingClientRect();
-        const x = e.clientX - rect.left;
-        const y = e.clientY - rect.top;
-        card.style.setProperty('--mouse-x', `${x}px`);
-        card.style.setProperty('--mouse-y', `${y}px`);
-      });
-    };
-
-    container.addEventListener('mousemove', handleMouseMove);
-    console.log("Service item mouse move listener attached.");
-
-    return () => {
-      container.removeEventListener('mousemove', handleMouseMove);
-      console.log("Service item mouse move listener removed.");
-      cards.forEach(card => {
-        card.style.removeProperty('--mouse-x');
-        card.style.removeProperty('--mouse-y');
-      });
-    };
-  }, []);
+  // Use the custom hook
+  useGlowEffect(containerRef, `.${styles.serviceItem}`);
 
   return (
     <section id="services" className={`${styles.servicesSection} section-padding`}>
@@ -64,7 +39,7 @@ const Services = () => {
         {/* Services Grid */}
         <div ref={containerRef} className={styles.servicesGrid} data-aos="fade-up">
           {services.service_content.map((service, i) => (
-            <div key={i} className={styles.serviceItem} data-aos="fade-up" data-aos-delay={i * 100}>
+            <div key={i} className={`${styles.serviceItem} glow-card`} data-aos="fade-up" data-aos-delay={i * 100}>
               {/* Use logo component from content */}
               <div className={styles.serviceIcon}>
                 {service.logo ? (

@@ -1,44 +1,17 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useRef } from 'react';
 import { content } from "../Content";
 // import { Parallax } from 'react-scroll-parallax'; // Commented out
 import styles from './Experience.module.css'; // Import CSS Module
 import { Helmet } from 'react-helmet-async'; // Import Helmet
+import useGlowEffect from '../hooks/useGlowEffect'; // Import the hook
 
 const Experience = () => {
   // Use the new Experience key from Content.js
   const { Experience } = content;
   const containerRef = useRef(null); // Add ref for the container
 
-  // Add useEffect for mouse tracking
-  useEffect(() => {
-    const container = containerRef.current;
-    if (!container) return;
-
-    // Target the cards within the container
-    const cards = container.querySelectorAll(`.${styles.timelineCard}`);
-
-    const handleMouseMove = (e) => {
-      cards.forEach(card => {
-        const rect = card.getBoundingClientRect();
-        const x = e.clientX - rect.left;
-        const y = e.clientY - rect.top;
-        card.style.setProperty('--mouse-x', `${x}px`);
-        card.style.setProperty('--mouse-y', `${y}px`);
-      });
-    };
-
-    container.addEventListener('mousemove', handleMouseMove);
-    console.log("Experience card mouse move listener attached.");
-
-    return () => {
-      container.removeEventListener('mousemove', handleMouseMove);
-      console.log("Experience card mouse move listener removed.");
-      cards.forEach(card => {
-        card.style.removeProperty('--mouse-x');
-        card.style.removeProperty('--mouse-y');
-      });
-    };
-  }, []); // Empty dependency array assuming items don't change dynamically
+  // Use the custom hook
+  useGlowEffect(containerRef, `.${styles.timelineCard}`);
 
   // Handle cases where data might be missing
   if (!Experience || !Experience.experience_content) {
@@ -90,7 +63,7 @@ const Experience = () => {
               </div>
               
               {/* Card */}
-              <div className={styles.timelineCard}>
+              <div className={`${styles.timelineCard} glow-card`}>
                  {/* Title and Location */}
                  <div className={styles.titleLocation}>
                    <h5>{exp.title}</h5>

@@ -212,3 +212,67 @@ textarea::placeholder {
 @tailwind components;
 @tailwind utilities;
 */
+
+/* Add common styles for the glow card effect */
+
+/* Keyframes for the flowing size animation */
+@keyframes flowSize {
+  0%, 100% {
+    --gradient-size: 280px;
+  }
+  50% {
+    --gradient-size: 330px;
+  }
+}
+
+.glow-card {
+  /* Base requirements for the effect */
+  position: relative;
+  z-index: 1; /* Ensure content is above ::before */
+  overflow: hidden;
+
+  /* Subtle background tint (uses --mouse-x/y set by JS) */
+  /* Important: Apply specific background-color in component CSS */
+  background-image: radial-gradient(
+    700px circle at var(--mouse-x, -999px) var(--mouse-y, -999px), /* Default off-screen */
+    rgba(52, 152, 219, 0.05) 0%,
+    transparent 50%
+  );
+  background-repeat: no-repeat;
+  /* border-radius should be set by the specific card component */
+}
+
+.glow-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit; /* Inherit from the specific .glow-card element */
+  padding: 2px; /* Border width */
+
+  /* Define variable for gradient size */
+  --gradient-size: 300px; /* Default size */
+
+  /* Border glow gradient (uses --mouse-x/y set by JS) */
+  background: radial-gradient(
+    var(--gradient-size) circle at var(--mouse-x, -999px) var(--mouse-y, -999px), /* Default off-screen */
+    rgba(52, 152, 219, 0.6) 0%,
+    rgba(52, 152, 219, 0.15) 40%,
+    transparent 65%
+  );
+
+  /* Mask to create the border effect */
+  -webkit-mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
+  mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+          mask-composite: exclude;
+
+  z-index: -1; /* Behind the content */
+  pointer-events: none;
+
+  /* Apply the flowing size animation */
+  animation: flowSize 3s infinite ease-in-out;
+}

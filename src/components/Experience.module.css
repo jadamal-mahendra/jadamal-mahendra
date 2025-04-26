@@ -129,54 +129,7 @@
   background-color: var(--color-white);
   padding: 1.5rem;
   border-radius: 0.5rem;
-  /* box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05); */ /* Keep or remove original shadow */
   margin-left: 45px;
-
-  /* Add required styles for glow effect */
-  z-index: 1; /* Ensure content is above pseudo-element */
-  overflow: hidden; /* Clip the pseudo-element */
-
-  /* Layer the subtle tint gradient */
-  background-image: radial-gradient(
-    700px circle at var(--mouse-x) var(--mouse-y),
-    rgba(52, 152, 219, 0.05) 0%,
-    transparent 50%
-  );
-  background-repeat: no-repeat;
-  /* Ensure background-color is still applied */
-  background-color: var(--color-white);
-}
-
-/* Add the pseudo-element for the glow */
-.timelineCard::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  border-radius: inherit;
-  padding: 2px; /* Border width */
-
-  /* Define variable for gradient size */
-  --gradient-size: 300px; /* Default size */
-
-  background: radial-gradient(
-    var(--gradient-size) circle at var(--mouse-x) var(--mouse-y),
-    rgba(52, 152, 219, 0.6) 0%,
-    rgba(52, 152, 219, 0.15) 40%,
-    transparent 65%
-  );
-  -webkit-mask:
-    linear-gradient(#fff 0 0) content-box,
-    linear-gradient(#fff 0 0);
-  mask:
-    linear-gradient(#fff 0 0) content-box,
-    linear-gradient(#fff 0 0);
-  -webkit-mask-composite: xor;
-          mask-composite: exclude;
-  z-index: -1;
-  pointer-events: none;
-
-  /* Add the flowing size animation */
-  animation: flowSize 3s infinite ease-in-out;
 }
 
 @media (min-width: 768px) { /* md */
@@ -303,14 +256,4 @@
   color: var(--color-accent);
   font-weight: bold;
   font-size: 1em;
-}
-
-/* Add keyframes for the flowing size effect */
-@keyframes flowSize {
-  0%, 100% {
-    --gradient-size: 280px; /* Smaller size */
-  }
-  50% {
-    --gradient-size: 330px; /* Larger size */
-  }
 } 
