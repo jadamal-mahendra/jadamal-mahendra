@@ -5,6 +5,7 @@ import react from '@vitejs/plugin-react'
 export default defineConfig(({ mode }) => {
   // Load env file based on `mode` in the current working directory.
   const env = loadEnv(mode, process.cwd())
+  const API_PORT = process.env.API_PORT || 3002; // Get API port for proxy
 
   return {
     plugins: [
@@ -14,6 +15,17 @@ export default defineConfig(({ mode }) => {
       port: env.VITE_PORT || 3001, // use env variable or default to 3001
       open: true, // automatically open the browser
       strictPort: false, // if port is in use, find another
+      // Add proxy configuration
+      proxy: {
+        // string shorthand: /api -> http://localhost:3002/api
+        '/api': {
+          target: `http://localhost:${API_PORT}`,
+          changeOrigin: true, // needed for virtual hosted sites
+          secure: false,      // if using http
+          // Optional: rewrite path if backend doesn't expect /api prefix
+          // rewrite: (path) => path.replace(/^\/api/, '') 
+        }
+      }
     },
 
     // build:{

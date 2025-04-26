@@ -1,6 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import styles from './ChatWidget.module.css'; // We'll create this CSS file next
 import { LuBot, LuX, LuSendHorizonal, LuLoader2 } from "react-icons/lu"; // Icons
+import ReactMarkdown from 'react-markdown'; // Import ReactMarkdown
 
 const ChatWidget = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -96,9 +97,17 @@ const ChatWidget = () => {
 
       {/* Chat Window */}
       <div className={`${styles.chatWindow} ${isOpen ? styles.chatWindowOpen : ''}`}>
-        {/* Header */}
+        {/* Header - Updated */}
         <div className={styles.chatHeader}>
-          <h3>Chat with AI Assistant</h3>
+          {/* Wrapper for image and name */}
+          <div className={styles.headerInfo}>
+            <img 
+              src="/2.png" // Assuming this is the correct path to your image
+              alt="Jadamal Mahendra" 
+              className={styles.headerImage} 
+            />
+            <h3>Jadamal Mahendra</h3>
+          </div>
           <button onClick={toggleChat} className={styles.closeButton} aria-label="Close Chat">
             <LuX size={20} />
           </button>
@@ -108,7 +117,21 @@ const ChatWidget = () => {
         <div className={styles.messagesArea}>
           {messages.map((msg, index) => (
             <div key={index} className={`${styles.message} ${styles[msg.role]}`}>
-              <span className={styles.messageContent}>{msg.content}</span>
+              {/* Render assistant messages with Markdown, user messages as plain text */}
+              {msg.role === 'assistant' ? (
+                <div className={styles.messageContent}> 
+                  <ReactMarkdown
+                    components={{
+                      // Ensure links open in a new tab and are secure
+                      a: ({node, ...props}) => <a {...props} target="_blank" rel="noopener noreferrer" />
+                    }}
+                  >
+                    {msg.content}
+                  </ReactMarkdown>
+                </div>
+              ) : (
+                <span className={styles.messageContent}>{msg.content}</span>
+              )}
             </div>
           ))}
           {/* Optional: Loading indicator */}
