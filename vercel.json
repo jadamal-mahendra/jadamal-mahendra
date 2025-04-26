@@ -1,0 +1,6 @@
+{
+    "crons": [{
+      "path": "/scripts/generate-blog.mjs",
+      "schedule": "0 10 * * *"
+    }]
+  }
