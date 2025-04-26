@@ -37,6 +37,8 @@ const App = () => {
           <meta property="og:title" content="Jadamal Mahendra - Web Developer Portfolio" />
           <meta property="og:description" content="Results-driven Lead Software Developer with 4+ years' leadership in building scalable web & mobile applications. Explore Jadamal Mahendra's portfolio & projects." />
           <meta property="og:type" content="website" />
+          <meta property="og:url" content="https://jadamalmahendra.inowix.io/" />
+          <meta property="og:image" content="/assets/illustrations/hero-1.svg" />
         </Helmet>
         <div className="overflow-hidden">
           <Navbar />

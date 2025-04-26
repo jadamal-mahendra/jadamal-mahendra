@@ -3,6 +3,7 @@ import { content } from "../Content";
 import emailjs from "@emailjs/browser";
 import toast, { Toaster } from "react-hot-toast";
 import styles from './Contact.module.css'; // Import CSS Module
+import { Helmet } from 'react-helmet-async'; // Import Helmet
 // Import Lucide icons if needed for social links (already imported in Content.js)
 
 const Contact = () => {
@@ -36,6 +37,10 @@ const Contact = () => {
 
   return (
     <section className={`${styles.contactSection} section-padding`} id="contact">
+      <Helmet>
+        <title>Contact Jadamal Mahendra</title>
+        <meta name="description" content="Get in touch with Jadamal Mahendra for web development projects or collaborations. Contact via email, phone, or LinkedIn." />
+      </Helmet>
       <Toaster />
       <div className="container">
         <h2 className="section-title" data-aos="fade-down">

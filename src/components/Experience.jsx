@@ -2,6 +2,7 @@ import React from 'react';
 import { content } from "../Content";
 // import { Parallax } from 'react-scroll-parallax'; // Commented out
 import styles from './Experience.module.css'; // Import CSS Module
+import { Helmet } from 'react-helmet-async'; // Import Helmet
 
 const Experience = () => {
   // Use the new Experience key from Content.js
@@ -18,6 +19,10 @@ const Experience = () => {
       className={`${styles.experienceSection} section-padding`}
       data-aos="fade-up"
     >
+      <Helmet>
+        <title>Work Experience - Jadamal Mahendra</title>
+        <meta name="description" content="Explore Jadamal Mahendra's professional journey as a Lead Software Developer, including roles at Elliot Systems, ViralNation, and Oodles Technologies." />
+      </Helmet>
       {/* <Parallax speed={-10}>
         <div className="experience-bg-gradient"></div>
       </Parallax> */}

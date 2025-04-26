@@ -3,6 +3,7 @@ import { content } from "../Content";
 // Removed Marquee import
 // import TechIcon from 'tech-stack-icons'; // Removed import
 import styles from './Hero.module.css'; // Import CSS Module
+import { Helmet } from 'react-helmet-async'; // Import Helmet
 
 const Hero = () => {
   const { hero, skills } = content;
@@ -14,6 +15,11 @@ const Hero = () => {
 
   return (
     <section id="home" className={`${styles.heroSection} section-padding`}>
+      <Helmet>
+        {/* Using main title/desc for home/hero section */}
+        <title>Jadamal Mahendra - Web Developer Portfolio</title>
+        <meta name="description" content="Results-driven Lead Software Developer with 4+ years' leadership in building scalable web & mobile applications. Explore Jadamal Mahendra's portfolio & projects." />
+      </Helmet>
       <div className={`${styles.heroGrid} container`}>
         {/* Text Content Column */}
         <div className={styles.heroContent}>

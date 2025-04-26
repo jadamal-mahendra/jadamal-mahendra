@@ -3,6 +3,7 @@ import { content } from "../Content";
 // Removed Swiper imports
 import { LuAward } from "react-icons/lu"; // Example icon
 import styles from './Awards.module.css'; // Import CSS Module
+import { Helmet } from 'react-helmet-async'; // Import Helmet
 
 const Awards = () => {
   // Ensure this matches the key in Content.js
@@ -19,6 +20,10 @@ const Awards = () => {
       className={`${styles.awardsSection} section-padding`}
       data-aos="fade-up" // Add AOS attribute
     >
+      <Helmet>
+        <title>Awards & Recognition - Jadamal Mahendra</title>
+        <meta name="description" content="View the awards and recognitions received by Jadamal Mahendra, including the Rising Star Award from Oodles Technologies." />
+      </Helmet>
       <div className="container mx-auto">
         {/* Section Title & Subtitle */}
         <h2 className="section-title" data-aos="fade-up">
