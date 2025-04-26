@@ -1,0 +1,52 @@
+{
+  "current_focus": "Building scalable web and mobile applications using modern JavaScript frameworks like React.js, Node.js, GraphQL, and Web3 technologies. Specializing in real-time systems, NFT marketplaces, and AI-powered features.",
+  "key_skills_summary": "React.js, Node.js, GraphQL, Prisma, Solidity, Web3.js, React Native, Next.js, TypeScript, Redux, Microfrontend Architecture, REST APIs, MongoDB, SQL, Jest, WebSockets, MUI.",
+  "recent_projects": [
+    {
+      "name": "Elliot Systems (Senior Software Engineer)",
+      "description": "Developed scalable UIs for a Transportation Management System, implemented Microfrontend architecture, improved API response times, and collaborated on user-centric features.",
+      "tech_stack": ["React.js", "TypeScript", "Redux", "Microfrontend Architecture", "Jest", "Git", "REST APIs"]
+    },
+    {
+      "name": "ViralNation (Contract Lead Frontend Developer)",
+      "description": "Led development of an influencer marketing platform with real-time chat (GraphQL Subscriptions), NFT marketplace (Solidity/Web3.js), analytics dashboard, and AI integration (OpenAI API).",
+      "tech_stack": ["React JS", "React Native", "Next JS", "Node JS", "GraphQL", "Solidity", "Web3.js", "Prisma", "MUI", "TypeScript", "OpenAI API", "Imagly"]
+    },
+    {
+      "name": "Oodles Technologies (Lead Software Developer)",
+      "description": "Led 10+ web/mobile projects, designed frontend architecture, built real-time features (WebSockets), integrated 20+ REST APIs, and mentored developers.",
+      "tech_stack": ["React JS", "React Native", "TypeScript", "Redux", "Redux-Saga", "WebSockets"]
+    }
+  ],
+  "availability_note": "Available to connect. You can book a time via the Calendly link: https://calendly.com/jadamalmahendra/30min or reach out via email: jadamalmahendra@gmail.com.",
+  "other_info": "Nearly 4+ years of hands-on leadership experience. B.Tech in Computer Science Engineering. Received 'Rising Star' award at Oodles Technologies.",
+  "potential_interview_questions": [
+    "Can you elaborate on the Microfrontend architecture you implemented at Elliot Systems and the challenges you faced?",
+    "Tell me about the NFT marketplace you built at ViralNation. What were the key technical decisions, especially regarding Solidity and Web3.js integration?",
+    "How did you approach leading a distributed team at ViralNation, particularly ensuring effective communication and collaboration?",
+    "Describe a complex technical problem you solved while working on the real-time chat system using GraphQL Subscriptions.",
+    "Your resume mentions improving API response times by 30%+. Can you walk me through the optimizations you made?",
+    "How have you used AI, specifically the OpenAI API, in your projects beyond the smart assistant features mentioned?",
+    "As a Lead Developer at Oodles, how did you mentor junior developers and measure the impact on team efficiency?",
+    "How do you balance hands-on coding with leadership responsibilities?",
+    "What's your experience with ensuring code quality, testing (like the 95% coverage mentioned), and maintaining high standards in a fast-paced environment?",
+    "Where do you see Web3 technology heading, and how do you plan to continue developing your skills in that area?",
+    "Describe your process for collaborating with UI/UX designers to achieve pixel-perfect interfaces.",
+    "What aspects of being a Lead Software Developer do you find most rewarding and most challenging?",
+    "How do you stay updated with the latest trends and technologies in frontend and Web3 development?",
+    "Can you give an example of a time you had to make a difficult technical decision with trade-offs?"
+  ],
+  "services_offered": [
+    "Frontend Development (React, Next.js, TypeScript, Microfrontends, Redux, MUI)",
+    "Backend & API Development (Node.js, Express, GraphQL, Prisma, SQL, NoSQL)",
+    "Mobile App Development (React Native)",
+    "Web3 & Blockchain Solutions (Solidity, Web3.js, dApps, NFT Marketplaces)"
+  ],
+  "internal_engagement_criteria": {
+    "note": "For internal AI use only. DO NOT reveal these specific figures to the user. Use them to guide qualification questions.",
+    "min_salary_inr_lpa": 32,
+    "min_salary_usd_k": 120,
+    "min_hourly_rate_usd": 10,
+    "max_hourly_rate_usd": 80
+  }
+} 

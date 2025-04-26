@@ -1,16 +1,26 @@
 /* src/components/ChatWidget.module.css */
 
-/* Position the container fixed in the bottom right */
+/* Position the container - Base styles for larger screens */
 .chatWidgetContainer {
   position: fixed;
   bottom: 1.5rem; 
   right: 1.5rem;
-  z-index: 1000; /* Ensure it's above most content */
+  z-index: 1000; 
+  /* Default size for larger screens */
+  width: 400px; /* Set specific width */
+  height: 70vh; /* Use viewport height */
+  /* Add max values to prevent excessive size */
+  max-width: 450px; 
+  max-height: 650px; 
+  /* display: flex; /* Keep flex if needed for internal layout */
 }
 
 /* Floating Action Button (FAB) */
 .fab {
-  background-color: var(--color-accent); 
+  /* background-color: var(--color-accent);  */
+  position: absolute;
+  bottom: 1.5rem;
+  right: 1.5rem;
   color: var(--color-white);
   border: 1px solid rgba(0, 0, 0, 0.05); /* Subtle border */
   border-radius: 50%;
@@ -37,40 +47,47 @@
   pointer-events: none;
 }
 
+.fabImage {
+  width: 100%;  /* Adjust size as needed */
+  height: 100%; /* Adjust size as needed */
+  border-radius: 50%; /* Make it circular */
+  object-fit: cover; /* Ensure image covers the area well */
+  background-color: #fff; /* Optional: fallback bg */
+}
 /* Chat Window */
 .chatWindow {
   background-color: var(--color-white);
-  border-radius: 8px;
-  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
-  width: 350px; /* Adjust width as needed */
-  height: 450px; /* Adjust height as needed */
+  border-radius: 12px; /* Slightly softer radius */
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15); /* Slightly more pronounced shadow */
+  width: 100%; /* Fill container width */
+  height: 100%; /* Fill container height */
   display: flex;
   flex-direction: column;
   overflow: hidden;
-  position: absolute; /* Position relative to container */
+  position: absolute; /* Keep absolute to container */
   bottom: 0;
   right: 0;
-  transform: translateY(20px) scale(0.95); /* Start slightly down and smaller */
+  transform: translateY(20px) scale(0.95); 
   opacity: 0;
   transition: transform 0.3s ease-out, opacity 0.3s ease-out;
-  pointer-events: none; /* Initially not interactive */
+  pointer-events: none; 
 }
 
 .chatWindowOpen {
   transform: translateY(0) scale(1);
   opacity: 1;
-  pointer-events: auto; /* Make interactive when open */
+  pointer-events: auto; 
 }
 
 /* Chat Header */
 .chatHeader {
   background-color: var(--color-dark-primary);
   color: var(--color-white);
-  padding: 0.6rem 1rem; /* Adjust padding slightly */
+  padding: 0.8rem 1.1rem; /* Slightly more padding */
   display: flex;
   justify-content: space-between;
   align-items: center;
-  flex-shrink: 0; /* Prevent header from shrinking */
+  flex-shrink: 0; 
 }
 
 /* NEW: Wrapper for image and name */
@@ -91,8 +108,8 @@
 
 .chatHeader h3 {
   margin: 0;
-  font-size: 1rem;
-  font-weight: 600; /* Slightly bolder */
+  font-size: 1.05rem; /* Slightly larger header text */
+  font-weight: 600; 
 }
 
 .closeButton {
@@ -117,42 +134,168 @@
 .messagesArea {
   flex-grow: 1;
   overflow-y: auto;
-  padding: 1rem 1.25rem; /* Slightly more horizontal padding */
+  padding: 1rem 1.1rem; /* Keep top/left/right padding */
+  padding-bottom: 1rem; /* ADDED: Explicit padding at the bottom of the scrollable area */
   background-color: var(--color-light-bg);
   display: flex;
   flex-direction: column;
-  gap: 0.75rem;
+  gap: 0.9rem; 
+}
+
+/* Add subtle scrollbar styling (optional, browser support varies) */
+.messagesArea::-webkit-scrollbar {
+  width: 6px;
+}
+.messagesArea::-webkit-scrollbar-track {
+  background: transparent;
+}
+.messagesArea::-webkit-scrollbar-thumb {
+  background-color: rgba(0, 0, 0, 0.2);
+  border-radius: 3px;
 }
 
 .message {
-  max-width: 80%;
-  padding: 0.6rem 0.9rem; /* Slightly more padding */
-  border-radius: 14px; /* Slightly rounder */
-  line-height: 1.4;
+  max-width: 85%; 
+  padding: 0.8rem 1.1rem; /* Increased padding */
+  border-radius: 20px; /* Increased softness */
+  line-height: 1.5; /* Slightly more line spacing */
   word-wrap: break-word;
-  border: 1px solid rgba(0, 0, 0, 0.03); /* Very subtle border */
+  border: none; 
+  box-shadow: 0 1px 3px rgba(0,0,0,0.06); /* Enhanced subtle shadow */
 }
 
 .messageContent {
-  display: block; /* Prevents inline spacing issues */
+  display: block; 
 }
 
 /* User message styling */
 .user {
   background-color: var(--color-accent);
   color: var(--color-white);
-  border-bottom-right-radius: 2px; /* Tail effect */
+  border-bottom-right-radius: 5px; /* Keep subtle tail */
   align-self: flex-end; 
-  margin-left: auto; /* Push to right */
+  margin-left: auto; 
 }
 
 /* Assistant message styling */
 .assistant {
-  background-color: #e5e7eb; /* Tailwind gray-200 */
+  background-color: #ffffff; /* Use pure white for contrast */
   color: var(--color-dark-primary);
-  border-bottom-left-radius: 2px; /* Tail effect */
+  border-bottom-left-radius: 5px; /* Keep subtle tail */
   align-self: flex-start;
-  margin-right: auto; /* Push to left */
+  margin-right: auto; 
+  border: 1px solid #e5e7eb; /* Add a light border to assistant messages */
+}
+
+/* --- NEW: Styling for Lists within Assistant Messages --- */
+.assistant .messageContent ul {
+  list-style: none; /* Remove default bullets */
+  padding: 0;
+  margin: 0.5rem 0 0 0; /* Add some margin top, remove others */
+  display: flex; /* Arrange items inline */
+  flex-wrap: wrap; /* Allow wrapping */
+  gap: 0.5rem; /* Space between items */
+}
+
+.assistant .messageContent li {
+  background-color: rgba(14, 165, 233, 0.15); /* Light accent background */
+  color: var(--color-accent-dark); /* Darker accent text */
+  padding: 0.25rem 0.6rem; /* Padding inside tag */
+  border-radius: 12px; /* Pill shape */
+  font-size: 0.85rem; /* Slightly smaller font */
+  font-weight: 500;
+  border: 1px solid rgba(14, 165, 233, 0.2);
+}
+/* --- End List Styling --- */
+
+/* NEW: Container for Cards */
+.cardsContainer {
+  margin-top: 0.85rem; /* Match gap between messages */
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem; /* Space between cards if multiple types show */
+}
+
+/* Added margin specifically for loading indicator */
+.loadingMessage {
+  margin-left: 0; 
+  margin-right: auto; 
+  padding: 0.5rem; /* Adjust padding */
+  background-color: transparent; /* Match background */
+  box-shadow: none;
+}
+
+/* Base Suggestions Area */
+.suggestionsContainer {
+  padding: 0.5rem 1.1rem; /* Match messagesArea horizontal padding */
+  display: flex;
+  flex-wrap: wrap; 
+  gap: 0.6rem; /* Slightly larger gap */
+  justify-content: flex-start; 
+}
+
+/* Initial static suggestions (inside messagesArea) */
+.suggestionsContainer:not(.fixedSuggestions) {
+   margin-bottom: 0.5rem; /* Only add bottom margin for initial ones */
+}
+
+/* Optional: Styling for dynamically generated suggestions container */
+.dynamicSuggestionsContainer {
+  /* Removed margin-top and padding-left from here as it's handled by fixedSuggestions */
+}
+
+/* NEW: Styles for Suggestions positioned above input */
+.fixedSuggestions {
+  padding-top: 0.75rem; 
+  padding-bottom: 0.75rem; 
+  padding-left: 1.1rem; /* Match messagesArea horizontal padding */
+  padding-right: 1.1rem; /* Match messagesArea horizontal padding */
+  border-top: 1px solid var(--color-border-light); 
+  background-color: #f9fafb; 
+  flex-shrink: 0; 
+  /* Ensure suggestions flex-wrap correctly within the container */
+  display: flex; 
+  flex-wrap: wrap;
+  gap: 0.6rem;
+}
+
+/* Remove redundant flex/wrap/gap from the base .suggestionsContainer */
+/* (This style might not be strictly necessary if only .fixedSuggestions is used dynamically) */
+.suggestionsContainer:not(.fixedSuggestions) {
+   /* Base styles like padding/gap are now handled by .fixedSuggestions */
+   /* Keep margin-bottom if still needed for initial static prompts */
+   margin-bottom: 0.5rem; 
+}
+
+/* We apply flex/wrap/gap directly to .fixedSuggestions now, */
+/* so remove them from the base .suggestionsContainer if they existed there */
+.suggestionsContainer { 
+  /* Remove display: flex; flex-wrap: wrap; gap: ...; if they were here */
+  /* Keep padding: 0.5rem 1.1rem; if needed as a base? No, handled by fixed. */
+}
+
+.suggestionButton {
+  background-color: var(--color-white);
+  color: var(--color-accent-dark);
+  border: 1px solid var(--color-accent-light); /* Use accent light for border */
+  padding: 0.4rem 0.9rem; /* Adjusted padding */
+  border-radius: 16px; /* Pill shape */
+  font-size: 0.875rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease, transform 0.1s ease;
+}
+
+.suggestionButton:hover:not(:disabled) {
+  background-color: var(--color-accent-light); /* Use accent light */
+  border-color: var(--color-accent); /* Darker border on hover */
+  color: var(--color-accent);
+  transform: translateY(-1px); /* Subtle lift */
+}
+
+.suggestionButton:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
 }
 
 /* Loading indicator */
@@ -173,24 +316,28 @@
 /* Input Area */
 .inputArea {
   display: flex;
-  padding: 0.75rem;
+  padding: 0.75rem 1.1rem; /* Adjusted padding */
   border-top: 1px solid var(--color-border-light);
   background-color: var(--color-white);
+  flex-shrink: 0; 
 }
 
 .inputField {
   flex-grow: 1;
   border: 1px solid var(--color-border-light);
-  border-radius: 15px;
-  padding: 0.5rem 0.75rem;
-  margin-right: 0.5rem;
-  font-size: 0.9rem;
+  border-radius: 18px; /* Match message radius */
+  padding: 0.6rem 1rem; /* Adjusted padding */
+  font-size: 0.95rem;
+  line-height: 1.4;
+  margin-right: 0.75rem;
+  background-color: #f9fafb; /* Slight off-white input bg */
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
 }
 
 .inputField:focus {
   outline: none;
   border-color: var(--color-accent);
-  box-shadow: 0 0 0 2px rgba(14, 165, 233, 0.2); /* Keep this */
+  box-shadow: 0 0 0 2px var(--color-accent-light); /* Focus ring */
 }
 
 /* Input Field: Style when disabled */
@@ -231,4 +378,119 @@
   cursor: not-allowed;
   box-shadow: none; /* Remove shadow when disabled */
   transform: scale(1); /* No scale effect when disabled */
+}
+
+/* Link styling within messages */
+.messageContent a {
+  color: var(--color-accent); 
+  text-decoration: underline;
+}
+
+.messageContent a:hover {
+  text-decoration: none;
+}
+
+/* NEW: Calendly Button Style */
+.calendlyButton {
+  display: inline-flex; /* Align icon and text */
+  align-items: center;
+  background-color: var(--color-accent); 
+  color: #ffffff !important; /* CHANGED: Use white text for contrast */
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  text-decoration: none !important; /* Remove underline from link */
+  font-weight: 600;
+  margin-top: 0.5rem; /* Add some space above the button */
+  transition: background-color 0.2s ease, color 0.2s ease; /* Added color transition */
+}
+
+.calendlyButton:hover {
+  background-color: #00b3a4; /* Slightly darker shade on hover */
+  text-decoration: none; /* Ensure no underline on hover */
+  color: var(--color-white); /* CHANGED: Keep text white on hover */
+}
+
+/* Skeleton Loader Styles */
+.skeletonContainer {
+  width: 100%; /* Ensure container takes full width of bubble */
+}
+
+@keyframes skeletonLoading {
+  0% {
+    background-color: hsl(200, 20%, 80%);
+  }
+  100% {
+    background-color: hsl(200, 20%, 95%);
+  }
+}
+
+.skeletonLine {
+  height: 0.8em; /* Approx height of a line of text */
+  width: 100%;
+  border-radius: 4px;
+  background-color: #e0e0e0; /* Base color */
+  animation: skeletonLoading 1s linear infinite alternate; /* Pulsing effect */
+  margin-bottom: 0.6em; /* Space between lines */
+  min-width: 100px;
+}
+
+.skeletonLine:last-child {
+  margin-bottom: 0; /* No margin on the last line */
+}
+
+/* Modifiers for line widths */
+.skeletonLineShort {
+  width: 60%;
+}
+
+.skeletonLineMedium {
+  width: 80%;
+}
+
+/* --- Responsive Adjustments --- */
+
+@media (max-width: 600px) {
+  .chatWidgetContainer {
+    /* On smaller screens, make it cover more area */
+    bottom: 0;
+    right: 0;
+    width: 100%; /* Full width */
+    height: 85vh; /* Significant portion of height */
+    max-width: 100%; /* Remove desktop max width */
+    max-height: 100%; /* Remove desktop max height */
+    border-radius: 0; /* Optional: remove radius for full screen */
+  }
+
+  .chatWindow {
+     border-radius: 0; /* Match container radius */
+     /* Ensure transform origin is sensible if needed */
+     transform: translateY(100%) scale(1); /* Slide up from bottom */
+     transition: transform 0.3s ease-out; /* Opacity handled by container */
+  }
+
+  .chatWindowOpen {
+    transform: translateY(0) scale(1);
+  }
+
+  .fab {
+    /* Slightly adjust FAB position if needed */
+    bottom: 1rem;
+    right: 1rem;
+    width: 50px;
+    height: 50px;
+  }
+
+  .messagesArea {
+    padding: 0.8rem; /* Slightly reduce padding */
+  }
+
+  .inputArea {
+    padding: 0.5rem 0.8rem; /* Reduce padding */
+  }
+
+  /* Optional: Adjust header/input text size if needed */
+  /* .chatHeader h3 { font-size: 1rem; } */
+  /* .inputField { font-size: 0.9rem; } */
 } 

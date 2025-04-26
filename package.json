@@ -12,6 +12,7 @@
   },
   "dependencies": {
     "@emailjs/browser": "^3.9.1",
+    "@emailjs/nodejs": "^5.0.2",
     "aos": "^2.3.4",
     "buffer": "^6.0.3",
     "gray-matter": "^4.0.3",

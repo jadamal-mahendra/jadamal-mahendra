@@ -1,0 +1,115 @@
+/* src/components/CardStyles.module.css */
+
+/* --- Card Styling (General) --- */
+.card {
+  background-color: #ffffff;
+  border-radius: 8px;
+  padding: 1rem;
+  border: 1px solid #e5e7eb;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+  transition: box-shadow 0.2s ease;
+}
+
+.card:hover {
+  box-shadow: 0 4px 8px rgba(0,0,0,0.08);
+}
+
+/* Style for the header row in cards */
+.cardHeaderRow {
+  display: flex;
+  align-items: center; /* Vertically center icon and title */
+  gap: 0.75rem; /* Space between icon and title */
+  margin-bottom: 0.5rem; /* Space below the header row */
+}
+
+.cardIcon {
+  width: 28px; /* Adjust icon size */
+  height: 28px;
+  object-fit: contain; /* Or 'cover' depending on icon style */
+  flex-shrink: 0; /* Prevent icon from shrinking */
+}
+
+.cardTitle {
+  margin: 0;
+  font-size: 1rem;
+  font-weight: 600;
+  /* Use a variable or specific color */
+  color: var(--color-dark-primary, #333); /* Added fallback */
+}
+
+.cardPara, .cardDescription /* Use one consistent class name */ {
+  font-size: 0.875rem;
+  color: #4b5563; /* Slightly muted text color */
+  line-height: 1.5;
+  margin: 0; /* Remove default paragraph margin */
+}
+
+/* Add specific styles for different card types if needed */
+/* Example: */
+.skillCard { 
+  /* Inherits .card styles by default if className={styles.card} is used */
+  /* Or add specific overrides here if needed */
+}
+
+.experienceCard {
+  /* Inherits .card styles or add specific overrides */
+}
+
+.serviceCard {
+  /* Inherits .card styles or add specific overrides */
+}
+
+.skillCard, .experienceCard, .serviceCard {
+  background-color: #fff;
+  border-radius: 8px;
+  padding: 1rem 1.25rem;
+  margin-bottom: 0.75rem; /* Space below each card */
+  box-shadow: 0 2px 5px rgba(0,0,0,0.08);
+  border: 1px solid var(--color-border-light);
+  display: flex;
+  align-items: flex-start; /* Align icon/logo to top */
+  gap: 1rem;
+  flex-direction: column;
+}
+
+.companyLogo {
+    width: 40px;
+    height: auto; /* Maintain aspect ratio */
+    max-height: 40px;
+    object-fit: contain;
+    flex-shrink: 0;
+    margin-top: 0.2rem;
+    border-radius: 4px; /* Slight rounding */
+}
+
+.cardContent {
+  flex-grow: 1;
+}
+
+.companyName {
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: #444;
+    margin: 0 0 0.2rem 0;
+}
+
+.cardDates {
+    font-size: 0.8rem;
+    color: #777;
+    margin: 0 0 0.5rem 0;
+}
+
+/* Optional Level Indicator Styling */
+.levelIndicator {
+    height: 5px;
+    background-color: var(--color-accent-light);
+    border-radius: 3px;
+    margin-top: 0.5rem;
+    overflow: hidden; /* Ensure inner div respects border-radius */
+}
+
+.levelIndicator > div { /* If you use an inner div for the fill */
+    height: 100%;
+    background-color: var(--color-accent);
+    border-radius: 3px;
+} 

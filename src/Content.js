@@ -1,18 +1,18 @@
 // import illustrations
 import web_developer_illustration from "./assets/images/illustrations/web_developer.svg";
 
-// Import SVG Icons as React Components
-import ReactLogo from './assets/icons/reactjs.svg?react';
-import NodeLogo from './assets/icons/nodejs.svg?react';
-import GraphqlLogo from './assets/icons/graphql.svg?react';
-import MaterialUILogo from './assets/icons/materialui.svg?react';
-import TypeScriptLogo from './assets/icons/typescript.svg?react';
-import NextjsLogo from './assets/icons/nextjs.svg?react';
-import SolidityLogo from './assets/icons/solidity.svg?react';
-import MongoDbLogo from './assets/icons/mongodb.svg?react';
-import WebpackLogo from './assets/icons/webpack.svg?react';
-import GitLogo from './assets/icons/git.svg?react';
-import SwiftLogo from './assets/icons/swift.svg?react'; // Added for services
+// Import SVG Icons (Removed ?react suffix)
+import ReactLogo from './assets/icons/reactjs.svg';
+import NodeLogo from './assets/icons/nodejs.svg';
+import GraphqlLogo from './assets/icons/graphql.svg';
+import MaterialUILogo from './assets/icons/materialui.svg';
+import TypeScriptLogo from './assets/icons/typescript.svg';
+import NextjsLogo from './assets/icons/nextjs.svg';
+import SolidityLogo from './assets/icons/solidity.svg';
+import MongoDbLogo from './assets/icons/mongodb.svg';
+import WebpackLogo from './assets/icons/webpack.svg';
+import GitLogo from './assets/icons/git.svg';
+import SwiftLogo from './assets/icons/swift.svg'; // Added for services
 
 // Resume PDF path (from public directory)
 const resume_pdf = "/assets/Jadamal-Mahendra.pdf";
@@ -147,7 +147,7 @@ export const content = {
       },
         {
         name: "Git",
-        para: "Implemented Microfrontend architecture for modular and scalable UI development.",
+        para: "Proficient with Git version control for managing code history, branching, merging, and collaborating effectively in team environments.",
         logo: GitLogo,
         level: 4,
       },

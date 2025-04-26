@@ -14,6 +14,8 @@ import Home from './pages/Home';
 import BlogList from './components/BlogList'; // Assuming BlogList handles /blog and /blog/tag/:tag
 import BlogPost from './components/BlogPost';
 // import NotFound from './pages/NotFound'; // Optional: Create a 404 page
+import ChatWidget from './components/ChatWidget'; 
+import ChatErrorBoundary from './components/ChatErrorBoundary'; // Import the boundary
 
 // Import base CSS
 import "./index.css"; 

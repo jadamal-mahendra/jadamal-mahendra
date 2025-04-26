@@ -10,82 +10,60 @@ const PORT = process.env.API_PORT || 3002;
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-// Define the path to your API route handler
-const apiRoutePath = path.join(__dirname, 'api', 'chat.js');
+// Define paths to API route handlers
+const chatApiRoutePath = path.join(__dirname, 'api', 'chat.js');
+const sendLogApiRoutePath = path.join(__dirname, 'api', 'send-log.js'); // Path for new handler
 
 const server = http.createServer(async (req, res) => {
   console.log(`[Server] Received request: ${req.method} ${req.url}`);
 
-  // Only handle POST requests to /api/chat
-  if (req.method === 'POST' && req.url === '/api/chat') {
-    let body = '';
-    req.on('data', chunk => {
-      body += chunk.toString(); // convert Buffer to string
-    });
+  let body = '';
+  req.on('data', chunk => {
+    body += chunk.toString();
+  });
 
-    req.on('end', async () => {
-      try {
-        // Convert the file path to a file URL
-        const apiRouteFileURL = pathToFileURL(apiRoutePath).href;
-
-        // Dynamically import the handler function using the file URL
-        // Adding a timestamp to bypass potential caching issues during dev
-        const modulePathWithTimestamp = `${apiRouteFileURL}?t=${Date.now()}`;
-        const { default: handler } = await import(modulePathWithTimestamp);
-
-        // Prepare mock Vercel-like request and response objects
-        const mockRequest = {
-          method: req.method,
-          url: req.url,
-          headers: req.headers,
-          body: JSON.parse(body || '{}'), // Vercel parses body, so we do too
-        };
-
-        let statusCode = 200;
-        let responseBody = {};
-        const headers = { 'Content-Type': 'application/json' };
-
-        const mockResponse = {
-          status: (code) => {
-            statusCode = code;
-            return mockResponse; // Allow chaining
-          },
-          json: (data) => {
-            responseBody = data;
-            // End the actual response when .json() is called
-            res.writeHead(statusCode, headers);
-            res.end(JSON.stringify(responseBody));
-          },
-          setHeader: (key, value) => {
-            headers[key] = value;
-          },
-          end: (message) => {
-             // Handle cases where handler uses .end() directly
-            if (!res.writableEnded) {
-                 if (typeof message === 'string' && !headers['Content-Type']) {
-                     headers['Content-Type'] = 'text/plain';
-                 }
-                 res.writeHead(statusCode, headers);
-                 res.end(message);
-             }
-          },
-        };
-
-        // Call the handler
-        await handler(mockRequest, mockResponse);
-
-      } catch (error) {
-        console.error('[Server] Error processing request:', error);
-        res.writeHead(500, { 'Content-Type': 'application/json' });
-        res.end(JSON.stringify({ error: 'Internal Server Error handling API request.' }));
+  req.on('end', async () => {
+    try {
+      let handlerPath;
+      // Determine which handler to use based on URL
+      if (req.method === 'POST' && req.url === '/api/chat') {
+        handlerPath = chatApiRoutePath;
+      } else if (req.method === 'POST' && req.url === '/api/send-log') { // Route for sending log
+        handlerPath = sendLogApiRoutePath;
+      } else {
+        // Handle other routes or methods if necessary, or return 404
+        res.writeHead(404, { 'Content-Type': 'application/json' });
+        res.end(JSON.stringify({ error: 'Not Found' }));
+        return; // Stop processing if route not found
       }
-    });
 
-  } else {
-    // Handle other routes or methods if necessary, or return 404
-    res.writeHead(404, { 'Content-Type': 'application/json' });
-    res.end(JSON.stringify({ error: 'Not Found' }));
-  }
+      const handlerFileURL = pathToFileURL(handlerPath).href;
+      const modulePathWithTimestamp = `${handlerFileURL}?t=${Date.now()}`;
+      const { default: handler } = await import(modulePathWithTimestamp);
+
+      // Prepare mock request object (body parsing needed for both handlers)
+      const mockRequest = {
+        method: req.method,
+        url: req.url,
+        headers: req.headers,
+        body: JSON.parse(body || '{}'), 
+      };
+      
+      // Pass the REAL response object directly to the chosen handler
+      await handler(mockRequest, res);
+
+    } catch (error) {
+      console.error('[Server] Error processing request:', error);
+      if (!res.writableEnded) { 
+          try {
+              res.writeHead(500, { 'Content-Type': 'application/json' });
+              res.end(JSON.stringify({ error: 'Internal Server Error handling API request.' }));
+          } catch (e) {
+              console.error('[Server] Error sending 500 response:', e);
+          }
+      }
+    }
+  });
 });
 
 server.listen(PORT, () => {
