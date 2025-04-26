@@ -55,33 +55,46 @@ const log = (...args) => {
 };
 
 /**
- * Loads a single blog post (JSON data) by its slug directly from src/content/blog.
+ * Loads a single blog post (JSON data) by its slug using dynamic import.meta.glob.
  */
 export const loadBlogPost = async (slug) => {
-  log(`Loading single post (JSON): ${slug}`);
+  log(`Loading single post (JSON via dynamic glob): ${slug}`);
+  
+  // Define the glob pattern for dynamic loading
+  // Returns an object where keys are paths and values are async functions to load the module
+  const modules = import.meta.glob('../content/blog/*.json');
+  const targetPath = `../content/blog/${slug}.json`;
+
+  log(`Looking for module: ${targetPath}`);
+
+  // Check if the module loader function exists for the target path
+  if (!modules[targetPath]) {
+    console.error(`[blogLoader] Module not found for path: ${targetPath}`);
+    return null; // Module doesn't exist
+  }
+
   try {
-    // Dynamically import the specific JSON file from the content directory
-    // The /* @vite-ignore */ comment might be needed if Vite warns about the dynamic path
-    const postJsonModule = await import(/* @vite-ignore */ `../content/blog/${slug}.json`);
+    // Dynamically load the module using the function provided by glob
+    const moduleLoader = modules[targetPath];
+    const postJsonModule = await moduleLoader(); // Execute the loader function
     
     // Access the default export which contains the parsed JSON data
     const postData = postJsonModule.default;
 
     // Basic validation
-    if (!postData || !postData.title || !postData.date || !postData.content) { // Check for 'content' now
+    if (!postData || !postData.title || !postData.date || !postData.content) { 
       console.warn(`[blogLoader] Missing or incomplete data in ${slug}.json`, postData);
       throw new Error(`Incomplete data for post: ${slug}`);
     }
-    log(`Successfully loaded data for ${slug}.json`);
+    log(`Successfully loaded module and data for ${slug}.json`);
 
     // Return the full post data, ensuring the date is a Date object
     return {
-      ...postData, // Spread all properties from the JSON
-      date: new Date(postData.date), // Ensure date is a Date object
+      ...postData,
+      date: new Date(postData.date),
     };
   } catch (error) {
-    console.error(`[blogLoader] Error loading blog post ${slug}.json:`, error);
-    // Rethrow or return null/error indicator based on how calling component handles errors
+    console.error(`[blogLoader] Error dynamically loading blog post ${slug}.json:`, error);
     return null; // Indicate failure to load
   }
 }; 
