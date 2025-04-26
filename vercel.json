@@ -2,5 +2,8 @@
     "crons": [{
       "path": "/api/test-cron",
       "schedule": "0 10 * * *"
-    }]
+    }],
+    "rewrites": [
+      { "source": "/(.*)", "destination": "/index.html" }
+    ]
   }
