@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { useLocation } from 'react-router-dom';
 import { content } from "../Content";
 import { LuMenu, LuX } from "react-icons/lu";
 import styles from './Navbar.module.css';
@@ -6,7 +7,7 @@ import styles from './Navbar.module.css';
 const Navbar = () => {
   const { nav, hero } = content;
   const [showMenu, setShowMenu] = useState(false);
-  const [active, setActive] = useState(0);
+  const location = useLocation();
   const [isScrolled, setIsScrolled] = useState(false);
 
   useEffect(() => {
@@ -35,38 +36,44 @@ const Navbar = () => {
     return classNames.join(' ');
   };
 
-  const getNavLinkClass = (index) => {
+  const getNavLinkClass = (path) => {
     let classNames = [styles.navbarLink];
-    if (index === active) {
+    if (path === '#home' && location.pathname === '/') {
+      classNames.push(styles.active);
+    } else if (path !== '#home' && location.pathname.startsWith(path)) {
       classNames.push(styles.active);
     }
     return classNames.join(' ');
+  };
+
+  const getCtaButtonClass = (isMobile = false) => {
+    let baseClass = isMobile ? styles.navbarLink : styles.navbarCta;
+    return `${baseClass} btn`;
   };
 
   return (
     <nav className={getNavClasses()}>
       <div className={`${styles.navbarContainer} container`}>
         {/* Logo/Name */}
-        <a href="#home" className={styles.navbarBrand} onClick={() => setActive(0)}>
+        <a href="/" className={styles.navbarBrand}>
           {hero.firstName} {hero.LastName}
         </a>
 
         {/* Desktop Navigation */}
         <div className={styles.navbarLinksDesktop}>
-          {nav.map((item, i) => (
+          {nav.map((item) => (
             <a
-              key={i}
+              key={item.link}
               href={item.link}
-              onClick={() => setActive(i)}
-              className={getNavLinkClass(i)}
+              className={getNavLinkClass(item.link)}
             >
               {item.link.substring(1).charAt(0).toUpperCase() + item.link.substring(2)}
             </a>
           ))}
-          <a href="/blog" onClick={() => setActive(nav.length)} className={getNavLinkClass(nav.length)}>
+          <a href="/blog" className={getNavLinkClass('/blog')}>
             Blog
           </a>
-          <a href="#contact" onClick={() => setActive(nav.length + 1)} className={`${styles.navbarCta} btn`}>
+          <a href="#contact" className={getCtaButtonClass()}>
             Contact Me
           </a>
         </div>
@@ -84,23 +91,20 @@ const Navbar = () => {
         {/* Mobile Menu Overlay */}
         <div className={getMobileOverlayClasses()}>
           <div className={styles.navbarMobileLinks}>
-            {nav.map((item, i) => (
+            {nav.map((item) => (
               <a
-                key={i}
+                key={item.link}
                 href={item.link}
-                onClick={() => {
-                  setActive(i);
-                  setShowMenu(false);
-                }}
-                className={getNavLinkClass(i)}
+                onClick={() => setShowMenu(false)}
+                className={getNavLinkClass(item.link)}
               >
                 {item.link.substring(1).charAt(0).toUpperCase() + item.link.substring(2)}
               </a>
             ))}
-            <a href="/blog" onClick={() => { setActive(nav.length); setShowMenu(false);}} className={getNavLinkClass(nav.length)}>
+            <a href="/blog" onClick={() => setShowMenu(false)} className={getNavLinkClass('/blog')}>
               Blog
             </a>
-            <a href="#contact" onClick={() => { setActive(nav.length + 1); setShowMenu(false);}} className={`${styles.navbarLink} btn`}>
+            <a href="#contact" onClick={() => setShowMenu(false)} className={getCtaButtonClass(true)}>
               Contact Me
             </a>
           </div>

@@ -34,10 +34,12 @@ const BlogPost = () => {
   }
 
   if (error || !post) {
-    // Optionally redirect or show a better 404 message
-    // navigate('/404'); 
+    console.error('BlogPost Error: Post not found or error loading.', { error, post }); // Log error state
     return <div className={styles.error}>Post not found.</div>;
   }
+
+  // Log the post object to check its content
+  console.log('Rendering BlogPost with post data:', post);
 
   return (
     <section id="blog-post" className={`${styles.blogSection} section-padding`}>
@@ -60,7 +62,12 @@ const BlogPost = () => {
           </header>
           
           <div className={styles.postContent}>
-            <ReactMarkdown>{post.content}</ReactMarkdown>
+            {/* Ensure post.content is a string before rendering */}
+            {typeof post.content === 'string' ? (
+              <ReactMarkdown>{post.content}</ReactMarkdown>
+            ) : (
+              <p>Error: Post content is not available or not a string.</p> // Add fallback
+            )}
           </div>
 
           <footer className={styles.postFooter}>

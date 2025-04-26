@@ -64,6 +64,7 @@ export const content = {
     {
       link: "#contact",
     },
+
   ],
   hero: {
     title: "Lead software developer",

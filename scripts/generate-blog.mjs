@@ -1,13 +1,18 @@
 import fs from 'fs/promises';
 import path from 'path';
+import { fileURLToPath } from 'url'; // Import url utility
 import dotenv from 'dotenv';
 import OpenAI from 'openai';
 
 // Load environment variables from .env file
 dotenv.config();
 
+// Get current directory path in ES Modules
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
 const openaiApiKey = process.env.OPENAI_API_KEY;
-const blogContentDir = path.join(__dirname, '../src/content/blog'); // Adjust path if needed
+const blogContentDir = path.resolve(__dirname, '../src/content/blog'); // Use path.resolve for robustness
 
 if (!openaiApiKey) {
   console.error('Error: OPENAI_API_KEY is not set in the .env file.');
@@ -86,9 +91,9 @@ async function generateBlogPost() {
     });
     generatedContent = completion.choices[0].message?.content?.trim() || '';
     console.log('Content generated successfully.');
-    // console.log('--- Generated Content ---');
-    // console.log(generatedContent);
-    // console.log('------------------------');
+    console.log('--- Raw Generated Content ---');
+    console.log(generatedContent);
+    console.log('---------------------------');
 
   } catch (error) {
     console.error('Error calling OpenAI API:', error);

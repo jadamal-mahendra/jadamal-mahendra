@@ -13,6 +13,7 @@
   "dependencies": {
     "@emailjs/browser": "^3.9.1",
     "aos": "^2.3.4",
+    "buffer": "^6.0.3",
     "dotenv": "^16.5.0",
     "gray-matter": "^4.0.3",
     "openai": "^4.96.0",
@@ -26,7 +27,8 @@
     "react-pdf": "^9.2.1",
     "react-router-dom": "^7.5.2",
     "react-scroll-parallax": "^3.4.5",
-    "swiper": "^8.4.4"
+    "swiper": "^8.4.4",
+    "vite-plugin-node-polyfills": "^0.23.0"
   },
   "devDependencies": {
     "@types/react": "^18.0.24",
