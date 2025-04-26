@@ -28,13 +28,13 @@ export function loadBlogPosts() {
       }
       log(`Loaded metadata for ${postData.slug}:`, { slug: postData.slug, title: postData.title, date: postData.date });
 
-      // Return only necessary metadata for the list view
+      // Return necessary metadata for the list view
       return {
         slug: postData.slug,
         title: postData.title,
-        date: new Date(postData.date), // Convert date string to Date object
-        featuredImage: postData.featuredImage || null, // <-- INCLUDE featuredImage path
-        // tags: postData.tags || [], // Optionally include tags
+        date: new Date(postData.date),
+        featuredImage: postData.featuredImage || null,
+        tags: postData.tags || [],
       };
     } catch (parseError) {
       console.error(`[blogLoader] Error processing JSON module for ${filepath}:`, parseError);

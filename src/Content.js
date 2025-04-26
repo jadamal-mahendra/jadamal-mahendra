@@ -54,17 +54,19 @@ import oodlesLogo from "./assets/images/Projects/Oodles-Technologies-2.svg";
 // import nextjsLogo from "./assets/images/Skills/nextjs.svg"; // Assume this file exists
 
 export const content = {
-  nav: [
+  nav:  [
     {
       link: "#home",
     },
     {
       link: "#services",
     },
+    { // Add this block
+      link: "#experience", 
+    },
     {
       link: "#contact",
     },
-
   ],
   hero: {
     title: "Lead software developer",

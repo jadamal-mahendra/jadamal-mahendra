@@ -206,24 +206,37 @@
   color: var(--color-text-secondary);
 }
 
-/* Blog Grid Styles */
-.postGrid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); /* Responsive grid */
-  gap: 2rem;
-  margin-top: 2rem;
+/* Masonry Styles */
+.myMasonryGrid {
+  display: flex;
+  margin-left: -2rem; /* Adjust based on column gap, counteracts column padding */
+  width: auto;
+  margin-top: 2rem; /* Keep the top margin */
 }
 
+.myMasonryGridColumn {
+  padding-left: 2rem; /* Column gap */
+  background-clip: padding-box; /* Prevent background from overlapping padding */
+}
+
+/* Style items (cards) within columns */
+.myMasonryGridColumn > a, /* Target the Link component which is the card */
+.myMasonryGridColumn > div { /* If you wrap cards in divs later */
+  margin-bottom: 2rem; /* Vertical gap between items in the same column */
+}
+
+/* Keep existing .postCard styles as they define the look of individual items */
 .postCard {
-  background-color: var(--color-white); /* Explicitly set to white or a contrasting variable/color */
+  background-color: var(--color-white);
   border-radius: 8px;
   overflow: hidden;
   text-decoration: none;
   color: inherit;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
-  display: flex; /* Use flexbox for card layout */
-  flex-direction: column; /* Stack image and content vertically */
-  border: 1px solid var(--color-border-light); /* Add back border if needed for definition */
+  display: flex; 
+  flex-direction: column;
+  border: 1px solid var(--color-border-light);
+  width: 100%; /* Ensure card takes full width of its column */
 }
 
 .postCard:hover {
@@ -233,21 +246,33 @@
 
 .cardContent {
   padding: 1.5rem;
+  flex-grow: 1; /* Allow content to fill remaining space */
 }
 
+/* Container for tags within the card */
 .tagsContainer {
-  margin-top: 1rem;
+  margin-top: 1rem; /* Space above the tags */
+  line-height: 1.4; /* Adjust spacing if tags wrap */
 }
 
+/* Individual tag style */
 .tagItem {
   display: inline-block;
   background-color: var(--color-tag-bg, #e2e8f0); /* Use variable or fallback */
-  color: var(--color-tag-text, var(--color-subtle-text));
+  color: var(--color-tag-text, var(--color-text-secondary)); /* Use variable or fallback */
   padding: 0.25rem 0.75rem;
   border-radius: 9999px; /* Pill shape */
   font-size: 0.8rem;
+  font-weight: 500;
   margin-right: 0.5rem;
-  margin-bottom: 0.5rem;
+  margin-bottom: 0.5rem; /* Space for wrapping tags */
+  text-decoration: none;
+  transition: background-color 0.2s ease;
+}
+
+.tagItem:hover {
+  background-color: var(--color-tag-hover-bg, #cbd5e1); /* Use variable or fallback */
+  color: var(--color-tag-hover-text, var(--color-text-primary));
 }
 
 /* Styles for code blocks using react-syntax-highlighter */
@@ -311,4 +336,18 @@
   flex-grow: 1; /* Allow content to fill remaining space */
 }
 
-/* You might need to adjust existing .postCard rules if they conflict */ 
+/* You might need to adjust existing .postCard rules if they conflict */
+
+.clearFilterLink {
+  display: inline-block;
+  margin-top: 1rem;
+  margin-bottom: 1rem; /* Add some space below */
+  color: var(--color-primary);
+  text-decoration: none;
+  font-size: 0.9rem;
+}
+
+.clearFilterLink:hover {
+  text-decoration: underline;
+  color: var(--color-primary-hover);
+} 

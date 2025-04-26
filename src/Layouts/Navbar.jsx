@@ -51,6 +51,20 @@ const Navbar = () => {
     return `${baseClass} btn`;
   };
 
+  const getCorrectHref = (link) => {
+    // If it's the blog link, always return /blog
+    if (link === '/blog') {
+      return '/blog';
+    }
+    // If it's a hash link (starts with #) and we are NOT on the home page
+    if (link.startsWith('#') && location.pathname !== '/') {
+      // Prepend / to navigate home first
+      return `/${link}`;
+    } 
+    // Otherwise (hash link on home page, or other type of link), return as is
+    return link;
+  };
+
   return (
     <nav className={getNavClasses()}>
       <div className={`${styles.navbarContainer} container`}>
@@ -64,16 +78,18 @@ const Navbar = () => {
           {nav.map((item) => (
             <a
               key={item.link}
-              href={item.link}
+              href={getCorrectHref(item.link)}
               className={getNavLinkClass(item.link)}
             >
-              {item.link.substring(1).charAt(0).toUpperCase() + item.link.substring(2)}
+              {item.link.startsWith('#') 
+                ? item.link.substring(1).charAt(0).toUpperCase() + item.link.substring(2) 
+                : item.text || 'Link'}
             </a>
           ))}
-          <a href="/blog" className={getNavLinkClass('/blog')}>
+          <a href={getCorrectHref('/blog')} className={getNavLinkClass('/blog')}>
             Blog
           </a>
-          <a href="#contact" className={getCtaButtonClass()}>
+          <a href={getCorrectHref('#contact')} className={getCtaButtonClass()}>
             Contact Me
           </a>
         </div>
@@ -94,17 +110,19 @@ const Navbar = () => {
             {nav.map((item) => (
               <a
                 key={item.link}
-                href={item.link}
+                href={getCorrectHref(item.link)}
                 onClick={() => setShowMenu(false)}
                 className={getNavLinkClass(item.link)}
               >
-                {item.link.substring(1).charAt(0).toUpperCase() + item.link.substring(2)}
+                {item.link.startsWith('#') 
+                  ? item.link.substring(1).charAt(0).toUpperCase() + item.link.substring(2) 
+                  : item.text || 'Link'}
               </a>
             ))}
-            <a href="/blog" onClick={() => setShowMenu(false)} className={getNavLinkClass('/blog')}>
+            <a href={getCorrectHref('/blog')} onClick={() => setShowMenu(false)} className={getNavLinkClass('/blog')}>
               Blog
             </a>
-            <a href="#contact" onClick={() => setShowMenu(false)} className={getCtaButtonClass(true)}>
+            <a href={getCorrectHref('#contact')} onClick={() => setShowMenu(false)} className={getCtaButtonClass(true)}>
               Contact Me
             </a>
           </div>

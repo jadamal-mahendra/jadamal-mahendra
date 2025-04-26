@@ -18,7 +18,8 @@ ReactDOM.createRoot(document.getElementById('root')).render(
           {/* Blog Routes */}
           <Route path="/blog" element={<BlogList />} />
           <Route path="/blog/:slug" element={<BlogPost />} />
-          
+          <Route path="/blog/tag/:tag" element={<BlogList />} />
+    
           {/* TODO: Add a 404 Not Found route */}
           {/* <Route path="*" element={<NotFound />} /> */}
         </Routes>

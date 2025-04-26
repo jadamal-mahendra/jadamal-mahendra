@@ -52,6 +52,7 @@ const App = () => {
           </p>
         </footer>
       </div>
+  
     </ParallaxProvider>
   );
 };
