@@ -120,3 +120,4 @@ dist-ssr
 
 # Windows files
 Thumbs.db
+.env

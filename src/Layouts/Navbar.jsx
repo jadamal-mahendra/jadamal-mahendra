@@ -63,7 +63,10 @@ const Navbar = () => {
               {item.link.substring(1).charAt(0).toUpperCase() + item.link.substring(2)}
             </a>
           ))}
-          <a href="#contact" onClick={() => setActive(nav.length)} className={`${styles.navbarCta} btn`}>
+          <a href="/blog" onClick={() => setActive(nav.length)} className={getNavLinkClass(nav.length)}>
+            Blog
+          </a>
+          <a href="#contact" onClick={() => setActive(nav.length + 1)} className={`${styles.navbarCta} btn`}>
             Contact Me
           </a>
         </div>
@@ -94,7 +97,10 @@ const Navbar = () => {
                 {item.link.substring(1).charAt(0).toUpperCase() + item.link.substring(2)}
               </a>
             ))}
-            <a href="#contact" onClick={() => { setActive(nav.length); setShowMenu(false);}} className={`${styles.navbarLink} btn`}>
+            <a href="/blog" onClick={() => { setActive(nav.length); setShowMenu(false);}} className={getNavLinkClass(nav.length)}>
+              Blog
+            </a>
+            <a href="#contact" onClick={() => { setActive(nav.length + 1); setShowMenu(false);}} className={`${styles.navbarLink} btn`}>
               Contact Me
             </a>
           </div>

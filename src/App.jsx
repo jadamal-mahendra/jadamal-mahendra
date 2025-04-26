@@ -28,33 +28,31 @@ const App = () => {
   }, []);
 
   return (
-    <HelmetProvider>
-      <ParallaxProvider>
-        <Helmet>
-          <title>Jadamal Mahendra - Web Developer Portfolio</title>
-          <meta name="description" content="Results-driven Lead Software Developer with 4+ years' leadership in building scalable web & mobile applications. Explore Jadamal Mahendra's portfolio & projects." />
-          <meta name="keywords" content="Jadamal Mahendra, web developer, portfolio, React, JavaScript, Node.js, frontend, backend, fullstack, lead developer, scalable applications" />
-          <meta property="og:title" content="Jadamal Mahendra - Web Developer Portfolio" />
-          <meta property="og:description" content="Results-driven Lead Software Developer with 4+ years' leadership in building scalable web & mobile applications. Explore Jadamal Mahendra's portfolio & projects." />
-          <meta property="og:type" content="website" />
-          <meta property="og:url" content="https://jadamalmahendra.inowix.io/" />
-          <meta property="og:image" content="/assets/illustrations/hero-1.svg" />
-        </Helmet>
-        <div className="overflow-hidden">
-          <Navbar />
-          <Hero />
-          <Services />
-          <Experience />
-          <Awards />
-          <Contact />
-          <footer className="app-footer">
-            <p className="app-footer-text">
-              &copy; {new Date().getFullYear()} Jadamal Mahendra. All rights reserved.
-            </p>
-          </footer>
-        </div>
-      </ParallaxProvider>
-    </HelmetProvider>
+    <ParallaxProvider>
+      <Helmet>
+        <title>Jadamal Mahendra - Web Developer Portfolio</title>
+        <meta name="description" content="Results-driven Lead Software Developer with 4+ years' leadership in building scalable web & mobile applications. Explore Jadamal Mahendra's portfolio & projects." />
+        <meta name="keywords" content="Jadamal Mahendra, web developer, portfolio, React, JavaScript, Node.js, frontend, backend, fullstack, lead developer, scalable applications" />
+        <meta property="og:title" content="Jadamal Mahendra - Web Developer Portfolio" />
+        <meta property="og:description" content="Results-driven Lead Software Developer with 4+ years' leadership in building scalable web & mobile applications. Explore Jadamal Mahendra's portfolio & projects." />
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="https://jadamalmahendra.inowix.io/" />
+        <meta property="og:image" content="/assets/illustrations/hero-1.svg" />
+      </Helmet>
+      <div className="overflow-hidden">
+        <Navbar />
+        <Hero />
+        <Services />
+        <Experience />
+        <Awards />
+        <Contact />
+        <footer className="app-footer">
+          <p className="app-footer-text">
+            &copy; {new Date().getFullYear()} Jadamal Mahendra. All rights reserved.
+          </p>
+        </footer>
+      </div>
+    </ParallaxProvider>
   );
 };
 
