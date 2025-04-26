@@ -1,7 +1,7 @@
 import React from 'react';
 import { content } from '../Content';
 import { Helmet } from 'react-helmet-async';
-import TechIcon from 'tech-stack-icons';
+// import TechIcon from 'tech-stack-icons'; // Removed import
 import styles from './Services.module.css'; // Import CSS Module
 
 // Optional: Import icons if you prefer them over image paths
@@ -38,10 +38,11 @@ const Services = () => {
         <div className={styles.servicesGrid} data-aos="fade-up">
           {services.service_content.map((service, i) => (
             <div key={i} className={styles.serviceItem} data-aos="fade-up" data-aos-delay={i * 100}>
-              {/* Use TechIcon component for the logo */}
+              {/* Use logo component from content */}
               <div className={styles.serviceIcon}>
                 {service.logo ? (
-                  <TechIcon name={service.logo} />
+                  // <service.logo className={styles.serviceSvgIcon} /> // Render imported SVG component
+                  <img src={service.logo} className={styles.serviceSvgIcon} alt={service.title || 'Service icon'} /> // Use img tag
                 ) : (
                   <span>Icon</span> // Optional fallback
                 )}

@@ -1,7 +1,7 @@
 // import content
 import { content } from "../Content";
 // Removed Marquee import
-import TechIcon from 'tech-stack-icons'; // Import the component from the library
+// import TechIcon from 'tech-stack-icons'; // Removed import
 import styles from './Hero.module.css'; // Import CSS Module
 
 const Hero = () => {
@@ -53,14 +53,14 @@ const Hero = () => {
                 {skillsRow1.map((skill, i) => (
                   <div key={`1-${i}-a`} className={styles.skillItemMarquee}>
                     {skill.logo ? (
-                      <TechIcon name={skill.logo} />
+                      <img src={skill.logo} className={styles.skillIcon} alt={skill.name || 'Skill icon'} />
                     ) : (
                       <span>{skill.name}</span> 
                     )}
                   </div>
                 ))}
+         
               </div>
-        
             </div>
 
             {/* Row 2: Scrolls Right to Left */}
@@ -70,14 +70,14 @@ const Hero = () => {
                  {skillsRow2.map((skill, i) => (
                   <div key={`2-${i}-a`} className={styles.skillItemMarquee}>
                     {skill.logo ? (
-                      <TechIcon name={skill.logo} />
+                      <img src={skill.logo} className={styles.skillIcon} alt={skill.name || 'Skill icon'} />
                     ) : (
                       <span>{skill.name}</span>
                     )}
                   </div>
                 ))}
+          
               </div>
-             
             </div>
           </div>
 

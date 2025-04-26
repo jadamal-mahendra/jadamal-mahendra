@@ -1,6 +1,6 @@
 import React from 'react';
 import { content } from "../Content";
-import { Parallax } from 'react-scroll-parallax';
+// import { Parallax } from 'react-scroll-parallax'; // Commented out
 import styles from './Experience.module.css'; // Import CSS Module
 
 const Experience = () => {
@@ -18,9 +18,9 @@ const Experience = () => {
       className={`${styles.experienceSection} section-padding`}
       data-aos="fade-up"
     >
-      <Parallax speed={-10}>
+      {/* <Parallax speed={-10}>
         <div className="experience-bg-gradient"></div>
-      </Parallax>
+      </Parallax> */}
       
       <div className="container mx-auto relative"> {/* Added relative for potential background elements */} 
         <h2 className="section-title" data-aos="fade-up">

@@ -1,19 +1,16 @@
 // import components
 import Hero from "./components/Hero";
 import Navbar from "./Layouts/Navbar";
-import Services from "./components/Services"; // Import Services
-// Removed commented-out imports
-import Experience from "./components/Experience"; // Added Experience
+import Services from "./components/Services";
+import Experience from "./components/Experience";
 import Awards from "./components/Awards";
 import Contact from "./components/Contact";
-import { useEffect } from "react"; // Import useEffect
-import AOS from "aos"; // Import AOS
-import "aos/dist/aos.css"; // Import AOS styles
-import { ParallaxProvider } from 'react-scroll-parallax'; // Import ParallaxProvider
-import { Helmet, HelmetProvider } from 'react-helmet-async'; // Import Helmet components
-// import { useEffect } from "react";
-// import content
-// import { content } from "./Content";
+import { useEffect } from "react";
+import AOS from "aos";
+import "aos/dist/aos.css";
+import { ParallaxProvider } from 'react-scroll-parallax';
+import { Helmet, HelmetProvider } from 'react-helmet-async';
+
 
 // Import custom CSS (assuming it's needed globally or we use modules later)
 import "./index.css"; 
@@ -45,7 +42,7 @@ const App = () => {
           <Navbar />
           <Hero />
           <Services />
-          <Experience /> 
+          <Experience />
           <Awards />
           <Contact />
           <footer className="app-footer">

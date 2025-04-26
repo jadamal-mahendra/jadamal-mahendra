@@ -1,8 +1,18 @@
 // import illustrations
 import web_developer_illustration from "./assets/images/illustrations/web_developer.svg";
 
-
-
+// Import SVG Icons as React Components
+import ReactLogo from './assets/icons/reactjs.svg?react';
+import NodeLogo from './assets/icons/nodejs.svg?react';
+import GraphqlLogo from './assets/icons/graphql.svg?react';
+import MaterialUILogo from './assets/icons/materialui.svg?react';
+import TypeScriptLogo from './assets/icons/typescript.svg?react';
+import NextjsLogo from './assets/icons/nextjs.svg?react';
+import SolidityLogo from './assets/icons/solidity.svg?react';
+import MongoDbLogo from './assets/icons/mongodb.svg?react';
+import WebpackLogo from './assets/icons/webpack.svg?react';
+import GitLogo from './assets/icons/git.svg?react';
+import SwiftLogo from './assets/icons/swift.svg?react'; // Added for services
 
 // Resume PDF path (from public directory)
 const resume_pdf = "/assets/Jadamal-Mahendra.pdf";
@@ -31,22 +41,13 @@ const calculateYearsOfExperience = () => {
 // import icons from react-icons
 import { GrMail } from "react-icons/gr";
 import { MdArrowForward, MdCall } from "react-icons/md";
-import { TbSmartHome } from "react-icons/tb";
-import { BiUser } from "react-icons/bi";
-import { RiServiceLine } from "react-icons/ri";
-import { MdOutlinePermContactCalendar } from "react-icons/md";
-import { HiOutlineDocumentText } from "react-icons/hi";
+
 import { FaLinkedin } from "react-icons/fa";
 
 // Import company logos (adjust filenames/extensions if needed)
 import elliotLogo from "./assets/images/Projects/Elliot-system-logo_Final_CTC-1.webp"; 
 import viralnationLogo from "./assets/images/Projects/VN_Logo_White.svg";
 import oodlesLogo from "./assets/images/Projects/Oodles-Technologies-2.svg";
-
-// Import icons for skills missing official logos
-// import { SiBlockchaindotcom } from "react-icons/si";
-// import { FaDatabase } from "react-icons/fa";
-// import { LuNetwork } from "react-icons/lu"; 
 
 // Import paths for skills with official logos (assuming they exist)
 // import typescriptLogo from "./assets/images/Skills/typescript.svg"; // Assume this file exists
@@ -56,15 +57,12 @@ export const content = {
   nav: [
     {
       link: "#home",
-      icon: TbSmartHome,
     },
     {
       link: "#services",
-      icon: RiServiceLine,
     },
     {
       link: "#contact",
-      icon: MdOutlinePermContactCalendar,
     },
   ],
   hero: {
@@ -92,70 +90,65 @@ export const content = {
       {
         name: "React js",
         para: "Expert in building interactive UIs and SPAs using React.js, including state management with Redux.",
-        logo: "reactjs",
+        logo: ReactLogo,
         level: 5,
       },
     
       {
         name: "Node js",
         para: "Proficient in server-side development with Node.js, creating scalable backend systems.",
-        logo: "nodejs",
+        logo: NodeLogo,
         level: 4,
       },
       {
         name: "GraphQL",
         para: "Skilled in designing and implementing GraphQL APIs with tools like Prisma for efficient data handling.",
-        logo: "graphql",
+        logo: GraphqlLogo,
         level: 4,
       },
       {
         name: "Material UI",
         para: "Experienced in designing responsive and visually appealing UI components using Material UI.",
-        logo: "materialui",
+        logo: MaterialUILogo,
         level: 4,
       },
       {
         name: "TypeScript",
         para: "Leveraging TypeScript for type safety and enhanced developer productivity in complex projects.",
-        logo: "typescript",
+        logo: TypeScriptLogo,
         level: 4,
       },
       {
         name: "Next Js",
         para: "Building server-rendered React applications and static websites with Next.js.",
-        logo: "nextjs",
+        logo: NextjsLogo,
         level: 4,
       },
       {
         name: "Web3 / Blockchain",
         para: "Developing decentralized applications (dApps) and NFT marketplaces using Solidity, Web3.js, and Hardhat.",
-        logo: "solidity",
+        logo: SolidityLogo,
         level: 3,
       },
       {
         name: "Databases",
         para: "Experience with both SQL (e.g., PostgreSQL) and NoSQL (e.g., MongoDB) databases.",
-        logo: "mongodb",
+        logo: MongoDbLogo,
         level: 4,
       },
       {
         name: "Microfrontends",
         para: "Implemented Microfrontend architecture for modular and scalable UI development.",
-        logo: "webpack",
+        logo: WebpackLogo,
         level: 4,
       },
         {
         name: "Git",
         para: "Implemented Microfrontend architecture for modular and scalable UI development.",
-        logo: "git",
+        logo: GitLogo,
         level: 4,
       },
-      {
-        name: "CI/CD",
-        para: "Implemented Microfrontend architecture for modular and scalable UI development.",
-        logo: "cicd",
-        level: 4,
-      }
+     
     ],
     icon: MdArrowForward,
   },
@@ -167,22 +160,22 @@ export const content = {
       {
         title: "Frontend Development",
         para: "Building scalable, high-performance UIs with React, Next.js, TypeScript, and Microfrontend architectures. Expertise in state management (Redux) and UI libraries (MUI, Fluent UI).",
-        logo: "reactjs", // Use tech-stack-icons name
+        logo: ReactLogo,
       },
       {
         title: "Backend & API Development",
         para: "Developing robust backend systems and APIs using Node.js, Express, and GraphQL. Experienced with Prisma, SQL, and NoSQL databases for efficient data handling.",
-        logo: "nodejs", // Use tech-stack-icons name
+        logo: NodeLogo,
       },
       {
         title: "Mobile App Development",
         para: "Creating cross-platform mobile applications with React Native, integrating native features and ensuring seamless user experiences across iOS and Android.",
-        logo: "reactnative", // Use tech-stack-icons name (or 'reactjs' if unavailable)
+        logo: SwiftLogo,
       },
       {
         title: "Web3 & Blockchain Solutions",
         para: "Designing and implementing decentralized applications (dApps), smart contracts (Solidity), and NFT marketplaces using Web3.js and related technologies.",
-        logo: "solidity", // Use tech-stack-icons name (check availability)
+        logo: SolidityLogo,
       },
     ],
   },
