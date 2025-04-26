@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
-import ReactMarkdown from 'react-markdown';
 import { loadBlogPost } from '../utils/blogLoader';
 import { Helmet } from 'react-helmet-async';
 import styles from './Blog.module.css'; // Reuse or create specific styles
@@ -39,7 +38,7 @@ const BlogPost = () => {
   }
 
   // Log the post object to check its content
-  console.log('Rendering BlogPost with post data:', post);
+  console.log('Rendering BlogPost with post data (expecting htmlContent):', post);
 
   return (
     <section id="blog-post" className={`${styles.blogSection} section-padding`}>
@@ -61,14 +60,11 @@ const BlogPost = () => {
             </time>
           </header>
           
-          <div className={styles.postContent}>
-            {/* Ensure post.content is a string before rendering */}
-            {typeof post.content === 'string' ? (
-              <ReactMarkdown>{post.content}</ReactMarkdown>
-            ) : (
-              <p>Error: Post content is not available or not a string.</p> // Add fallback
-            )}
-          </div>
+          {/* Use dangerouslySetInnerHTML to render pre-generated HTML */}
+          <div 
+            className={styles.postContent}
+            dangerouslySetInnerHTML={{ __html: post.htmlContent }}
+          />
 
           <footer className={styles.postFooter}>
             <Link to="/blog" className={styles.backLink}>&larr; Back to Blog</Link>

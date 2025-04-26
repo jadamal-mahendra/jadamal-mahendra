@@ -1,6 +1,6 @@
 {
     "crons": [{
-      "path": "/scripts/generate-blog.mjs",
-      "schedule": "0 10 * * *"
+      "path": "/api/test-cron",
+      "schedule": "*/5 * * * *"
     }]
   }

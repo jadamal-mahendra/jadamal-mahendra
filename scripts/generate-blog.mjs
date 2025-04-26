@@ -3,6 +3,8 @@ import path from 'path';
 import { fileURLToPath } from 'url'; // Import url utility
 import dotenv from 'dotenv';
 import OpenAI from 'openai';
+import matter from 'gray-matter'; // Import gray-matter
+import { marked } from 'marked'; // Import marked
 
 // Load environment variables from .env file
 dotenv.config();
@@ -82,17 +84,17 @@ async function generateBlogPost() {
 
   // 5. Call OpenAI API
   console.log('Generating content with OpenAI...');
-  let generatedContent = '';
+  let generatedMarkdown = '';
   try {
     const completion = await openai.chat.completions.create({
       model: "gpt-3.5-turbo", // Or a newer model if you prefer
       messages: [{ role: "user", content: prompt }],
       temperature: 0.7, // Adjust for creativity vs consistency
     });
-    generatedContent = completion.choices[0].message?.content?.trim() || '';
+    generatedMarkdown = completion.choices[0].message?.content?.trim() || '';
     console.log('Content generated successfully.');
     console.log('--- Raw Generated Content ---');
-    console.log(generatedContent);
+    console.log(generatedMarkdown);
     console.log('---------------------------');
 
   } catch (error) {
@@ -100,42 +102,52 @@ async function generateBlogPost() {
     return; // Exit if generation fails
   }
 
-  // 6. Extract Title and Validate Content
-  if (!generatedContent || !generatedContent.startsWith('---')) {
-    console.error('Error: Generated content is empty or missing frontmatter.');
-    return;
-  }
-
-  const frontmatterMatch = generatedContent.match(/^---\s*([\s\S]*?)\s*---/);
-  if (!frontmatterMatch) {
-      console.error('Error: Could not parse frontmatter from generated content.');
-      return;
-  }
-  const frontmatterText = frontmatterMatch[1];
-  const titleMatch = frontmatterText.match(/title:\s*["']?(.*?)["']?$/m);
-  const postTitle = titleMatch ? titleMatch[1].trim() : '';
-
-  if (!postTitle) {
-      console.error('Error: Could not extract title from frontmatter.');
-      return;
-  }
-  console.log(`Extracted post title: ${postTitle}`);
-
-  // 7. Create filename (slugify the title)
-  const slug = postTitle
-    .toLowerCase()
-    .replace(/[^a-z0-9\s-]/g, '') // Remove special chars
-    .replace(/\s+/g, '-')         // Replace spaces with hyphens
-    .replace(/-+/g, '-');         // Remove consecutive hyphens
-  const filename = `${slug}.md`;
-  const filePath = path.join(blogContentDir, filename);
-  console.log(`Generated filename: ${filename}`);
-
-
-  // 8. Write the content to a new Markdown file
+  // --- Pre-process Markdown here --- 
+  let postData = {};
   try {
-    await fs.writeFile(filePath, generatedContent);
-    console.log(`Successfully wrote blog post to ${filePath}`);
+    console.log('[generate-blog] Parsing generated Markdown with gray-matter...');
+    const { data: frontmatter, content: contentBody } = matter(generatedMarkdown);
+
+    // Validate frontmatter
+    if (!frontmatter || !frontmatter.title || !frontmatter.date) {
+      throw new Error('Generated content missing required frontmatter (title, date).');
+    }
+    console.log('[generate-blog] Parsed Frontmatter:', frontmatter);
+
+    const postTitle = frontmatter.title.trim();
+    const slug = postTitle
+      .toLowerCase()
+      .replace(/[^a-z0-9\s-]/g, '') 
+      .replace(/\s+/g, '-')         
+      .replace(/-+/g, '-');
+
+    console.log('[generate-blog] Converting Markdown content to HTML using marked...');
+    const htmlContent = marked.parse(contentBody.trim()); // Convert Markdown to HTML
+
+    postData = {
+        slug: slug,
+        title: postTitle,
+        date: frontmatter.date, // Keep original date string
+        tags: frontmatter.tags || [], // Add tags if generated
+        htmlContent: htmlContent // Store HTML content
+    };
+    console.log(`[generate-blog] Prepared JSON data for ${slug}.json (with HTML content)`);
+
+  } catch (error) {
+      console.error('[generate-blog] Error processing generated Markdown:', error);
+      console.error('--- Faulty Markdown Start ---\n', generatedMarkdown.substring(0, 500), '\n--- Faulty Markdown End ---');
+      return; // Stop if parsing fails
+  }
+  // --- End Pre-processing ---
+
+  // --- Save as JSON --- 
+  const filename = `${postData.slug}.json`; // Save as .json
+  const filePath = path.join(blogContentDir, filename);
+  console.log(`[generate-blog] Saving JSON to: ${filename}`);
+
+  try {
+    await fs.writeFile(filePath, JSON.stringify(postData, null, 2)); // Write JSON
+    console.log(`Successfully wrote blog post JSON to ${filePath}`);
   } catch (error) {
     console.error(`Error writing file ${filePath}:`, error);
   }
