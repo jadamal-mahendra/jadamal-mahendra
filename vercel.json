@@ -1,7 +1,7 @@
 {
     "version": 2,
     "crons": [{
-      "path": "/api/test-cron",
+      "path": "/api/generate-blog.mjs",
       "schedule": "0 10 * * *"
     }],
     "rewrites": [
