@@ -18,13 +18,7 @@ export default defineConfig(({ mode }) => {
       open: true, // automatically open the browser
       strictPort: false, // if port is in use, find another
     },
-    resolve: {
-      alias: {
-        '#minpath': 'path',
-        '#minproc': 'process/browser',
-        '#minurl': 'url',
-      },
-    },
+
     // build:{
     //   minify: 'esbuild',
     //   rollupOptions:{
