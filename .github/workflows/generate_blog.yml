@@ -49,6 +49,7 @@ jobs:
         if: steps.check_files.outputs.changes_detected == 'true'
         run: |
           git add src/content/blog/*.json
+          git add public/assets/blog-images/*.png # Add new images (adjust extension if needed)
           git commit -m "chore: Add generated blog post [skip ci]"
           git push
 

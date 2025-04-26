@@ -38,6 +38,15 @@ const BlogList = () => {
                 /* data-aos-delay={index * 100} */ // Removed AOS attributes
               >
                 <div className={styles.cardContent}> 
+                  {/* Add image if it exists */}
+                  {post.featuredImage && (
+                    <img 
+                      src={post.featuredImage}
+                      alt={`Featured image for ${post.title}`}
+                      className={styles.postCardImage} // Add a CSS class for styling
+                      loading="lazy" // Lazy load images
+                    />
+                  )}
                   <h3 className={styles.postTitle}>{post.title}</h3>
                   <time dateTime={post.date.toISOString()} className={styles.postDate}>
                     {post.date.toLocaleDateString('en-US', { 
