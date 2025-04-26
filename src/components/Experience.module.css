@@ -16,18 +16,14 @@
   position: relative;
   max-width: 56rem; 
   margin: 2rem auto 0; 
-  /* Remove mask from main container */
-  /* mask-image: linear-gradient(...); */
-  /* -webkit-mask-image: linear-gradient(...); */
 }
 
 /* New container for just the visual line/drop elements */
 .timelineVisuals {
   position: absolute;
-  inset: 0; /* Cover parent */
-  z-index: 0; /* Behind timeline items */
-  pointer-events: none; /* Allow clicks through to items */
-  /* Apply mask here */
+  inset: 0; 
+  z-index: 0; 
+  pointer-events: none; 
   mask-image: linear-gradient(
     to bottom,
     transparent 0%,
@@ -54,21 +50,21 @@
   bottom: 0;
   left: 20px;
   transform: translateX(-50%);
-  z-index: 0; /* Base layer within visuals */
+  z-index: 0;
 }
 
 /* Vertical timeline line (Progress Indicator) - Target within Visuals */
 .timelineVisuals::after {
   content: '';
   position: absolute;
-  width:3px; /* Slightly wider for gradient glow */
-  background-color: transparent; /* Use gradient for color/glow */
+  width:3px; 
+  background-color: transparent; 
   background-image: linear-gradient(
-    to top, /* Gradient fades upwards */
-    rgba(14, 165, 233, 0.9) 0%,   /* Stronger glow near drop */
-    rgba(14, 165, 233, 0.7) 20%,  /* Start fading */
-    rgba(14, 165, 233, 0.3) 60%,  /* More faded further up */
-    rgba(14, 165, 233, 0.1) 90%,  /* Very faint near top */
+    to top, 
+    rgba(14, 165, 233, 0.9) 0%,   
+    rgba(14, 165, 233, 0.7) 20%,  
+    rgba(14, 165, 233, 0.3) 60%,  
+    rgba(14, 165, 233, 0.1) 90%,  
     transparent 100%
   );
   top: 0;
@@ -78,14 +74,11 @@
   height: calc(var(--scroll-progress, 0) * 100%); 
   z-index: 1; 
   transition: height 0.1s linear;
-  /* box-shadow: 0 0 8px 2px rgba(14, 165, 233, 0.6); */ /* Removed box-shadow glow */
-  /* Optional: slight blur to soften gradient edges */
-  /* filter: blur(1px); */
 }
 
 /* Drop indicator element - Target within Visuals */
 .timelineVisuals .timelineDropIndicator {
-  position: relative; /* Changed from absolute for pseudo-element positioning */
+  position: relative; 
   width: 5px; 
   height: 10px; 
   background-color: var(--color-accent);
@@ -97,24 +90,22 @@
   transition: top 0.1s linear;
 }
 
-/* Add a blurred overlay for smoother connection */
+/* Blurred overlay for smoother connection */
 .timelineVisuals .timelineDropIndicator::before {
   content: '';
   position: absolute;
-  /* Position at the connection point (bottom edge before rotation) */
-  bottom: -1px; /* Slight offset to cover seam */
+  bottom: -1px; 
   left: 50%;
   transform: translateX(-50%);
-  width: 3px; /* Match line width */
-  height: 4px; /* How far the gradient extends */
+  width: 3px; 
+  height: 4px; 
   background: linear-gradient(to top, var(--color-accent) 0%, transparent 100%);
-  filter: blur(1px); /* Soften the gradient */
-  z-index: 3; /* Ensure it's above the drop's background */
-  border-radius: 1px; /* Optional slight rounding */
+  filter: blur(1px); 
+  z-index: 3; 
+  border-radius: 1px; 
 }
 
-@media (min-width: 768px) { /* md */
-  /* Center visuals within the .timelineVisuals container */
+@media (min-width: 768px) { 
   .timelineVisuals::before,
   .timelineVisuals::after,
   .timelineVisuals .timelineDropIndicator {
@@ -123,8 +114,8 @@
 }
 
 .timelineItem {
-  position: relative; /* Needed to establish stacking context */
-  z-index: 1; /* Ensure items are above timelineVisuals */
+  position: relative; 
+  z-index: 1; 
   margin-bottom: 2.5rem; 
 }
 
@@ -176,22 +167,23 @@
   align-items: center;
   justify-content: center;
   border: 3px solid var(--color-white); 
-  /* Default inactive shadow */
-  box-shadow: 0 0 0 3px var(--color-accent);
-  /* Add transition for smooth change */
-  transition: box-shadow 0.3s ease-in-out;
+  overflow: visible; /* Ensure overflow is not hidden */
 }
 
-/* Style for when the scroll indicator reaches/passes the logo */
-.timelineLogoHolder.isActive {
-  /* Slightly thicker/brighter accent ring */
-  box-shadow: 0 0 0 4px var(--color-accent-hover); /* Use hover color or slightly brighter */
+/* Accent color fill ring - Revealed by clip-path */
+.timelineLogoHolder::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  border: 3px solid var(--color-accent);
+  height: 100%; 
+  box-sizing: border-box; 
+  z-index: 12; 
+  clip-path: inset(0 0 calc(100% - var(--logo-fill-progress, 0) * 100%) 0);
 }
 
 @media (min-width: 768px) { /* md */
-  /* Remove the generic desktop .timelineLogoHolder rule 
-     as positioning is now specific to odd/even */
-
   .timelineItem:nth-child(odd) .timelineLogoHolder {
      left: 100%; /* Position left edge at parent's right edge (center line) */
      /* Inherits top: 50%, transform: translate(-50%, -50%) */

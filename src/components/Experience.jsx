@@ -4,28 +4,7 @@ import { content } from "../Content";
 import styles from './Experience.module.css'; // Import CSS Module
 import { Helmet } from 'react-helmet-async'; // Import Helmet
 import useGlowEffect from '../hooks/useGlowEffect'; // Import the hook
-
-// Simple throttle function (can be moved to a utils file)
-function throttle(func, delay) {
-  let timeoutId = null;
-  let lastExecTime = 0;
-  return function(...args) {
-    const context = this;
-    const currentTime = Date.now();
-    const execute = () => {
-      func.apply(context, args);
-      lastExecTime = currentTime;
-      timeoutId = null;
-    };
-    if (!timeoutId) {
-      if (currentTime - lastExecTime >= delay) {
-        execute();
-      } else {
-        timeoutId = setTimeout(execute, delay - (currentTime - lastExecTime));
-      }
-    }
-  };
-}
+import { throttle } from '../utils/throttle'; // Import throttle utility
 
 const Experience = () => {
   // Use the new Experience key from Content.js
@@ -63,21 +42,32 @@ const Experience = () => {
 
       // Update the main progress line variable
       timelineContainer.style.setProperty('--scroll-progress', progress);
+      
+      // Calculate indicator's Y position within the timeline container
+      const indicatorY = progress * containerHeight;
 
-      // Reinstate check for each logo holder
+      // Calculate fill for each logo holder
       timelineItems.forEach((item, index) => {
         const logoHolder = logoHolders[index];
         if (!logoHolder) return;
 
-        const itemCenterOffset = item.offsetTop + item.clientHeight / 2;
-        const itemCenterPercent = itemCenterOffset / containerHeight;
+        const logoTop = logoHolder.offsetTop; // Top of logo relative to container
+        const logoHeight = logoHolder.clientHeight; // Height of logo
 
-        // Add/remove 'isActive' class
-        if (progress >= itemCenterPercent) {
-          logoHolder.classList.add(styles.isActive);
-        } else {
-          logoHolder.classList.remove(styles.isActive);
+        // How far indicator is past the logo's top edge
+        const fillAmount = indicatorY - logoTop;
+
+        // Percentage fill (0 to 1) for this logo
+        let logoFillPercent = 0;
+        if (logoHeight > 0) {
+            logoFillPercent = fillAmount / logoHeight;
         }
+
+        // Clamp between 0 and 1
+        logoFillPercent = Math.max(0, Math.min(1, logoFillPercent));
+
+        // Set the variable
+        logoHolder.style.setProperty('--logo-fill-progress', logoFillPercent);
       });
     };
 
@@ -87,8 +77,8 @@ const Experience = () => {
 
     return () => {
       window.removeEventListener('scroll', throttledScrollHandler);
-      // Clean up classes on unmount
-      logoHolders.forEach(holder => holder.classList.remove(styles.isActive));
+      // Clean up custom property on unmount
+      logoHolders.forEach(holder => holder.style.removeProperty('--logo-fill-progress'));
       if (timelineContainer) timelineContainer.style.removeProperty('--scroll-progress');
     };
 
