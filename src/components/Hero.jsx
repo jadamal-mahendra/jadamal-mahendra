@@ -34,7 +34,7 @@ const Hero = () => {
             <br />
             {/* Action Buttons */}
             <div className={styles.heroButtons}>
-              <a href="/resume.pdf" className="btn" target="_blank" rel="noopener noreferrer">
+              <a href="/Jadamal-Mahendra-April-2025.pdf" className="btn" target="_blank" rel="noopener noreferrer">
                 View Resume
               </a>
               {/* Combine global btn with module style */}
