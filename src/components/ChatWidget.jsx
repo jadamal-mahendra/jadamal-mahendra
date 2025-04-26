@@ -13,8 +13,7 @@ import { content as websiteContent } from '../Content'; // Adjust path if necess
 
 const CHAT_HISTORY_KEY = 'chatHistory';
 const THREAD_ID_KEY = 'chatThreadId';
-
-
+const WORD_LIMIT = 150; // Define the word limit
 
 const ChatWidget = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -54,6 +53,7 @@ const ChatWidget = () => {
 
   const [messages, setMessages] = useState(getInitialMessages);
   const [inputValue, setInputValue] = useState('');
+  const [wordCount, setWordCount] = useState(0); // State for word count
   const [isLoading, setIsLoading] = useState(false);
   const [currentSuggestions, setCurrentSuggestions] = useState([]);
   const [currentThreadId, setCurrentThreadId] = useState(getInitialThreadId);
@@ -108,8 +108,18 @@ const ChatWidget = () => {
 
   const toggleChat = () => setIsOpen(!isOpen);
 
+  // Updated input handler with word limit
   const handleInputChange = (event) => {
-    setInputValue(event.target.value);
+    const value = event.target.value;
+    const words = value.trim().split(/\\s+/).filter(Boolean); // Split by whitespace, filter empty
+    const currentCount = words.length;
+
+    if (currentCount <= WORD_LIMIT) {
+      setInputValue(value);
+      setWordCount(currentCount);
+    } 
+    // Optionally: If count > WORD_LIMIT, maybe show an error or just prevent update
+    // For now, we just don't update state if the limit is exceeded
   };
 
   // Refactored function to send message and get AI response
@@ -410,18 +420,31 @@ const ChatWidget = () => {
 
         {/* Input Area */}
         <form className={styles.inputArea} onSubmit={handleFormSubmit}>
-          <input
-            type="text"
-            placeholder="Ask about skills, projects..."
+          <textarea // Assuming it's a textarea, adjust if it's an input
             value={inputValue}
             onChange={handleInputChange}
-            disabled={isLoading}
+            placeholder="Type your message..."
             className={styles.inputField}
-            aria-label="Chat message input"
+            rows="1" // Start with one row
+            onInput={(e) => { // Auto-resize textarea
+                e.target.style.height = 'auto';
+                e.target.style.height = `${e.target.scrollHeight}px`;
+            }}
+            disabled={isLoading || isSendingTranscript}
           />
-          <button type="submit" disabled={isLoading || !inputValue} className={styles.sendButton} aria-label="Send Message">
-            {isLoading ? <LuLoader2 className={styles.loadingIconSmall} size={18}/> : <LuSendHorizonal size={18} />}
-          </button>
+          {/* Word Counter */}
+          <div className={styles.inputControls}>
+            <span className={styles.wordCounter}>
+              {wordCount}/{WORD_LIMIT}
+            </span>
+            <button 
+              type="submit" 
+              className={styles.sendButton} 
+              disabled={isLoading || isSendingTranscript || !inputValue.trim()}
+            >
+              {isLoading ? <LuLoader2 className={styles.spinner} /> : <LuSendHorizonal />}
+            </button>
+          </div>
         </form>
       </div>
     </div>
