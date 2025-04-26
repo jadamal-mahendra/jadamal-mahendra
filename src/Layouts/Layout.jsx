@@ -4,6 +4,8 @@ import Navbar from './Navbar';
 import Footer from './Footer';
 import ChatWidget from '../components/ChatWidget';
 import ChatErrorBoundary from '../components/ChatErrorBoundary';
+import { Analytics } from '@vercel/analytics/react';
+import { SpeedInsights } from '@vercel/speed-insights/react';
 
 const Layout = () => {
   // --- Theme State --- 
@@ -40,6 +42,10 @@ const Layout = () => {
       <ChatErrorBoundary>
         <ChatWidget />
       </ChatErrorBoundary>
+      <Analytics />
+      <SpeedInsights />
+
+
     </>
   );
 };
