@@ -102,7 +102,7 @@ async function generateBlogPost() {
     Example frontmatter format:
     ---
     title: "Navigating Asynchronous Patterns in Production Node.js"
-    date: "2024-01-15"
+    date: today date in this format"2024-01-15"
     tags:
       - Node.js
       - JavaScript
@@ -141,16 +141,28 @@ async function generateBlogPost() {
   let postTitle = '';
   let frontmatter = {}; // Define frontmatter in the outer scope
 
+  // ---> Get and format the current date <---
+  const today = new Date();
+  const year = today.getFullYear();
+  const month = String(today.getMonth() + 1).padStart(2, '0'); // Months are 0-indexed
+  const day = String(today.getDate()).padStart(2, '0');
+  const currentDate = `${year}-${month}-${day}`;
+  // ---> End date formatting <---
+
   try {
     // Parse frontmatter and content directly
     const { data, content: contentBody } = matter(generatedMarkdown);
     frontmatter = data; // Assign the parsed data to the outer scope variable
 
+    // ---> OVERWRITE the date from AI with the current date <---
+    frontmatter.date = currentDate;
+    // ---> End date overwrite <---
+
     // Validate frontmatter - Now include imagePrompt
-    if (!frontmatter || !frontmatter.title || !frontmatter.date || !frontmatter.imagePrompt) {
+    if (!frontmatter || !frontmatter.title || !frontmatter.date || !frontmatter.imagePrompt) { // Date check is still good
       throw new Error('Generated content missing required frontmatter (title, date, imagePrompt).');
     }
-    console.log('[generate-blog] Parsed Frontmatter:', frontmatter);
+    console.log('[generate-blog] Parsed Frontmatter (Date Overwritten):', frontmatter);
 
     postTitle = frontmatter.title.trim();
     slug = postTitle.toLowerCase().replace(/[^a-z0-9\s-]/g, '').replace(/\s+/g, '-').replace(/-+/g, '-');
@@ -158,7 +170,7 @@ async function generateBlogPost() {
     postData = {
         slug: slug,
         title: postTitle,
-        date: frontmatter.date,
+        date: frontmatter.date, // This will now use the correct current date
         tags: frontmatter.tags || [],
         content: contentBody.trim(), // Store raw Markdown content again
         featuredImage: null // Keep placeholder
