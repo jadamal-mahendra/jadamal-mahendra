@@ -127,6 +127,7 @@ const BlogPost = () => {
              <ReactMarkdown
                components={{
                  code: CodeBlock, // Override default code rendering
+                 h1: () => null, // Add an override for h1 to render nothing
                }}
              >
                {post.content} 
