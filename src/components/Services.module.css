@@ -14,6 +14,16 @@
 /* .sectionTitle { ... } */
 /* .sectionSubtitle { ... } */
 
+/* Add keyframes for the flowing size effect */
+@keyframes flowSize {
+  0%, 100% {
+    --gradient-size: 280px; /* Smaller size */
+  }
+  50% {
+    --gradient-size: 330px; /* Larger size */
+  }
+}
+
 .servicesGrid {
   display: grid;
   /* Adjust columns based on screen size */
@@ -26,14 +36,61 @@
   background-color: #ffffff; /* White background for the card */
   padding: 2rem; /* Internal padding */
   border-radius: 8px; /* Rounded corners */
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08); /* Subtle shadow */
+  /* box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08); */ /* Keep or remove original shadow */
   text-align: center; /* Center content */
-  transition: transform 0.3s ease, box-shadow 0.3s ease; /* Hover effect */
+  /* transition: transform 0.3s ease, box-shadow 0.3s ease; */ /* Keep or remove original transition */
+
+  /* Add required styles for glow effect */
+  position: relative; /* Needed for pseudo-element */
+  z-index: 1; /* Ensure content is above pseudo-element */
+  overflow: hidden; /* Clip the pseudo-element */
+
+  /* Layer the subtle tint gradient */
+  background-image: radial-gradient(
+    700px circle at var(--mouse-x) var(--mouse-y),
+    rgba(52, 152, 219, 0.05) 0%,
+    transparent 50%
+  );
+  background-repeat: no-repeat;
+  /* Ensure background-color is still applied */
+  background-color: #ffffff;
+}
+
+/* Add the pseudo-element for the glow */
+.serviceItem::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 2px; /* Border width */
+
+  /* Define variable for gradient size */
+  --gradient-size: 300px; /* Default size */
+
+  background: radial-gradient(
+    var(--gradient-size) circle at var(--mouse-x) var(--mouse-y),
+    rgba(52, 152, 219, 0.6) 0%,
+    rgba(52, 152, 219, 0.15) 40%,
+    transparent 65%
+  );
+  -webkit-mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
+  mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+          mask-composite: exclude;
+  z-index: -1;
+  pointer-events: none;
+
+  /* Add the flowing size animation */
+  animation: flowSize 3s infinite ease-in-out;
 }
 
 .serviceItem:hover {
-  transform: translateY(-5px); /* Slight lift on hover */
-  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.12); /* Enhanced shadow on hover */
+  transform: translateY(-5px); /* Keep original hover lift */
+  /* box-shadow: 0 6px 20px rgba(0, 0, 0, 0.12); */ /* Keep or remove original shadow hover */
 }
 
 .serviceIcon {

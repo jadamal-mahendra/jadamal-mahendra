@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import { content } from '../Content';
 import { Helmet } from 'react-helmet-async';
 // import TechIcon from 'tech-stack-icons'; // Removed import
@@ -9,9 +9,36 @@ import styles from './Services.module.css'; // Import CSS Module
 
 const Services = () => {
   const { services } = content;
+  const containerRef = useRef(null);
 
-  // Example: Mapping icons if you choose to use them
-  // const serviceIcons = [<FaCode size={40}/>, <FaMobileAlt size={40}/>, <FaCube size={40}/>];
+  useEffect(() => {
+    const container = containerRef.current;
+    if (!container) return;
+
+    const cards = container.querySelectorAll(`.${styles.serviceItem}`);
+
+    const handleMouseMove = (e) => {
+      cards.forEach(card => {
+        const rect = card.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+        card.style.setProperty('--mouse-x', `${x}px`);
+        card.style.setProperty('--mouse-y', `${y}px`);
+      });
+    };
+
+    container.addEventListener('mousemove', handleMouseMove);
+    console.log("Service item mouse move listener attached.");
+
+    return () => {
+      container.removeEventListener('mousemove', handleMouseMove);
+      console.log("Service item mouse move listener removed.");
+      cards.forEach(card => {
+        card.style.removeProperty('--mouse-x');
+        card.style.removeProperty('--mouse-y');
+      });
+    };
+  }, []);
 
   return (
     <section id="services" className={`${styles.servicesSection} section-padding`}>
@@ -35,7 +62,7 @@ const Services = () => {
         <br />
 
         {/* Services Grid */}
-        <div className={styles.servicesGrid} data-aos="fade-up">
+        <div ref={containerRef} className={styles.servicesGrid} data-aos="fade-up">
           {services.service_content.map((service, i) => (
             <div key={i} className={styles.serviceItem} data-aos="fade-up" data-aos-delay={i * 100}>
               {/* Use logo component from content */}
