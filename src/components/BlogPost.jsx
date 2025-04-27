@@ -111,6 +111,31 @@ const BlogPost = () => {
   // Construct the LinkedIn share URL
   const linkedInShareUrl = `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(currentUrl)}`;
 
+  // --- Prepare SEO data ---
+  const pageTitle = `${post.title} - Jadamal Mahendra Blog`;
+  const metaDescription = cleanDescription(post.content, 160); // Standard meta description length
+  const ogDescription = cleanDescription(post.content, 300); // Longer for Open Graph
+  const canonicalUrl = currentUrl || `${publicSiteUrl}/blog/${post.slug}`; // Use dynamic URL if available, else construct
+  
+  // --- Robust Image URL Construction ---
+  let featuredImageUrl = `${publicSiteUrl}/assets/default-og-image.png`; // Default fallback
+  if (post.featuredImage) {
+    if (post.featuredImage.startsWith('http')) {
+        featuredImageUrl = post.featuredImage; // Use as is if absolute
+    } else {
+        // Use URL constructor for robust joining, ensuring leading slash handling
+        try {
+            featuredImageUrl = new URL(post.featuredImage, publicSiteUrl).href;
+        } catch (e) {
+            console.error(`Error constructing featured image URL from path: ${post.featuredImage}`, e);
+            // Keep the default fallback if URL construction fails
+        }
+    }
+  }
+  // --- End Robust Image URL Construction ---
+
+  const authorName = "Jadamal Mahendra"; // Replace with your name
+
   return (
     <section id="blog-post" className={`${styles.blogSection} section-padding`}>
       <Helmet>
