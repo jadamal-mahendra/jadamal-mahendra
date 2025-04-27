@@ -8,6 +8,7 @@ import matter from 'gray-matter'; // Import gray-matter
 import https from 'https'; // Needed for image download potentially
 import stream from 'stream';
 import { promisify } from 'util';
+import fetch from 'node-fetch'; // <--- Add import for fetch
 
 // Load environment variables from .env file
 dotenv.config();
@@ -17,6 +18,11 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 const openaiApiKey = process.env.OPENAI_API_KEY;
+// ---> Add site URL and function secret from environment variables <--- 
+const publicSiteUrl = process.env.PUBLIC_SITE_URL;
+const functionSecret = process.env.FUNCTION_SECRET_KEY;
+// ---> End environment variable loading <---
+
 const blogContentDir = path.resolve(__dirname, '../src/content/blog'); // Use path.resolve for robustness
 const blogImageDir = path.resolve(__dirname, '../public/assets/blog-images'); // Save images to public directory
 
@@ -27,9 +33,70 @@ if (!openaiApiKey) {
   process.exit(1);
 }
 
+// ---> Add check for PUBLIC_SITE_URL <---
+if (!publicSiteUrl) {
+  console.warn('Warning: PUBLIC_SITE_URL is not set in the .env file. Cannot construct full URLs for LinkedIn posting.');
+  // Decide if you want to exit or just skip posting
+  // process.exit(1);
+}
+// ---> End check <---
+
 const openai = new OpenAI({
   apiKey: openaiApiKey,
 });
+
+// ---> Define the triggerZapierWebhook function here <--- 
+async function triggerZapierWebhook(postData, postUrl) {
+  const zapierWebhookUrl = 'https://hooks.zapier.com/hooks/catch/22683508/2pt67cf/'; 
+
+  console.log(`Attempting to trigger Zapier webhook: ${zapierWebhookUrl}`);
+
+  try {
+    const payload = {
+      title: postData.title,
+      url: postUrl, // The absolute URL to the deployed blog post
+      // Generate description from content for the Zapier payload
+      description: (postData.content || '')
+        .replace(/^#+\s+.*/gm, '') 
+        .replace(/<[^>]*>/g, '')    
+        .replace(/\s+/g, ' ')       
+        .trim()                     
+        .slice(0, 250) || 'Read more...' // Slightly longer slice for Zapier context
+    };
+
+    // ---> Add Detailed Logging <--- 
+    console.log("\n--- Debug Zapier Request ---");
+    console.log("Payload Object:", payload);
+    const jsonBody = JSON.stringify(payload);
+    console.log("JSON Body Sent:", jsonBody);
+    const headers = {
+      'Content-Type': 'application/json',
+    };
+    console.log("Headers Sent:", headers);
+    console.log("--- End Debug Zapier Request ---\n");
+    // ---> End Detailed Logging <---
+
+    const response = await fetch(zapierWebhookUrl, {
+      method: 'POST',
+      headers: headers, // Use the logged headers object
+      body: jsonBody // Use the logged JSON body string
+    });
+
+    // Zapier typically returns a success status even if the Zap fails later
+    // We primarily check if the webhook itself was received ok (2xx status)
+    if (!response.ok) {
+      // Attempt to get error details if Zapier provides them
+      let errorBody = await response.text(); 
+      console.error(`Failed to trigger Zapier webhook (${response.status}):`, errorBody || response.statusText);
+    } else {
+      const result = await response.json(); // Zapier returns status info
+      console.log('Zapier webhook triggered successfully:', result);
+    }
+  } catch (error) {
+    console.error('Error calling Zapier webhook:', error);
+  }
+}
+// ---> End definition of triggerZapierWebhook <---
 
 async function generateBlogPost() {
   console.log('Starting blog post generation...');
@@ -97,31 +164,19 @@ async function generateBlogPost() {
     
     Create an engaging title that is more specific than just "${selectedSkill}".
     
-    Format the output strictly as Markdown, including YAML frontmatter at the beginning with 'title', 'date' (YYYY-MM-DD format), 'tags' (a YAML array of relevant keywords, including the core skill and related concepts), and 'imagePrompt' (a short English phrase describing a suitable conceptual or abstract featured image for this advanced topic, e.g., 'Abstract representation of interconnected system architecture').
+    Format the output strictly as Markdown. 
+    **IMPORTANT:** Start the response *directly* with the YAML frontmatter block, enclosed ONLY by \`---\` delimiters on their own lines. Do NOT wrap the frontmatter in \`\`\`yaml or any other code block fences. 
+    The frontmatter must include 'title', 'date' (in YYYY-MM-DD format), 'tags' (a YAML array of relevant keywords), and 'imagePrompt' (a short phrase describing a suitable featured image).
 
     Example frontmatter format:
-    ---
-    title: "Navigating Asynchronous Patterns in Production Node.js"
-    date: today date in this format"2024-01-15"
-    tags:
-      - Node.js
-      - JavaScript
-      - Async
-      - Promises
-      - Event Loop
-      - Performance
-    imagePrompt: "Complex network of interconnected glowing nodes"
-    ---
-
-    Existing blog post topics to try and avoid repeating directly: ${existingTopics.join(', ') || 'None'}
-  `;
+    ---\n    title: \"Navigating Asynchronous Patterns in Production Node.js\"\n    date: \"2024-01-15\" \n    tags:\n      - Node.js\n      - JavaScript\n      - Async\n      - Promises\n      - Event Loop\n      - Performance\n    imagePrompt: \"Complex network of interconnected glowing nodes\"\n    ---\n\n    After the closing \`---\` delimiter of the frontmatter, the main Markdown content of the blog post should follow.\n\n    Existing blog post topics to try and avoid repeating directly: ${existingTopics.join(', ')} || 'None'\n  `;
 
   // 5. Call OpenAI API
   console.log('Generating content with OpenAI...');
   let generatedMarkdown = '';
   try {
     const completion = await openai.chat.completions.create({
-      model: "gpt-3.5-turbo", // Or a newer model if you prefer
+      model: "gpt-4o", // Or a newer model if you prefer
       messages: [{ role: "user", content: prompt }],
       temperature: 0.7, // Adjust for creativity vs consistency
     });
@@ -159,8 +214,8 @@ async function generateBlogPost() {
     // ---> End date overwrite <---
 
     // Validate frontmatter - Now include imagePrompt
-    if (!frontmatter || !frontmatter.title || !frontmatter.date || !frontmatter.imagePrompt) { // Date check is still good
-      throw new Error('Generated content missing required frontmatter (title, date, imagePrompt).');
+    if (!frontmatter || !frontmatter.title || !frontmatter.date ) { // Date check is still good
+      throw new Error('Generated content missing required frontmatter (title, date).');
     }
     console.log('[generate-blog] Parsed Frontmatter (Date Overwritten):', frontmatter);
 
@@ -182,55 +237,7 @@ async function generateBlogPost() {
       return;
   }
 
-  // --- Step 5b: Generate and Save Image --- 
-  if (frontmatter && frontmatter.imagePrompt) { // Add a check for frontmatter existence too
-    console.log(`[generate-blog] Generating image with prompt: "${frontmatter.imagePrompt}"`);
-    try {
-      const response = await openai.images.generate({
-        model: "dall-e-2", // Or dall-e-3 if preferred/available
-        prompt: frontmatter.imagePrompt,
-        n: 1, // Generate one image
-        size: "1024x1024" // Or other supported size
-      });
-      
-      const imageUrl = response.data?.[0]?.url;
-      if (!imageUrl) {
-        throw new Error('No image URL received from OpenAI.');
-      }
-      console.log(`[generate-blog] Image generated: ${imageUrl}`);
-
-      // Download and save the image
-      const imageFilename = `${slug}.png`; // Assuming PNG, adjust if needed
-      const imageSavePath = path.join(blogImageDir, imageFilename);
-      const relativeImagePath = `/assets/blog-images/${imageFilename}`; // Path for frontend
-
-      console.log(`[generate-blog] Downloading image to ${imageSavePath}...`);
-      await fs.mkdir(blogImageDir, { recursive: true }); // Ensure directory exists
-      
-      // Use fetch to get the image stream
-      const fetchResponse = await fetch(imageUrl);
-      if (!fetchResponse.ok) {
-        throw new Error(`Failed to download image: ${fetchResponse.statusText}`);
-      }
-      if (!fetchResponse.body) {
-        throw new Error('Response body is null');
-      }
-
-      // Stream the image to the file using callback fs
-      await pipeline(fetchResponse.body, fsCallbacks.createWriteStream(imageSavePath));
-
-      console.log(`[generate-blog] Image saved successfully to ${imageSavePath}`);
-      postData.featuredImage = relativeImagePath; // Update post data with relative path
-
-    } catch (imgError) {
-      console.error('[generate-blog] Error generating or saving image:', imgError.message);
-      postData.featuredImage = null; // Ensure featuredImage is null if image fails
-    }
-  } else {
-    console.log('[generate-blog] No image prompt found or frontmatter missing, skipping image generation.');
-    postData.featuredImage = null;
-  }
-  // --- End Image Generation --- 
+ 
 
   // --- Save JSON --- 
   const filename = `${postData.slug}.json`;
@@ -240,26 +247,24 @@ async function generateBlogPost() {
   try {
     await fs.writeFile(filePath, JSON.stringify(postData, null, 2)); // Write JSON
     console.log(`Successfully wrote blog post JSON to ${filePath}`);
+
+    // ---> Call triggerZapierWebhook after successful save <---
+    if (publicSiteUrl) { // Only proceed if we have the base URL
+      // Construct the full URL to the new post
+      const deployedUrl = `${publicSiteUrl.replace(/\/$/, '')}/blog/${postData.slug}`;
+      console.log(`Constructed deployed URL: ${deployedUrl}`);
+      // Call the Zapier function instead of notifyLinkedIn
+      await triggerZapierWebhook(postData, deployedUrl); 
+    } else {
+      console.warn('Skipping Zapier notification because PUBLIC_SITE_URL is not set.');
+    }
+    // ---> End Zapier notification call <---
+
   } catch (error) {
-    console.error(`Error writing file ${filePath}:`, error);
+    console.error(`Error writing file ${filePath} or notifying Zapier:`, error);
   }
 }
 
-// --- Vercel Handler --- //
 
-export default async function handler(request, response) {
-  console.log('[Vercel Cron] Received request, starting blog generation...');
-  try {
-    await generateBlogPost();
-    console.log('[Vercel Cron] Blog generation function completed.');
-    // Send a success response
-    return response.status(200).json({ message: 'Blog generation successful' });
-  } catch (error) {
-    console.error('[Vercel Cron] Error during blog generation:', error);
-    // Send an error response
-    return response.status(500).json({ message: 'Blog generation failed', error: error.message });
-  }
-}
 
-// Comment out the direct call, as Vercel will call the handler
-// generateBlogPost(); 
+generateBlogPost(); 

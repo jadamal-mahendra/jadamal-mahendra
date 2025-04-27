@@ -184,6 +184,9 @@
   margin-top: 3rem;
   padding-top: 1.5rem;
   border-top: 1px solid var(--color-border-light);
+  display: flex; /* Use flexbox */
+  justify-content: space-between; /* Push items to edges */
+  align-items: center; /* Vertically align items */
 }
 
 .backLink {
@@ -195,6 +198,26 @@
 .backLink:hover {
   text-decoration: underline;
   color: var(--color-primary-hover);
+}
+
+/* Share Link Styles */
+.shareLink {
+  display: inline-flex; /* Align icon and text */
+  align-items: center;
+  color: #0077b5; /* LinkedIn blue */
+  text-decoration: none;
+  font-size: 0.9rem;
+  font-weight: 500;
+  transition: color 0.2s ease;
+}
+
+.shareLink svg {
+  margin-right: 0.4rem; /* Space between icon and text */
+}
+
+.shareLink:hover {
+  color: #005582; /* Darker LinkedIn blue on hover */
+  text-decoration: none;
 }
 
 /* Loading/Error Styles */
@@ -378,4 +401,16 @@
 /* Make sure card content is clickable if the card itself isn't a link */
 .postCard > * {
     pointer-events: auto; /* Allow clicks on content inside */
+}
+
+.postDescription {
+  margin-top: 0.5rem; /* Adjust spacing as needed */
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 3; /* Limit to 3 lines */
+  line-clamp: 3; /* Limit to 3 lines */
+  -webkit-box-orient: vertical;
+  color: var(--text-secondary); /* Or your desired text color */
+  font-size: 0.9rem; /* Adjust font size as needed */
+  line-height: 1.4; /* Adjust line height as needed */
 } 

@@ -17,7 +17,7 @@ const BlogList = () => {
   const posts = tag
     ? allPosts.filter(post => post.tags && post.tags.includes(decodeURIComponent(tag)))
     : allPosts;
-
+console.log(posts);
   useGlowEffect(cardContainerRef, `.${styles.postCard}`);
 
   const pageTitle = tag ? `Posts tagged: "${decodeURIComponent(tag)}" - Blog` : "Blog - Jadamal Mahendra";
@@ -69,21 +69,14 @@ const BlogList = () => {
                 style={{ cursor: 'pointer' }}
               >
                 <div className={styles.cardContent}>
-                  {post.featuredImage && (
-                    <img
-                      src={post.featuredImage}
-                      alt={`Featured image for ${post.title}`}
-                      className={styles.postCardImage}
-                      loading="lazy"
-                      onClick={(e) => e.stopPropagation()}
-                    />
-                  )}
+               
                   <Link to={`/blog/${post.slug}`} onClick={(e) => e.stopPropagation()} className={styles.postTitleLink}>
                      <h3 className={styles.postTitle}>{post.title}</h3>
                   </Link>
                   <time dateTime={post.date.toISOString()} className={styles.postDate}>
                     {post.date.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}
                   </time>
+                  {post.description && <p className={styles.postDescription}>{post.description}</p>}
                   {post.tags && post.tags.length > 0 && (
                     <div className={styles.tagsContainer}>
                       {post.tags.map(tag => (

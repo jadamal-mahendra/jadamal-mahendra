@@ -1,6 +1,5 @@
 import OpenAI from 'openai';
-import fs from 'fs';
-import path from 'path';
+
 
 // Get OpenAI client and Assistant ID
 const openai = new OpenAI({

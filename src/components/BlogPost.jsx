@@ -7,6 +7,7 @@ import { Helmet } from 'react-helmet-async';
 import styles from './Blog.module.css'; // Reuse or create specific styles
 import Navbar from '../Layouts/Navbar';
 import { LuCopy, LuCheck } from "react-icons/lu"; // Icons for copy button
+import { FaLinkedin } from 'react-icons/fa'; // Import LinkedIn icon
 
 // Custom Code component for ReactMarkdown using prism-react-renderer
 const CodeBlock = ({ node, inline, className, children, ...props }) => {
@@ -74,8 +75,12 @@ const BlogPost = () => {
   const [post, setPost] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
+  const [currentUrl, setCurrentUrl] = useState('');
 
   useEffect(() => {
+    // Set the current URL once the component mounts (client-side)
+    setCurrentUrl(window.location.href);
+
     const fetchPost = async () => {
       setLoading(true);
       setError(false);
@@ -103,6 +108,9 @@ const BlogPost = () => {
   // Log the post object to check its content
   console.log('Rendering BlogPost with post data (expecting htmlContent):', post);
 
+  // Construct the LinkedIn share URL
+  const linkedInShareUrl = `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(currentUrl)}`;
+
   return (
     <section id="blog-post" className={`${styles.blogSection} section-padding`}>
       <Helmet>
@@ -115,13 +123,13 @@ const BlogPost = () => {
         <article className={styles.postArticle}>
           <header className={styles.postHeader}>
             {/* Display Featured Image if available */}
-            {post.featuredImage && (
+            {/* {post.featuredImage && (
               <img 
                 src={post.featuredImage} 
                 alt={`${post.title} featured image`} 
                 className={styles.featuredImage} // Add styles for this
               />
-            )}
+            )} */}
             <h1 className={styles.postTitleArticle}>{post.title}</h1>
             <time dateTime={post.date.toISOString()} className={styles.postDateArticle}>
               {post.date.toLocaleDateString('en-US', { 
@@ -152,6 +160,16 @@ const BlogPost = () => {
 
           <footer className={styles.postFooter}>
             <Link to="/blog" className={styles.backLink}>&larr; Back to Blog</Link>
+            {/* Add LinkedIn Share Link */}
+            <a 
+              href={linkedInShareUrl} 
+              target="_blank" 
+              rel="noopener noreferrer" 
+              className={styles.shareLink} // Add a class for styling
+              aria-label="Share this post on LinkedIn"
+            >
+              <FaLinkedin size={18} /> Share on LinkedIn
+            </a>
           </footer>
         </article>
       </div>

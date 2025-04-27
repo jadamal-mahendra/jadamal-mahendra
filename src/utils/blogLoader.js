@@ -35,6 +35,13 @@ export function loadBlogPosts() {
         date: new Date(postData.date),
         featuredImage: postData.featuredImage || null,
         tags: postData.tags || [],
+        // Generate description: remove MD headings, HTML tags, collapse whitespace, then slice
+        description: (postData.content || '')
+          .replace(/^#+\s+.*/gm, '') // Remove Markdown headings
+          .replace(/<[^>]*>/g, '')    // Remove HTML tags
+          .replace(/\s+/g, ' ')       // Collapse whitespace
+          .trim()                     // Trim leading/trailing space
+          .slice(0, 200) || '',     // Slice to 200 chars
       };
     } catch (parseError) {
       console.error(`[blogLoader] Error processing JSON module for ${filepath}:`, parseError);
