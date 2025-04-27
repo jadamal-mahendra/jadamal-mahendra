@@ -115,6 +115,20 @@ const BlogPost = () => {
     <section id="blog-post" className={`${styles.blogSection} section-padding`}>
       <Helmet>
         <title>{post.title} - Jadamal Mahendra Blog</title>
+        <meta name="description" content={post.content.substring(0, 300) + '...'} />
+        <meta property="og:title" content={post.title} />
+        <meta property="og:description" content={post.content.substring(0, 300) + '...'} />
+        <meta property="og:image" content={post.featuredImage} />
+        <meta property="og:url" content={currentUrl} />
+        <meta property="og:type" content="article" />
+        <meta property="og:site_name" content="Jadamal Mahendra Blog" />
+        <meta property="og:locale" content="en_US" />
+        <meta property="og:image:width" content="1200" />
+        <meta property="og:image:height" content="630" />
+        <meta property="og:image:alt" content={post.featuredImageAlt} />
+ 
+        
+        
         {/* You could generate a meta description from post content snippet here */}
         {/* <meta name="description" content={post.content.substring(0, 150) + '...'} /> */}
       </Helmet>
