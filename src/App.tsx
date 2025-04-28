@@ -13,7 +13,7 @@ import "aos/dist/aos.css";
 import Home from './pages/Home';
 import BlogListPage from './pages/BlogListPage';
 import BlogPostPage from './pages/BlogPostPage';
-import Layout from "./layouts/Layout.tsx";
+import Layout from "./layouts/Layout";
 
 // Import base CSS
 import "./styles/index.css";
