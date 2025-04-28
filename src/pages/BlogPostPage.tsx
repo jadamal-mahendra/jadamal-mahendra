@@ -1,20 +1,27 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
 import ReactMarkdown from 'react-markdown';
-import { loadBlogPost } from '@/utils/blogLoader';
+import { loadBlogPost, BlogPost } from '@/utils/blogLoader';
 import { Helmet } from 'react-helmet-async';
 import styles from '@/styles/Blog.module.css';
 import { FaLinkedin } from 'react-icons/fa';
 import CodeBlock from '@/components/CodeBlock/CodeBlock';
 
-// Helper function to clean text for meta descriptions (Keep this)
-const cleanDescription = (text, maxLength = 160) => {
-  // ... (implementation remains the same)
-};
-
 const BlogPostPage = () => {
+  // Define helper function INSIDE the component
+  const cleanDescription = (text = '', maxLength = 160) => {
+    if (!text) return '';
+    return text
+      .replace(/<[^>]*>/g, '') // Remove HTML tags
+      .replace(/\r\n|\n|\r/gm, ' ') // Replace newlines with spaces
+      .replace(/\s+/g, ' ') // Replace multiple spaces with single space
+      .replace(/^#+\s+.*/gm, '') // Remove markdown headings
+      .trim()
+      .slice(0, maxLength);
+  };
+
   const { slug } = useParams();
-  const [post, setPost] = useState(null);
+  const [post, setPost] = useState<BlogPost | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
   const [currentUrl, setCurrentUrl] = useState('');
@@ -27,11 +34,18 @@ const BlogPostPage = () => {
     setCurrentUrl(window.location.href);
 
     const fetchPost = async () => {
+      // Ensure slug exists before fetching
+      if (!slug) { 
+        console.error("No slug provided in URL");
+        setError(true);
+        setLoading(false);
+        return;
+      }
       setLoading(true);
       setError(false);
       const loadedPost = await loadBlogPost(slug);
       if (loadedPost) {
-        setPost(loadedPost);
+        setPost(loadedPost); // This assignment is now type-safe
       } else {
         setError(true);
       }
@@ -122,7 +136,7 @@ const BlogPostPage = () => {
             </time>
             {post.tags && post.tags.length > 0 && (
               <div className={styles.tagsContainer}>
-                {post.tags.map(tag => (
+                {post.tags.map((tag: string) => (
                   <Link to={`/blog/tag/${encodeURIComponent(tag)}`} key={tag} className={styles.tagItem}>{tag}</Link>
                 ))}
               </div>

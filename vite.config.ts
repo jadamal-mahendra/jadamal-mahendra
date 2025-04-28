@@ -10,8 +10,8 @@ export default defineConfig(({ mode }) => {
 
   return {
     plugins: [
-      react(),
-      tsconfigPaths()
+      tsconfigPaths(),
+      react()
     ],
     server: {
       port: parseInt(env.VITE_PORT || '3001', 10), // Parse port to number
