@@ -1,4 +1,4 @@
-import React, { useState, useEffect, ReactNode } from 'react';
+import  { useState, useEffect, ReactNode } from 'react';
 import Navbar from './Navbar'; // Use relative path
 import Footer from './Footer'; // Use relative path
 import ChatWidget from '../components/ChatWidget/ChatWidget'; // Use relative path
@@ -11,7 +11,7 @@ interface AppLayoutProps {
   children: ReactNode; // Expect children prop
 }
 
-const AppLayout: React.FC<AppLayoutProps> = ({ children }) => {
+const AppLayout = ({ children }: AppLayoutProps) => {
   // --- Theme State --- 
   const [theme, setTheme] = useState<'light' | 'dark'>(() => {
     // Guard against SSR/build environments where localStorage might not be available

@@ -58,7 +58,6 @@ const App = () => {
   }, []);
 
   return (
-    // Wrap RouterProvider with AppLayout
     <AppLayout>
       <RouterProvider router={router} />
     </AppLayout>
