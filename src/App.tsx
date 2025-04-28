@@ -13,10 +13,10 @@ import ChatErrorBoundary from '@/components/ChatErrorBoundary/ChatErrorBoundary'
 import Home from '@/pages/Home';
 import BlogListPage from '@/pages/BlogListPage';
 import BlogPostPage from '@/pages/BlogPostPage';
+import Layout from "@/layouts/Layout";
 
 // Import base CSS
 import "@/styles/index.css";
-import Layout from './layouts/Layout';
 
 // Define routes
 const router = createBrowserRouter([
