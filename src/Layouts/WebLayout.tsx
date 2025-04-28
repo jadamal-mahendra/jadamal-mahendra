@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Outlet } from 'react-router-dom';
-import Navbar from './Navbar'; 
-import Footer from './Footer';
+// import Navbar from './Navbar'; // Comment out
+// import Footer from './Footer'; // Comment out
 // import ChatWidget from '../components/ChatWidget/ChatWidget'; // Comment out
 // import ChatErrorBoundary from '../components/ChatErrorBoundary/ChatErrorBoundary'; // Comment out
 import { Analytics } from '@vercel/analytics/react';
@@ -36,12 +36,12 @@ const WebLayout: React.FC = () => {
   return (
     <>
       {/* Pass theme and toggle function to Navbar */}
-      <Navbar currentTheme={theme} toggleTheme={toggleTheme} />
+      {/* <Navbar currentTheme={theme} toggleTheme={toggleTheme} /> */}
       <main>
         {/* Child routes will render here */}
         <Outlet /> 
       </main>
-      <Footer />
+      {/* <Footer /> */}
       {/* Comment out ChatWidget and ErrorBoundary usage */}
       {/* <ChatErrorBoundary>
         <ChatWidget />
