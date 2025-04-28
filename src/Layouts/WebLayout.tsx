@@ -2,8 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { Outlet } from 'react-router-dom';
 import Navbar from './Navbar'; 
 import Footer from './Footer';
-import ChatWidget from '../components/ChatWidget/ChatWidget';
-import ChatErrorBoundary from '../components/ChatErrorBoundary/ChatErrorBoundary';
+// import ChatWidget from '../components/ChatWidget/ChatWidget'; // Comment out
+// import ChatErrorBoundary from '../components/ChatErrorBoundary/ChatErrorBoundary'; // Comment out
 import { Analytics } from '@vercel/analytics/react';
 import { SpeedInsights } from '@vercel/speed-insights/react';
 
@@ -42,13 +42,12 @@ const WebLayout: React.FC = () => {
         <Outlet /> 
       </main>
       <Footer />
-      <ChatErrorBoundary>
+      {/* Comment out ChatWidget and ErrorBoundary usage */}
+      {/* <ChatErrorBoundary>
         <ChatWidget />
-      </ChatErrorBoundary>
+      </ChatErrorBoundary> */}
       <Analytics />
       <SpeedInsights />
-
-
     </>
   );
 };
