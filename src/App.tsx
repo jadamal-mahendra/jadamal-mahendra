@@ -13,16 +13,17 @@ import "aos/dist/aos.css";
 import Home from './pages/Home';
 import BlogListPage from './pages/BlogListPage';
 import BlogPostPage from './pages/BlogPostPage';
+// Import the new layout component
+import AppLayout from "./layouts/AppLayout.tsx"; 
 
 // Import base CSS
 import "./styles/index.css";
-import WebLayout from './layouts/WebLayout';
 
 // Define routes
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <WebLayout />,
+    // element: <AppLayout />, // Remove Layout component from root element
     children: [
       {
         index: true, // Matches "/" path exactly
@@ -57,10 +58,10 @@ const App = () => {
   }, []);
 
   return (
-    // Removed ParallaxProvider and Helmet as they are likely handled 
-    // in main.jsx or within specific page components/Layout
-    // Removed direct rendering of sections/Navbar/Footer
-    <RouterProvider router={router} />
+    // Wrap RouterProvider with AppLayout
+    <AppLayout>
+      <RouterProvider router={router} />
+    </AppLayout>
   );
 };
 
