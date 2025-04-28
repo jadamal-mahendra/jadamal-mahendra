@@ -7,7 +7,7 @@ import ChatErrorBoundary from '../components/ChatErrorBoundary/ChatErrorBoundary
 import { Analytics } from '@vercel/analytics/react';
 import { SpeedInsights } from '@vercel/speed-insights/react';
 
-const Layout: React.FC = () => {
+const WebLayout: React.FC = () => {
   // --- Theme State --- 
   const [theme, setTheme] = useState<'light' | 'dark'>(() => {
     // Get initial theme from localStorage or default to 'light'
@@ -53,4 +53,4 @@ const Layout: React.FC = () => {
   );
 };
 
-export default Layout; 
+export default WebLayout; 

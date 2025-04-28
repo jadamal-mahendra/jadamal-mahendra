@@ -16,11 +16,13 @@ import BlogPostPage from './pages/BlogPostPage';
 
 // Import base CSS
 import "./styles/index.css";
+import WebLayout from './layouts/WebLayout';
 
 // Define routes
 const router = createBrowserRouter([
   {
     path: "/",
+    element: <WebLayout />,
     children: [
       {
         index: true, // Matches "/" path exactly
