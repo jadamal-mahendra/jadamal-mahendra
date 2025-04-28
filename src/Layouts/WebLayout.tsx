@@ -4,8 +4,8 @@ import { Outlet } from 'react-router-dom';
 // import Footer from './Footer'; // Comment out
 // import ChatWidget from '../components/ChatWidget/ChatWidget'; // Comment out
 // import ChatErrorBoundary from '../components/ChatErrorBoundary/ChatErrorBoundary'; // Comment out
-import { Analytics } from '@vercel/analytics/react';
-import { SpeedInsights } from '@vercel/speed-insights/react';
+// import { Analytics } from '@vercel/analytics/react'; // Comment out
+// import { SpeedInsights } from '@vercel/speed-insights/react'; // Comment out
 
 const WebLayout: React.FC = () => {
   // --- Theme State --- 
@@ -46,8 +46,8 @@ const WebLayout: React.FC = () => {
       {/* <ChatErrorBoundary>
         <ChatWidget />
       </ChatErrorBoundary> */}
-      <Analytics />
-      <SpeedInsights />
+      {/* <Analytics /> */}
+      {/* <SpeedInsights /> */}
     </>
   );
 };
