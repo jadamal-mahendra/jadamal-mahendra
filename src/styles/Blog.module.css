@@ -380,23 +380,7 @@
   color: var(--color-primary-hover);
 }
 
-/* Ensure this targets your blog post card elements */
-.postCard {
-  /* Remove duplicated/conflicting properties from this instance */
-  /* border: 2px solid transparent; */
-  /* border-radius: 8px; */ /* Radius is defined in the primary .postCard rule */
-  /* background-clip: padding-box; */
-  /* position: relative; */ /* Defined in the primary .postCard rule */
-  /* z-index: 1; */ /* Defined in the primary .postCard rule */
 
-  /* Remove the problematic border-image properties */
-  /* border-image-source: radial-gradient(...); */
-  /* border-image-slice: 1; */
-
-  /* Keep any other specific styles needed for this instance, if any */
-  /* Optional: Add transition for smoother appearance if desired */
-  /* transition: border-image-source 0.1s ease-out; */
-}
 
 /* Make sure card content is clickable if the card itself isn't a link */
 .postCard > * {
@@ -413,4 +397,10 @@
   color: var(--text-secondary); /* Or your desired text color */
   font-size: 0.9rem; /* Adjust font size as needed */
   line-height: 1.4; /* Adjust line height as needed */
+}
+
+.temporaryGridContainer {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); /* Example grid */
+  gap: 1rem;
 } 

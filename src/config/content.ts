@@ -14,8 +14,6 @@ import WebpackLogo from '../assets/icons/webpack.svg';
 import GitLogo from '../assets/icons/git.svg';
 import SwiftLogo from '../assets/icons/swift.svg'; // Added for services
 
-// Resume PDF path (from public directory)
-const resume_pdf = "/assets/Jadamal-Mahendra.pdf";
 
 // Career start date - used to calculate years of experience
 // Updated start date based on resume experience (May 2021)

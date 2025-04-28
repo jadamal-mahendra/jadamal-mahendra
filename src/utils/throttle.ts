@@ -15,7 +15,8 @@ export function throttle<T extends (...args: any[]) => any>(
   let lastExec = 0;
 
   return function(this: ThisParameterType<T>, ...args: Parameters<T>) {
-    const context = this;
+    // eslint-disable-next-line @typescript-eslint/no-this-alias
+    const context = this; // Intentionally preserve original 'this' context
     const elapsed = Date.now() - lastExec;
 
     const later = () => {

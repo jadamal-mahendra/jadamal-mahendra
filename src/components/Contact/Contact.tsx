@@ -1,5 +1,5 @@
 import React, { useRef, createElement } from "react";
-import { content } from "@/config/content";
+import { content } from "../../config/content";
 import emailjs from "@emailjs/browser";
 import toast, { Toaster } from "react-hot-toast";
 import styles from './Contact.module.css'; // Import CSS Module

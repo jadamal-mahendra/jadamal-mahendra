@@ -7,16 +7,16 @@ import AOS from "aos";
 import "aos/dist/aos.css";
 
 // Layout Component
-import ChatErrorBoundary from '@/components/ChatErrorBoundary/ChatErrorBoundary';
+// import ChatErrorBoundary from './components/ChatErrorBoundary/ChatErrorBoundary'; // Removed unused import
 
 // Page Components
-import Home from '@/pages/Home';
-import BlogListPage from '@/pages/BlogListPage';
-import BlogPostPage from '@/pages/BlogPostPage';
-import Layout from "@/layouts/Layout";
+import Home from './pages/Home';
+import BlogListPage from './pages/BlogListPage';
+import BlogPostPage from './pages/BlogPostPage';
+import Layout from "./layouts/Layout";
 
 // Import base CSS
-import "@/styles/index.css";
+import "./styles/index.css";
 
 // Define routes
 const router = createBrowserRouter([

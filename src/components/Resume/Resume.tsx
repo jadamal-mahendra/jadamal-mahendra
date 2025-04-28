@@ -1,5 +1,6 @@
+import { content } from "../../config/content";
+// import styles from './Resume.module.css'; // Removed unused styles
 import React from 'react';
-import { content } from "@/config/content";
 
 const Resume: React.FC = () => {
   const { resume } = content;

@@ -1,11 +1,11 @@
 import React, { useRef } from 'react';
-import { content } from "@/config/content";
+import { content } from "../../config/content";
 import { LuAward } from "react-icons/lu";
 import styles from './Awards.module.css';
 import { Helmet } from 'react-helmet-async';
-import useGlowEffect from '@/hooks/useGlowEffect';
+import useGlowEffect from '../../hooks/useGlowEffect';
 // Import types
-import { AwardsContent, AwardItem } from '@/types/content';
+import { AwardsContent, AwardItem } from '../../types/content';
 
 const Awards: React.FC = () => {
   // Use imported type for content destructuring

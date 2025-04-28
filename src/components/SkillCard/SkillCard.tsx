@@ -10,9 +10,9 @@ interface SkillCardProps {
   level?: number; // Optional proficiency level (0-5 or similar)
 }
 
-const SkillCard: React.FC<SkillCardProps> = ({ name, para, logo, level }) => { 
+const SkillCard: React.FC<SkillCardProps> = ({ name, para, logo, level: _level }) => { 
   // Basic level indicator (optional)
-  // const levelIndicator = level ? <div className={styles.levelIndicator} style={{ width: `${level * 20}%` }}></div> : null;
+  // const levelIndicator = _level ? <div className={styles.levelIndicator} style={{ width: `${_level * 20}%` }}></div> : null;
 
   // Function to render the logo appropriately
   const renderLogo = () => {

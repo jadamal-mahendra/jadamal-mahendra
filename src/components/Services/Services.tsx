@@ -1,29 +1,33 @@
 import React, { useRef } from 'react';
-import { content } from '@/config/content';
+import { content } from '../../config/content';
 import { Helmet } from 'react-helmet-async';
 import styles from './Services.module.css'; // Keep relative for module
-import useGlowEffect from '@/hooks/useGlowEffect'; // Use alias path
+import useGlowEffect from '../../hooks/useGlowEffect'; // Use relative path
 import ServiceCard from '../ServiceCard/ServiceCard'; // Use relative path
 // Import types
-import { ServicesContent, ServiceItem } from '@/types/content';
-import { FaReact, FaNodeJs, FaDatabase, FaMobileAlt, FaChartLine, FaTools } from 'react-icons/fa';
+import { ServicesContent, ServiceItem } from '../../types/content';
+// import { FaReact, FaNodeJs, FaDatabase, FaMobileAlt, FaChartLine, FaTools } from 'react-icons/fa'; // Removed unused icons
+// import Masonry from 'react-masonry-css'; // Removed unused Masonry
+// import { TbGridDots } from "react-icons/tb"; // Removed unused icon
 
 // Optional: Import icons if you prefer them over image paths
 
 const Services: React.FC = () => {
   // Use imported type for content destructuring
   const servicesData = content?.services as ServicesContent; 
+  // --- Call hooks at the top level --- 
+  const containerRef = useRef<HTMLDivElement>(null); // Specify element type for ref
+  useGlowEffect(containerRef, '.glow-card'); 
 
   // Add a check in case servicesData is undefined
   if (!servicesData) {
     console.error("Services content not found in content object.");
-    return <div>Error loading services.</div>; // Or return null, or a loading state
+    return <div>Error loading services.</div>; // Early return is now AFTER hooks
   }
 
-  const containerRef = useRef<HTMLDivElement>(null); // Specify element type for ref
-
-  // Use the custom hook
-  useGlowEffect(containerRef, '.glow-card'); 
+  // --- Remove hook calls from here ---
+  // const containerRef = useRef<HTMLDivElement>(null); // Moved up
+  // useGlowEffect(containerRef, '.glow-card'); // Moved up
 
   return (
     <section id="services" className={`${styles.servicesSection} section-padding`}>

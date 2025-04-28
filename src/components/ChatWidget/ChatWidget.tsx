@@ -1,8 +1,8 @@
-import React, { useState, useRef, useEffect, useCallback } from 'react';
+import React, { useState, useRef, useEffect, useMemo } from 'react';
 import styles from './ChatWidget.module.css'; // We'll create this CSS file next
-import { LuBot, LuX, LuSendHorizonal, LuLoader2, LuCalendar, LuShare2 } from "react-icons/lu"; // Icons
+import { LuX, LuSendHorizonal, LuLoader2, LuCalendar, LuShare2 } from "react-icons/lu"; // Icons
 import ReactMarkdown from 'react-markdown'; // Import ReactMarkdown
-import { FaPaperPlane, FaTimes, FaCommentDots } from 'react-icons/fa';
+import { content } from '../../config/content'; // Add back content import
 
 // Import Card Components (Assuming they exist)
 import SkillCard from '../SkillCard/SkillCard';
@@ -10,10 +10,7 @@ import ExperienceCard from '../ExperienceCard/ExperienceCard';
 import ServiceCard from '../ServiceCard/ServiceCard';
 
 // Import structured data 
-import { content } from '@/config/content'; // Corrected alias path
-
-// Import specific types
-import { Content, Skill, ExperienceItem, ServiceItem } from '@/types/content';
+import { Content, Skill, ExperienceItem, ServiceItem } from '../../types/content'; // Use relative path
 
 const CHAT_HISTORY_KEY = 'chatHistory';
 const THREAD_ID_KEY = 'chatThreadId';
@@ -90,12 +87,12 @@ const ChatWidget = () => {
   const [transcriptStatus, setTranscriptStatus] = useState<TranscriptStatus | null>(null); // 'success' or 'error' or null
   const messagesEndRef = useRef<HTMLDivElement | null>(null);
 
-  // Predefined initial suggestion prompts
-  const suggestedPrompts: string[] = [
+  // Wrap suggestedPrompts in useMemo
+  const suggestedPrompts = useMemo(() => [
     "What are your key skills?",
     "Tell me about your recent projects.",
     "How many years of experience do you have?",
-  ];
+  ], []);
 
   // Effect to scroll to bottom
   useEffect(() => {
@@ -133,7 +130,7 @@ const ChatWidget = () => {
     } else if (!isOpen) {
       setCurrentSuggestions([]);
     }
-  }, [isOpen, messages]);
+  }, [isOpen, messages, suggestedPrompts]);
 
   const toggleChat = () => setIsOpen(!isOpen);
 
@@ -153,7 +150,6 @@ const ChatWidget = () => {
   const sendMessage = async (messageContent: string) => {
     if (!messageContent.trim() || isLoading) return;
     const newUserMessage: Message = { role: 'user', content: messageContent };
-    const historyToSend = messages.slice(-4).filter(msg => msg.role !== 'system');
 
     // Add user message & show loading state (no empty assistant message needed)
     setMessages(prevMessages => [...prevMessages, newUserMessage]);
@@ -208,10 +204,10 @@ const ChatWidget = () => {
 
     } catch (error) {
       console.error("Failed to send/process message (Assistant API):", error);
-      // Add error message to chat
-      const errorMessage: Message = { role: 'assistant', content: `Sorry, I couldn't get a response. ${(error instanceof Error ? error.message : String(error))}` };
+      const errorMessageText = `Sorry, I couldn't get a response. ${(error instanceof Error ? error.message : String(error))}`;
+      const errorMessage: Message = { role: 'assistant', content: errorMessageText };
       setMessages(prevMessages => [...prevMessages, errorMessage]);
-      setCurrentSuggestions([]); // Clear suggestions on error
+      setCurrentSuggestions([]);
     } finally {
       setIsLoading(false); // Turn off loading indicator
     }

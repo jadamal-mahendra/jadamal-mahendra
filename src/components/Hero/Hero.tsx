@@ -1,9 +1,9 @@
 import React from 'react';
-import { content } from "@/config/content"; // Use alias path
+import { content } from "../../config/content"; // Use relative path
 import styles from './Hero.module.css'; // Keep relative path for CSS module
 import { Helmet } from 'react-helmet-async'; 
 // Import specific types from the new declaration file
-import { HeroContent, SkillsContent, Skill } from '@/types/content';
+import { HeroContent, SkillsContent, Skill } from '../../types/content';
 
 const Hero: React.FC = () => {
   // content is now typed, destructure with imported types
@@ -24,7 +24,7 @@ const Hero: React.FC = () => {
         {/* Text Content Column */}
         <div className={styles.heroContent}>
           <h3 className={styles.heroIntro} data-aos="fade-down">
-            Hi there, I'm
+            Hi there, I&apos;m
           </h3>
           <h1 className={styles.heroName} data-aos="fade-down">
             {hero.firstName} {hero.LastName}
@@ -35,7 +35,7 @@ const Hero: React.FC = () => {
           <div className="md:w-5/6" data-aos="fade-down" data-aos-delay="200">
             <br />
             <p className={styles.heroDescription}>
-              Results-driven Lead Software Developer with 4+ years' leadership in building scalable web & mobile applications. Explore Jadamal Mahendra's portfolio & projects.
+              Results-driven Lead Software Developer with 4+ years&apos; leadership in building scalable web &amp; mobile applications. Explore Jadamal Mahendra&apos;s portfolio &amp; projects.
             </p>
             <br />
             {/* Action Buttons */}

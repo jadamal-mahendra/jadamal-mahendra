@@ -1,8 +1,8 @@
 import React from 'react';
-import { content } from "@/config/content";
+import { content } from "../../config/content";
 import { LuGithub, LuExternalLink } from "react-icons/lu";
 import styles from './Projects.module.css';
-import useGlowEffect from '@/hooks/useGlowEffect'; // Import the hook
+import useGlowEffect from '../../hooks/useGlowEffect';
 
 const Projects: React.FC = () => {
   const { Projects: ProjectsData } = content;

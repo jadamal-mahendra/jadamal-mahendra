@@ -1,9 +1,9 @@
 import React from 'react';
-import Hero from "@/components/Hero/Hero";
-import Services from "@/components/Services/Services";
-import Experience from "@/components/Experience/Experience";
-import Awards from "@/components/Awards/Awards";
-import Contact from "@/components/Contact/Contact";
+import Hero from "../components/Hero/Hero";
+import Services from "../components/Services/Services";
+import Experience from "../components/Experience/Experience";
+import Awards from "../components/Awards/Awards";
+import Contact from "../components/Contact/Contact";
 // Removed AOS import as it's likely initialized in App.jsx or main.jsx
 // import AOS from "aos";
 // import "aos/dist/aos.css";

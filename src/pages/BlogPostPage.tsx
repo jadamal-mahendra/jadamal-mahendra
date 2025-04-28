@@ -1,11 +1,11 @@
-import React, { useState, useEffect, useCallback } from 'react';
-import { useParams, Link, useNavigate } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { useParams, Link } from 'react-router-dom';
 import ReactMarkdown from 'react-markdown';
-import { loadBlogPost, BlogPost } from '@/utils/blogLoader';
+import { loadBlogPost, BlogPost } from '../utils/blogLoader';
 import { Helmet } from 'react-helmet-async';
-import styles from '@/styles/Blog.module.css';
+import styles from '../styles/Blog.module.css';
 import { FaLinkedin } from 'react-icons/fa';
-import CodeBlock from '@/components/CodeBlock/CodeBlock';
+import CodeBlock from '../components/CodeBlock/CodeBlock';
 
 const BlogPostPage = () => {
   // Define helper function INSIDE the component

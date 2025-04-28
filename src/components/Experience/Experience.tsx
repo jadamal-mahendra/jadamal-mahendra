@@ -1,11 +1,12 @@
 import React, { useEffect, useRef } from 'react';
-import { content } from "@/config/content"; // Use alias path
+import { content } from "../../config/content"; // Use relative path
 import styles from './Experience.module.css'; // Keep relative for module
 import { Helmet } from 'react-helmet-async';
-import useGlowEffect from '@/hooks/useGlowEffect'; // Use alias path
-import { throttle } from '@/utils/throttle'; // Use alias path
+import useGlowEffect from '../../hooks/useGlowEffect'; // Use relative path
+import { throttle } from '../../utils/throttle'; // Use relative path
+// import { FiChevronLeft, FiChevronRight } from 'react-icons/fi'; // Removed unused icons
 // Import types
-import { ExperienceContent, ExperienceItem } from '@/types/content';
+import { ExperienceContent, ExperienceItem } from '../../types/content';
 
 const Experience: React.FC = () => {
   // Use imported type for content destructuring

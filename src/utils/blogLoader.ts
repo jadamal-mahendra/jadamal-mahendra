@@ -15,13 +15,8 @@ interface PostData {
   description?: string; // Might be generated or present
 }
 
-interface ModuleData {
-  default?: PostData;
-  // Allow direct access if default is not present
-  [key: string]: any; 
-}
-
-interface BlogPostListItem {
+// Export this interface too
+export interface BlogPostListItem {
   slug: string;
   title: string;
   date: Date;
@@ -42,6 +37,12 @@ export interface BlogPost {
     description?: string; // Still optional
 }
 
+// Define types for the dynamic import results
+// This assumes the default export of your JSON is PostData
+// and allows for other potential exports if needed.
+type JsonModule = { default: PostData } & Record<string, unknown>; 
+type DynamicImportResult = Record<string, () => Promise<JsonModule>>;
+
 /**
  * Loads all blog post metadata from the src/content/blog directory (JSON files),
  * parses them, and sorts them by date descending.
@@ -49,51 +50,56 @@ export interface BlogPost {
 export async function loadBlogPosts(): Promise<BlogPostListItem[]> {
   log('Starting loadBlogPosts (JSON mode - async)...');
 
-  // Use dynamic import (no eager: true)
-  const modules: Record<string, () => Promise<ModuleData>> = (import.meta.glob as any)('../content/blog/*.json');
+  const modules = import.meta.glob('../content/blog/*.json') as DynamicImportResult;
   log('Found module loaders:', Object.keys(modules));
 
-  const postPromises = Object.entries(modules).map(async ([filepath, moduleLoader]) => {
-    log(`Attempting to load module: ${filepath}`);
-    try {
-      const moduleData = await moduleLoader();
-      log(`Loaded module for ${filepath}`);
+  // Use Promise.allSettled for better error handling if one load fails
+  const postResults = await Promise.allSettled(
+    Object.entries(modules).map(async ([filepath, moduleLoader]: [string, () => Promise<JsonModule>]) => {
+      log(`Attempting to load module: ${filepath}`);
+      try {
+        const moduleData = await moduleLoader(); 
+        const postData: PostData | undefined = moduleData.default;
 
-      // Cast moduleData directly if default isn't guaranteed structure
-      const postData: PostData | undefined = moduleData.default ?? (moduleData as PostData);
+        if (!postData || !postData.slug || !postData.title || !postData.date) {
+          throw new Error(`Missing or incomplete data in ${filepath}`);
+        }
 
-      if (!postData || !postData.slug || !postData.title || !postData.date) {
-        console.warn(`[blogLoader] Missing or incomplete data in ${filepath}`, postData);
-        return null;
+        const description = (postData.content || '')
+          .replace(/^#+\s+.*/gm, '')
+          .replace(/<[^>]*>/g, '')
+          .replace(/\s+/g, ' ')
+          .trim()
+          .slice(0, 200) || '';
+
+        return {
+          slug: postData.slug,
+          title: postData.title,
+          date: new Date(postData.date),
+          featuredImage: postData.featuredImage || null,
+          tags: postData.tags || [],
+          description: description,
+        };
+      } catch (loadError: unknown) {
+        // Type check before accessing properties
+        const errorMessage = loadError instanceof Error ? loadError.message : String(loadError);
+        console.error(`[blogLoader] Error processing JSON module for ${filepath}:`, errorMessage);
+        throw loadError; 
       }
-      log(`Loaded metadata for ${postData.slug}:`, { slug: postData.slug, title: postData.title, date: postData.date });
+    })
+  );
 
-      const description = (postData.content || '')
-        .replace(/^#+\s+.*/gm, '')
-        .replace(/<[^>]*>/g, '')
-        .replace(/\s+/g, ' ')
-        .trim()
-        .slice(0, 200) || '';
-
-      return {
-        slug: postData.slug,
-        title: postData.title,
-        date: new Date(postData.date), // Convert to Date object
-        featuredImage: postData.featuredImage || null,
-        tags: postData.tags || [],
-        description: description,
-      };
-    } catch (loadError) {
-      console.error(`[blogLoader] Error processing JSON module for ${filepath}:`, loadError);
-      return null;
+  // Filter successful results and log rejections
+  const posts: BlogPostListItem[] = [];
+  postResults.forEach(result => {
+    if (result.status === 'fulfilled') {
+      posts.push(result.value);
+    } else {
+      // Log rejected promises (errors during load/processing)
+      // Error was already logged in the catch block, 
+      // but you could add more context here if needed.
     }
   });
-
-  // Wait for all promises to resolve
-  const resolvedPosts = await Promise.all(postPromises);
-
-  // Filter out nulls after resolution
-  const posts = resolvedPosts.filter((post): post is BlogPostListItem => post !== null);
 
   posts.sort((a, b) => b.date.getTime() - a.date.getTime());
   log('Finished loading posts (JSON mode - async):', posts);
@@ -113,10 +119,8 @@ const log = (...args: any[]) => {
 export const loadBlogPost = async (slug: string): Promise<BlogPost | null> => {
   log(`Loading single post (JSON via dynamic glob): ${slug}`);
   
-  // Type the dynamic import result
-  // Use as any for import.meta.glob which might not be fully typed by vite/client yet
-  const modules: Record<string, () => Promise<ModuleData>> = (import.meta.glob as any)('../content/blog/*.json');
-  const targetPath = `../content/blog/${slug}.json`; // Keep relative path for dynamic import key
+  const modules = import.meta.glob('../content/blog/*.json') as DynamicImportResult;
+  const targetPath = `../content/blog/${slug}.json`; 
 
   log(`Looking for module: ${targetPath}`);
 
@@ -127,25 +131,24 @@ export const loadBlogPost = async (slug: string): Promise<BlogPost | null> => {
   }
 
   try {
-    const postJsonModule = await moduleLoader();
-    const postData: PostData | undefined = postJsonModule.default ?? (postJsonModule as PostData);
+    const postJsonModule = await moduleLoader(); 
+    const postData: PostData | undefined = postJsonModule.default;
 
-    if (!postData || !postData.title || !postData.date || !postData.content) {
+    if (!postData || !postData.title || !postData.date || !postData.content) { 
       console.warn(`[blogLoader] Missing or incomplete data in ${slug}.json`, postData);
       throw new Error(`Incomplete data for post: ${slug}`);
     }
     log(`Successfully loaded module and data for ${slug}.json`);
 
-    // Construct the final BlogPost object with the correct type
     const finalPost: BlogPost = {
       slug: postData.slug || slug,
       title: postData.title,
-      date: new Date(postData.date), // Convert to Date object
+      date: new Date(postData.date),
       featuredImage: postData.featuredImage || null,
-      featuredImageAlt: postData.featuredImageAlt || postData.title, // Use alt if present, fallback to title
+      featuredImageAlt: postData.featuredImageAlt || postData.title, 
       tags: postData.tags || [],
-      content: postData.content, // Content is required here
-      description: postData.description // Keep if present
+      content: postData.content, 
+      description: postData.description
     };
     return finalPost;
 

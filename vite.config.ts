@@ -1,7 +1,6 @@
 import { defineConfig, loadEnv } from 'vite'
 import react from '@vitejs/plugin-react'
-import tsconfigPaths from 'vite-tsconfig-paths'
-import path from 'path' // Import path module
+// import tsconfigPaths from 'vite-tsconfig-paths' // Remove plugin import
 
 // https://vitejs.dev/config/
 export default defineConfig(({ mode }) => {
@@ -11,14 +10,15 @@ export default defineConfig(({ mode }) => {
 
   return {
     plugins: [
-      tsconfigPaths(),
+      // tsconfigPaths(), // Remove plugin usage
       react()
     ],
-    resolve: { // Add resolve section
-      alias: {
-        '@': path.resolve(__dirname, './src'), // Define @ alias
-      },
-    },
+    // Remove resolve section
+    // resolve: { 
+    //   alias: {
+    //     '@': path.resolve(__dirname, './src'),
+    //   },
+    // },
     server: {
       port: parseInt(env.VITE_PORT || '3001', 10), // Parse port to number
       open: true, // automatically open the browser

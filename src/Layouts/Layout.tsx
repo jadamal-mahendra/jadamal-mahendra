@@ -1,20 +1,23 @@
 import React, { useState, useEffect } from 'react';
 import { Outlet } from 'react-router-dom';
 import Navbar from './Navbar'; 
-import Footer from '@/layouts/Footer';
-import ChatWidget from '@/components/ChatWidget/ChatWidget';
-import ChatErrorBoundary from '@/components/ChatErrorBoundary/ChatErrorBoundary';
+import Footer from './Footer';
+import ChatWidget from '../components/ChatWidget/ChatWidget';
+import ChatErrorBoundary from '../components/ChatErrorBoundary/ChatErrorBoundary';
 import { Analytics } from '@vercel/analytics/react';
 import { SpeedInsights } from '@vercel/speed-insights/react';
 
 const Layout: React.FC = () => {
   // --- Theme State --- 
-  const [theme, setTheme] = useState<string>(() => {
+  const [theme, setTheme] = useState<'light' | 'dark'>(() => {
     // Get initial theme from localStorage or default to 'light'
     const savedTheme = localStorage.getItem('theme');
-    // Optional: Add prefers-color-scheme check for first visit
-    // const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
-    return savedTheme || 'light'; // Default to light
+    // Validate savedTheme before returning
+    if (savedTheme === 'light' || savedTheme === 'dark') {
+      return savedTheme;
+    }
+    // Fallback to light if invalid or not set
+    return 'light';
   });
 
   // --- Effect to Apply Theme --- 

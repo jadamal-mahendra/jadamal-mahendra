@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from "react";
-import { useLocation } from 'react-router-dom';
-import { content } from "@/config/content";
+// import { Link as ScrollLink } from "react-scroll"; // Remove unused import
+// import { Link as RouterLink, NavLink, useLocation } from "react-router-dom"; // Removed RouterLink, NavLink
+import { useLocation } from "react-router-dom"; // Keep useLocation
+import { content } from "../config/content";
 import { LuMenu, LuX, LuSun, LuMoon } from "react-icons/lu";
 import styles from './Navbar.module.css';
 // Import specific types
-import { NavItem, HeroContent } from '@/types/content'; 
+import { NavItem, HeroContent } from '../types/content'; 
 
 // Props interface for Navbar
 interface NavbarProps {
@@ -30,7 +32,7 @@ const Navbar: React.FC<NavbarProps> = ({ currentTheme, toggleTheme }) => {
 
     // Helper function to generate class names dynamically
     const getNavClasses = () => {
-      let classNames = [styles.navbar];
+      const classNames = [styles.navbar];
       if (isScrolled) {
         classNames.push(styles.scrolled);
       }
@@ -38,7 +40,7 @@ const Navbar: React.FC<NavbarProps> = ({ currentTheme, toggleTheme }) => {
     };
 
     const getMobileOverlayClasses = () => {
-      let classNames = [styles.navbarMobileOverlay];
+      const classNames = [styles.navbarMobileOverlay];
       if (showMenu) {
         classNames.push(styles.open);
       }
@@ -46,7 +48,7 @@ const Navbar: React.FC<NavbarProps> = ({ currentTheme, toggleTheme }) => {
     };
 
     const getNavLinkClass = (path: string) => {
-      let classNames = [styles.navbarLink];
+      const classNames = [styles.navbarLink];
       if (path === '#home' && location.pathname === '/') {
         classNames.push(styles.active);
       } else if (path !== '#home' && path !== '/blog' && location.pathname.startsWith(path)) { // Adjust condition if needed
@@ -58,7 +60,7 @@ const Navbar: React.FC<NavbarProps> = ({ currentTheme, toggleTheme }) => {
     };
 
     const getCtaButtonClass = (isMobile = false) => {
-      let baseClass = isMobile ? styles.navbarLink : styles.navbarCta;
+      const baseClass = isMobile ? styles.navbarLink : styles.navbarCta;
       return `${baseClass} btn`;
     };
 

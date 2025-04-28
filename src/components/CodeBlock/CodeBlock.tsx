@@ -1,23 +1,31 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState } from 'react';
 import { Highlight, themes } from 'prism-react-renderer';
+import styles from '../../styles/Blog.module.css'; // Use relative path for styles
 import { LuCopy, LuCheck } from "react-icons/lu";
-import styles from '@/styles/Blog.module.css'; // Use alias for styles
 
-// TODO: Define proper types for props if needed
-const CodeBlock = ({ node, inline, className, children, ...props }: any) => {
+// Simplify props - ReactMarkdown passes props for <code> element
+interface CodeBlockProps {
+  inline?: boolean;
+  className?: string;
+  children?: React.ReactNode;
+  // Implicitly includes other props passed by ReactMarkdown like node
+}
+
+// Use the simplified type, remove unused node prop destructuring
+const CodeBlock = ({ inline, className, children, ...props }: CodeBlockProps) => {
   const [isCopied, setIsCopied] = useState(false);
   const match = /language-(\w+)/.exec(className || '');
   const language = match ? match[1] : 'text';
   const codeText = String(children).replace(/\n$/, '');
 
-  const handleCopy = useCallback(() => {
+  const handleCopy = () => {
     navigator.clipboard.writeText(codeText).then(() => {
       setIsCopied(true);
       setTimeout(() => setIsCopied(false), 1500);
     }, (err) => {
       console.error('Failed to copy text: ', err);
     });
-  }, [codeText]);
+  };
 
   if (inline) {
     // Ensure styles.inlineCode exists in Blog.module.css or use a default
@@ -30,17 +38,13 @@ const CodeBlock = ({ node, inline, className, children, ...props }: any) => {
         <div className={styles.codeBlockWrapper}> 
           <pre className={`${highlightClassName} ${styles.codeBlockPre}`} style={style}>
             {tokens.map((line, i) => {
-              const lineProps = getLineProps({ line, key: i });
-              const lineKey = lineProps.key;
-              delete lineProps.key;
+              const lineProps = getLineProps({ line });
               return (
-                <div key={lineKey} {...lineProps}>
+                <div key={i} {...lineProps}>
                   {line.map((token, key) => {
-                    const tokenProps = getTokenProps({ token, key });
-                    const tokenKey = tokenProps.key;
-                    delete tokenProps.key;
+                    const tokenProps = getTokenProps({ token });
                     return (
-                      <span key={tokenKey} {...tokenProps} />
+                      <span key={key} {...tokenProps} />
                     );
                   })}
                 </div>
