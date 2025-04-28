@@ -13,7 +13,6 @@ import "aos/dist/aos.css";
 import Home from './pages/Home';
 import BlogListPage from './pages/BlogListPage';
 import BlogPostPage from './pages/BlogPostPage';
-import Layout from "./layouts/Layout";
 
 // Import base CSS
 import "./styles/index.css";
@@ -22,7 +21,6 @@ import "./styles/index.css";
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <Layout />, // Use Layout component for the main structure
     children: [
       {
         index: true, // Matches "/" path exactly
