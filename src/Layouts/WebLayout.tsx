@@ -1,15 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { Outlet } from 'react-router-dom';
-// import Navbar from './Navbar'; // Comment out
-// import Footer from './Footer'; // Comment out
-// import ChatWidget from '../components/ChatWidget/ChatWidget'; // Comment out
-// import ChatErrorBoundary from '../components/ChatErrorBoundary/ChatErrorBoundary'; // Comment out
-// import { Analytics } from '@vercel/analytics/react'; // Comment out
-// import { SpeedInsights } from '@vercel/speed-insights/react'; // Comment out
+import Navbar from './Navbar'; // Uncomment
+import Footer from './Footer'; // Uncomment
+import ChatWidget from '../components/ChatWidget/ChatWidget'; // Uncomment
+import ChatErrorBoundary from '../components/ChatErrorBoundary/ChatErrorBoundary'; // Uncomment
+import { Analytics } from '@vercel/analytics/react'; // Uncomment
+import { SpeedInsights } from '@vercel/speed-insights/react'; // Uncomment
 
 const WebLayout: React.FC = () => {
-  // --- Comment out Theme State --- 
-  /*
+  // --- Restore Theme State --- 
   const [theme, setTheme] = useState<'light' | 'dark'>(() => {
     // Get initial theme from localStorage or default to 'light'
     const savedTheme = localStorage.getItem('theme');
@@ -20,10 +19,8 @@ const WebLayout: React.FC = () => {
     // Fallback to light if invalid or not set
     return 'light';
   });
-  */
 
-  // --- Comment out Effect to Apply Theme --- 
-  /*
+  // --- Restore Effect to Apply Theme --- 
   useEffect(() => {
     // Apply the data-theme attribute to the root HTML element
     // Ensure document exists (it should in useEffect, but good practice)
@@ -32,30 +29,30 @@ const WebLayout: React.FC = () => {
       localStorage.setItem('theme', theme);
     }
   }, [theme]);
-  */
 
-  // --- Comment out Toggle Function --- 
-  /*
+  // --- Restore Toggle Function --- 
   const toggleTheme = (): void => {
     setTheme((prevTheme) => (prevTheme === 'light' ? 'dark' : 'light'));
   };
-  */
 
   return (
     <>
-      {/* Pass theme and toggle function to Navbar */}
-      {/* <Navbar currentTheme={theme} toggleTheme={toggleTheme} /> */}
+      {/* Restore Navbar */}
+      <Navbar currentTheme={theme} toggleTheme={toggleTheme} />
       <main>
         {/* Child routes will render here */}
         <Outlet /> 
       </main>
-      {/* <Footer /> */}
-      {/* Comment out ChatWidget and ErrorBoundary usage */}
-      {/* <ChatErrorBoundary>
+      {/* Restore Footer */}
+      <Footer />
+      {/* Restore ChatWidget and ErrorBoundary */}
+      <ChatErrorBoundary>
         <ChatWidget />
-      </ChatErrorBoundary> */}
-      {/* <Analytics /> */}
-      {/* <SpeedInsights /> */}
+      </ChatErrorBoundary>
+      {/* Restore Analytics */}
+      <Analytics />
+      {/* Restore SpeedInsights */}
+      <SpeedInsights />
     </>
   );
 };
