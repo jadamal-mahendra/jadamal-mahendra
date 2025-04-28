@@ -1,17 +1,14 @@
-import  { useState, useEffect, ReactNode } from 'react';
+import  { useState, useEffect } from 'react';
 import Navbar from './Navbar'; // Use relative path
 import Footer from './Footer'; // Use relative path
 import ChatWidget from '../components/ChatWidget/ChatWidget'; // Use relative path
 import ChatErrorBoundary from '../components/ChatErrorBoundary/ChatErrorBoundary'; // Use relative path
 import { Analytics } from '@vercel/analytics/react';
 import { SpeedInsights } from '@vercel/speed-insights/react';
+import { Outlet } from 'react-router-dom';
 
-// Define props interface including children
-interface AppLayoutProps {
-  children: ReactNode; // Expect children prop
-}
 
-const AppLayout = ({ children }: AppLayoutProps) => {
+const AppLayout = () => {
   // --- Theme State --- 
   const [theme, setTheme] = useState<'light' | 'dark'>(() => {
     // Guard against SSR/build environments where localStorage might not be available
@@ -46,7 +43,7 @@ const AppLayout = ({ children }: AppLayoutProps) => {
       <Navbar currentTheme={theme} toggleTheme={toggleTheme} /> 
       <main>
         {/* Render children directly instead of Outlet */} 
-        {children} 
+        <Outlet/> 
       </main>
       <Footer /> 
       <ChatErrorBoundary>

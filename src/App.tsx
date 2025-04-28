@@ -23,7 +23,7 @@ import "./styles/index.css";
 const router = createBrowserRouter([
   {
     path: "/",
-    // element: <AppLayout />, // Remove Layout component from root element
+    element: <AppLayout />, // Remove Layout component from root element
     children: [
       {
         index: true, // Matches "/" path exactly
@@ -58,9 +58,7 @@ const App = () => {
   }, []);
 
   return (
-    <AppLayout>
       <RouterProvider router={router} />
-    </AppLayout>
   );
 };
 
