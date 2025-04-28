@@ -8,7 +8,8 @@ import { Outlet } from 'react-router-dom';
 // import { SpeedInsights } from '@vercel/speed-insights/react'; // Comment out
 
 const WebLayout: React.FC = () => {
-  // --- Theme State --- 
+  // --- Comment out Theme State --- 
+  /*
   const [theme, setTheme] = useState<'light' | 'dark'>(() => {
     // Get initial theme from localStorage or default to 'light'
     const savedTheme = localStorage.getItem('theme');
@@ -19,19 +20,26 @@ const WebLayout: React.FC = () => {
     // Fallback to light if invalid or not set
     return 'light';
   });
+  */
 
-  // --- Effect to Apply Theme --- 
+  // --- Comment out Effect to Apply Theme --- 
+  /*
   useEffect(() => {
     // Apply the data-theme attribute to the root HTML element
-    document.documentElement.setAttribute('data-theme', theme);
-    // Save the theme preference to localStorage
-    localStorage.setItem('theme', theme);
-  }, [theme]); // Rerun only when theme changes
+    // Ensure document exists (it should in useEffect, but good practice)
+    if (typeof document !== 'undefined') { 
+      document.documentElement.setAttribute('data-theme', theme);
+      localStorage.setItem('theme', theme);
+    }
+  }, [theme]);
+  */
 
-  // --- Toggle Function --- 
+  // --- Comment out Toggle Function --- 
+  /*
   const toggleTheme = (): void => {
     setTheme((prevTheme) => (prevTheme === 'light' ? 'dark' : 'light'));
   };
+  */
 
   return (
     <>
