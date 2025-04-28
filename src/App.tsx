@@ -14,7 +14,7 @@ import Home from './pages/Home';
 import BlogListPage from './pages/BlogListPage';
 import BlogPostPage from './pages/BlogPostPage';
 // Import the new layout component
-import AppLayout from "./layouts/AppLayout.tsx"; 
+import AppLayout from "./layouts/AppLayout"; 
 
 // Import base CSS
 import "./styles/index.css";
