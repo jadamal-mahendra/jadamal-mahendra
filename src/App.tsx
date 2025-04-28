@@ -7,7 +7,6 @@ import AOS from "aos";
 import "aos/dist/aos.css";
 
 // Layout Component
-import Layout from '@/layouts/Layout';
 import ChatErrorBoundary from '@/components/ChatErrorBoundary/ChatErrorBoundary';
 
 // Page Components
@@ -17,6 +16,7 @@ import BlogPostPage from '@/pages/BlogPostPage';
 
 // Import base CSS
 import "@/styles/index.css";
+import Layout from './layouts/Layout';
 
 // Define routes
 const router = createBrowserRouter([

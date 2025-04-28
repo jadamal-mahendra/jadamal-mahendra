@@ -44,19 +44,19 @@ interface BlogPost {
  * Loads all blog post metadata from the src/content/blog directory (JSON files),
  * parses them, and sorts them by date descending.
  */
-export function loadBlogPosts(): BlogPostListItem[] {
-  log('Starting loadBlogPosts (JSON mode)...');
-  
-  // Explicitly type the imported modules
-  // Use as any for import.meta.glob which might not be fully typed by vite/client yet
-  const modules: Record<string, ModuleData> = (import.meta.glob as any)('../content/blog/*.json', { 
-    eager: true, 
-  });
-  log('Found modules:', modules);
+export async function loadBlogPosts(): Promise<BlogPostListItem[]> {
+  log('Starting loadBlogPosts (JSON mode - async)...');
 
-  const posts: BlogPostListItem[] = Object.entries(modules).map(([filepath, moduleData]) => {
-    log(`Processing file: ${filepath}`);
+  // Use dynamic import (no eager: true)
+  const modules: Record<string, () => Promise<ModuleData>> = (import.meta.glob as any)('../content/blog/*.json');
+  log('Found module loaders:', Object.keys(modules));
+
+  const postPromises = Object.entries(modules).map(async ([filepath, moduleLoader]) => {
+    log(`Attempting to load module: ${filepath}`);
     try {
+      const moduleData = await moduleLoader();
+      log(`Loaded module for ${filepath}`);
+
       // Cast moduleData directly if default isn't guaranteed structure
       const postData: PostData | undefined = moduleData.default ?? (moduleData as PostData);
 
@@ -67,10 +67,10 @@ export function loadBlogPosts(): BlogPostListItem[] {
       log(`Loaded metadata for ${postData.slug}:`, { slug: postData.slug, title: postData.title, date: postData.date });
 
       const description = (postData.content || '')
-        .replace(/^#+\s+.*/gm, '') 
-        .replace(/<[^>]*>/g, '')    
-        .replace(/\s+/g, ' ')       
-        .trim()                     
+        .replace(/^#+\s+.*/gm, '')
+        .replace(/<[^>]*>/g, '')
+        .replace(/\s+/g, ' ')
+        .trim()
         .slice(0, 200) || '';
 
       return {
@@ -81,15 +81,20 @@ export function loadBlogPosts(): BlogPostListItem[] {
         tags: postData.tags || [],
         description: description,
       };
-    } catch (parseError) {
-      console.error(`[blogLoader] Error processing JSON module for ${filepath}:`, parseError);
+    } catch (loadError) {
+      console.error(`[blogLoader] Error processing JSON module for ${filepath}:`, loadError);
       return null;
     }
-  })
-  .filter((post): post is BlogPostListItem => post !== null); // Type guard for filtering nulls
+  });
+
+  // Wait for all promises to resolve
+  const resolvedPosts = await Promise.all(postPromises);
+
+  // Filter out nulls after resolution
+  const posts = resolvedPosts.filter((post): post is BlogPostListItem => post !== null);
 
   posts.sort((a, b) => b.date.getTime() - a.date.getTime());
-  log('Finished loading posts (JSON mode):', posts);
+  log('Finished loading posts (JSON mode - async):', posts);
   return posts;
 }
 

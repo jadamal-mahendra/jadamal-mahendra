@@ -30,21 +30,22 @@ export default defineConfig(({ mode }) => {
       }
     },
 
-    // build:{
-    //   minify: 'esbuild',
-    //   rollupOptions:{
-    //     output:{
-    //       manualChunks:{
-    //         react: ['react', 'react-dom'],
-    //         'react-icons': ['react-icons'],
-    //         'react-scroll-parallax': ['react-scroll-parallax'],
-    //         'react-helmet-async': ['react-helmet-async'],
-    //         'react-modal': ['react-modal'],
-    //         'react-pdf': ['react-pdf'],
+    build:{
+      minify: 'esbuild',
+      rollupOptions:{
+        output:{
+          manualChunks:{
+            react: ['react', 'react-dom'],
+            'react-router': ['react-router-dom'],
+            'react-icons': ['react-icons'],
+            // 'react-scroll-parallax': ['react-scroll-parallax'],
+            // 'react-helmet-async': ['react-helmet-async'],
+            // 'react-modal': ['react-modal'],
+            // 'react-pdf': ['react-pdf'],
             
-    //       }
-    //     }
-    //   }
-    // }
+          }
+        }
+      }
+    }
   }
 })
