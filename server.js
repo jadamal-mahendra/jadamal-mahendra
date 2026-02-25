@@ -26,7 +26,7 @@ const server = http.createServer(async (req, res) => {
     try {
       let handlerPath;
       // Determine which handler to use based on URL
-      if (req.method === 'POST' && req.url === '/api/chat') {
+      if ((req.method === 'POST' || req.method === 'OPTIONS') && req.url === '/api/chat') {
         handlerPath = chatApiRoutePath;
       } else if (req.method === 'POST' && req.url === '/api/send-log') { // Route for sending log
         handlerPath = sendLogApiRoutePath;
@@ -41,14 +41,15 @@ const server = http.createServer(async (req, res) => {
       const modulePathWithTimestamp = `${handlerFileURL}?t=${Date.now()}`;
       const { default: handler } = await import(modulePathWithTimestamp);
 
-      // Prepare mock request object (body parsing needed for both handlers)
+      // Prepare mock request object
       const mockRequest = {
         method: req.method,
         url: req.url,
         headers: req.headers,
-        body: JSON.parse(body || '{}'), 
+        body: body ? JSON.parse(body) : {},
+        on: req.on.bind(req), // Proxy event listener for client disconnect detection
       };
-      
+
       // Pass the REAL response object directly to the chosen handler
       await handler(mockRequest, res);
 

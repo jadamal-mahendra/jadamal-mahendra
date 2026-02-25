@@ -37,7 +37,7 @@ const Resume: React.FC = () => {
         <div className="resume-download">
               <a
                 href={resume.pdf_file}
-            download="Jadamal-Mahendra-April-2025.pdf"
+            download="Jadamal-Mahendra.pdf"
             className="btn"
               >
                 {resume.download_text}

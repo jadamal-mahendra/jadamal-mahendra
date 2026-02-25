@@ -40,7 +40,7 @@ const Hero: React.FC = () => {
             <br />
             {/* Action Buttons */}
             <div className={styles.heroButtons}>
-              <a href="/Jadamal-Mahendra-April-2025.pdf" className="btn" target="_blank" rel="noopener noreferrer">
+              <a href="/Jadamal-Mahendra.pdf" className="btn" target="_blank" rel="noopener noreferrer">
                 View Resume
               </a>
               <a href="#contact" className={`${styles.heroButtonSecondary} btn`}> 

@@ -13,6 +13,12 @@ import MongoDbLogo from '../assets/icons/mongodb.svg';
 import WebpackLogo from '../assets/icons/webpack.svg';
 import GitLogo from '../assets/icons/git.svg';
 import SwiftLogo from '../assets/icons/swift.svg'; // Added for services
+import PrismaLogo from '../assets/icons/prisma.svg';
+import PostgresqlLogo from '../assets/icons/postgresql.svg';
+import DockerLogo from '../assets/icons/docker.svg';
+import TailwindLogo from '../assets/icons/tailwindcss.svg';
+import ReduxLogo from '../assets/icons/redux.svg';
+import BashLogo from '../assets/icons/bash.svg';
 
 
 // Career start date - used to calculate years of experience
@@ -67,7 +73,7 @@ export const content = {
     },
   ],
   hero: {
-    title: "Lead software developer",
+    title: "Technical Lead",
     firstName: "Jadamal",
     LastName: "Mahendra",
     btnText: "Hire Me",
@@ -79,7 +85,7 @@ export const content = {
         text: "Years of Experience in Web Development",
       },
       {
-        count: "15+",
+        count: "20+",
         text: "Projects Worked in my career",
       },
     ],
@@ -149,7 +155,36 @@ export const content = {
         logo: GitLogo,
         level: 4,
       },
-     
+      {
+        name: "Prisma",
+        para: "Extensive use of Prisma ORM for type-safe database access in RecruAI HRMS and ViralNation platforms.",
+        logo: PrismaLogo,
+        level: 4,
+      },
+      {
+        name: "PostgreSQL / TimescaleDB",
+        para: "Designed 169-table IIoT schema with TimescaleDB for energy monitoring, and PostgreSQL databases for RecruAI HRMS.",
+        logo: PostgresqlLogo,
+        level: 4,
+      },
+      {
+        name: "Docker",
+        para: "Containerized development environments for NextGenDB, n8n automation workflows, and local dev setups.",
+        logo: DockerLogo,
+        level: 3,
+      },
+      {
+        name: "Tailwind CSS",
+        para: "Building modern, responsive UIs with utility-first CSS in RecruAI and other enterprise applications.",
+        logo: TailwindLogo,
+        level: 4,
+      },
+      {
+        name: "AI Orchestration & Agentic Workflows",
+        para: "Pioneered dual-AI agent pipelines (Claude + Kimi) with tmux-based orchestration, swarm mode, and autonomous development workflows.",
+        logo: BashLogo,
+        level: 4,
+      },
     ],
     icon: MdArrowForward,
   },
@@ -177,6 +212,16 @@ export const content = {
         title: "Web3 & Blockchain Solutions",
         para: "Designing and implementing decentralized applications (dApps), smart contracts (Solidity), and NFT marketplaces using Web3.js and related technologies.",
         logo: SolidityLogo,
+      },
+      {
+        title: "Database & IoT Engineering",
+        para: "Designing scalable database schemas, time-series data with TimescaleDB, multi-tenant architecture, and IoT protocol integration (MQTT, OPC-UA).",
+        logo: PostgresqlLogo,
+      },
+      {
+        title: "AI Workflow & Automation",
+        para: "Building AI-driven development pipelines, agent orchestration systems, and no-code automation workflows using n8n, Claude Code, and Kimi.",
+        logo: BashLogo,
       },
     ],
   },
@@ -217,22 +262,23 @@ export const content = {
   resume: {
     title: "My Resume",
     subtitle: "MY PROFESSIONAL JOURNEY",
-    pdf_file: "/assets/Jadamal-Mahendra-April-2025.pdf",
+    pdf_file: "/assets/Jadamal-Mahendra.pdf",
     image: web_developer_illustration,
     summary_title: "Professional Summary",
-    summary: `Results-driven Lead Software Developer with nearly 4+ years of hands-on leadership experience, specializing in building scalable web and mobile applications using modern JavaScript frameworks. Skilled in React.js, GraphQL, Node.js, and Web3 technologies, with deep expertise in real-time systems, NFT marketplaces, and AI-powered features. Proven track record in full-cycle product development, cross-functional team collaboration, and delivering high-impact digital solutions across startups and enterprise environments.`,
+    summary: `Results-driven Senior Software Engineer with ${calculateYearsOfExperience()}+ years of hands-on experience, specializing in building scalable web applications, IIoT platforms, and enterprise HRMS systems. Skilled in React.js, Next.js, Node.js, TypeScript, Prisma, PostgreSQL/TimescaleDB, and AI agent orchestration. Proven track record in database engineering (169-table IIoT schemas), AI-driven development pipelines, and full-cycle product delivery across startups and enterprise environments.`,
     key_skills_title: "Key Skills",
     key_skills: [
       "React.js / React Native / Next.js",
       "Node.js / Express",
       "TypeScript / JavaScript",
       "GraphQL / REST APIs",
-      "Prisma / SQL / MongoDB",
-      "Solidity / Web3.js / Hardhat",
-      "Material UI /Fluent  UI",
+      "Prisma / PostgreSQL / TimescaleDB",
+      "Docker / TurboRepo",
+      "Tailwind CSS / Material UI / Fluent UI",
       "Microfrontend Architecture",
+      "AI Agent Orchestration (Claude + Kimi)",
       "State Management (Redux)",
-      "Testing (Jest)",
+      "Testing (Jest / Playwright)",
       "Git / CI/CD",
     ],
     download_text: "Download Resume",
@@ -245,18 +291,19 @@ export const content = {
         company: "Elliot Systems",
         website: "https://www.elliotsystems.com/",
         logo: elliotLogo,
-        title: "Senior Software Engineer",
+        title: "Technical Lead",
         date: "May 2024 – Present",
         location: "Pune, India",
-        tech_stack: "React.js, TypeScript, Redux, Microfrontend Architecture, Jest, Git, REST APIs, NPM packages",
+        tech_stack: "React.js, Next.js, TypeScript, Prisma, PostgreSQL, TimescaleDB, Docker, Tailwind CSS, Redux, Microfrontend Architecture, n8n, Jest, Git",
         description: [
-          "Developed and maintained scalable, high-performance UIs for a Transportation Management System using React.js and Redux.",
-          "Implemented Microfrontend architecture, enabling modular code, future scalability, and reduced deployment complexity.",
-          "Leveraged TypeScript to improve code quality, ensure type safety, and enhance developer productivity.",
-          "Wrote and maintained unit tests achieving 95% coverage, ensuring application stability.",
-          "Collaborated with cross-functional teams (product, engineering, design) to deliver user-centric features.",
-          "Reduced API response times by 30% through frontend optimizations and backend service integration.",
-          "Spearheaded new feature integrations contributing to a 20% increase in user engagement.",
+          "Leading development of RecruAI — enterprise HRMS platform with AI-powered recruitment (Next.js 14, TypeScript, Prisma, PostgreSQL).",
+          "Designed 169-table IIoT database schema (TimescaleDB) for Elliot-IIOT energy monitoring platform.",
+          "Built multi-role RBAC system (7 roles) with strict TypeScript enforcement and zero type assertions.",
+          "Pioneered dual-AI agent orchestration (Claude + Kimi) with tmux-based autonomous development pipeline.",
+          "Implemented Google Calendar OAuth integration for HR interview scheduling.",
+          "Led MongoDB to TimescaleDB production migration with multi-agent ETL pipeline.",
+          "Built automated interview assessment system with Google Apps Script + ChatGPT analysis.",
+          "Developed TMS UI using Microfrontend architecture with React.js and Redux.",
         ]
       },
       {
@@ -307,6 +354,30 @@ export const content = {
     title: "Projects",
     subtitle: "MY CREATIONS",
     project_content: [
+      {
+        title: "RecruAI — AI-Powered HRMS Platform",
+        image: null,
+        description: "Enterprise HRMS with AI screening, NLP job matching, 7-role RBAC, interview scheduling with Google Calendar, deployed on Vercel.",
+        tags: ["Next.js", "TypeScript", "Prisma", "PostgreSQL", "NextAuth", "Tailwind CSS", "Playwright"],
+        link_live: null,
+        link_repo: "https://github.com/mahendra-elliot/recruai",
+      },
+      {
+        title: "Elliot-IIOT — Industrial IoT Platform",
+        image: null,
+        description: "Multi-tenant IIoT platform with 169-table schema, energy monitoring (13 parameters), device/gateway management, MongoDB to TimescaleDB migration.",
+        tags: ["TimescaleDB", "PostgreSQL", "Node.js", "Express", "Docker", "TurboRepo"],
+        link_live: null,
+        link_repo: null,
+      },
+      {
+        title: "AI Agent Orchestrator",
+        image: null,
+        description: "Dual-AI autonomous development pipeline with PM, Worker, QA, and UX Tester agents. Swarm mode with parallel workers and observatory dashboard.",
+        tags: ["Bash", "tmux", "Claude Code", "Kimi CLI", "WSL"],
+        link_live: null,
+        link_repo: null,
+      },
       {
         title: "Influencer Marketing Platform",
         image: "https://www.viralnation.com/hs-fs/hubfs/ViralNation_January2025/images/VN-Web-Tablet.gif",
