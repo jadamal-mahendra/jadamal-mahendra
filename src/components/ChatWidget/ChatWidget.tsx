@@ -146,19 +146,22 @@ const ChatWidget = () => {
     } 
   };
 
-  // Refactored function to send message and get AI response
+  // Refactored function to send message and get AI response with streaming
   const sendMessage = async (messageContent: string) => {
     if (!messageContent.trim() || isLoading) return;
     const newUserMessage: Message = { role: 'user', content: messageContent };
 
-    // Add user message & show loading state (no empty assistant message needed)
+    // Add user message & show loading state
     setMessages(prevMessages => [...prevMessages, newUserMessage]);
     setInputValue('');
     setCurrentSuggestions([]);
     setIsLoading(true);
 
+    // Add empty assistant message placeholder for streaming
+    setMessages(prevMessages => [...prevMessages, { role: 'assistant', content: '', signal: null }]);
+
     try {
-      // --- Call backend with Assistants API --- 
+      // --- Call backend with streaming --- 
       const response = await fetch('/api/chat', {
         method: 'POST',
         headers: {
@@ -170,46 +173,149 @@ const ChatWidget = () => {
         })
       });
 
-      // Standard JSON response handling
       if (!response.ok) {
          let errorData: { error?: string, threadId?: string } = { error: `API Error: ${response.statusText}` };
          try { errorData = await response.json(); } catch (e) { /* Ignore parsing error */ }
-         // Include threadId from error payload if available
          const errorThreadId = errorData.threadId ? ` (Thread: ${errorData.threadId})` : '';
          throw new Error(errorData.error || `HTTP error! status: ${response.status}${errorThreadId}`);
       }
 
-      // Expect { text, signal, suggestions, threadId } 
-      const data: ChatApiResponse = await response.json();
-      
-      // More robust check
-      if (typeof data.text !== 'string' || !Array.isArray(data.suggestions) || typeof data.threadId !== 'string') {
-        console.error("Invalid API response format:", data);
-        throw new Error("Invalid response format from server.");
-      }
-
-      // Set state based on the response
-      const aiMessage: Message = {
-        role: 'assistant',
-        content: data.text,
-        signal: data.signal || null // Store the signal (or null)
-      };
-      setMessages(prevMessages => [...prevMessages, aiMessage]);
-      setCurrentSuggestions(data.suggestions || []);
-
-      if (data.threadId && data.threadId !== currentThreadId) {
-          console.log(`Received new thread ID: ${data.threadId}`);
+      // Check if response is SSE stream
+      const contentType = response.headers.get('content-type') || '';
+      if (!contentType.includes('text/event-stream')) {
+        // Fallback to JSON if not streaming
+        const data: ChatApiResponse = await response.json();
+        if (typeof data.text !== 'string' || !Array.isArray(data.suggestions) || typeof data.threadId !== 'string') {
+          throw new Error("Invalid response format from server.");
+        }
+        // Replace placeholder with actual message
+        setMessages(prevMessages => {
+          const newMessages = [...prevMessages];
+          newMessages[newMessages.length - 1] = {
+            role: 'assistant',
+            content: data.text,
+            signal: data.signal || null
+          };
+          return newMessages;
+        });
+        setCurrentSuggestions(data.suggestions || []);
+        if (data.threadId && data.threadId !== currentThreadId) {
           setCurrentThreadId(data.threadId);
+        }
+        setIsLoading(false);
+        return;
       }
+
+      // --- Handle SSE Stream ---
+      const reader = response.body?.getReader();
+      if (!reader) {
+        throw new Error("Failed to get response reader");
+      }
+
+      const decoder = new TextDecoder();
+      let buffer = '';
+      let streamText = '';
+      let finalData: { fullText?: string; signal?: string | null; suggestions?: string[]; threadId?: string } | null = null;
+
+      while (true) {
+        const { done, value } = await reader.read();
+        if (done) break;
+
+        buffer += decoder.decode(value, { stream: true });
+        
+        // Process SSE events from buffer
+        const lines = buffer.split('\n\n');
+        buffer = lines.pop() || ''; // Keep incomplete chunk in buffer
+
+        for (const eventBlock of lines) {
+          const lines_in_block = eventBlock.split('\n');
+          let eventType = 'message';
+          let eventData = '';
+
+          for (const line of lines_in_block) {
+            if (line.startsWith('event: ')) {
+              eventType = line.slice(7).trim();
+            } else if (line.startsWith('data: ')) {
+              eventData = line.slice(6);
+            }
+          }
+
+          if (eventData) {
+            try {
+              const parsed = JSON.parse(eventData);
+
+              if (eventType === 'token' && parsed.text) {
+                // Hide skeleton on first token
+                if (streamText === '') {
+                  setIsLoading(false);
+                }
+                streamText += parsed.text;
+                // Update the last message with accumulated text
+                setMessages(prevMessages => {
+                  const newMessages = [...prevMessages];
+                  const lastMsg = newMessages[newMessages.length - 1];
+                  if (lastMsg && lastMsg.role === 'assistant') {
+                    lastMsg.content = streamText;
+                  }
+                  return newMessages;
+                });
+              } else if (eventType === 'done') {
+                finalData = parsed;
+              } else if (eventType === 'error') {
+                throw new Error(parsed.error || 'Stream error');
+              }
+            } catch (e) {
+              console.error('Failed to parse SSE data:', e, eventData);
+            }
+          }
+        }
+      }
+
+      // Process final data
+      if (finalData) {
+        setMessages(prevMessages => {
+          const newMessages = [...prevMessages];
+          const lastMsg = newMessages[newMessages.length - 1];
+          if (lastMsg && lastMsg.role === 'assistant') {
+            lastMsg.content = finalData.fullText || streamText;
+            lastMsg.signal = finalData.signal || null;
+          }
+          return newMessages;
+        });
+        setCurrentSuggestions(finalData.suggestions || []);
+        if (finalData.threadId && finalData.threadId !== currentThreadId) {
+          setCurrentThreadId(finalData.threadId);
+        }
+      } else {
+        // Stream ended without done event - use accumulated text
+        setMessages(prevMessages => {
+          const newMessages = [...prevMessages];
+          const lastMsg = newMessages[newMessages.length - 1];
+          if (lastMsg && lastMsg.role === 'assistant') {
+            lastMsg.content = streamText;
+          }
+          return newMessages;
+        });
+      }
+
+      setIsLoading(false);
 
     } catch (error) {
-      console.error("Failed to send/process message (Assistant API):", error);
+      console.error("Failed to send/process message:", error);
       const errorMessageText = `Sorry, I couldn't get a response. ${(error instanceof Error ? error.message : String(error))}`;
-      const errorMessage: Message = { role: 'assistant', content: errorMessageText };
-      setMessages(prevMessages => [...prevMessages, errorMessage]);
+      // Replace placeholder with error message
+      setMessages(prevMessages => {
+        const newMessages = [...prevMessages];
+        const lastMsg = newMessages[newMessages.length - 1];
+        if (lastMsg && lastMsg.role === 'assistant') {
+          lastMsg.content = errorMessageText;
+        } else {
+          newMessages.push({ role: 'assistant', content: errorMessageText });
+        }
+        return newMessages;
+      });
       setCurrentSuggestions([]);
-    } finally {
-      setIsLoading(false); // Turn off loading indicator
+      setIsLoading(false);
     }
   };
 
@@ -390,8 +496,8 @@ const ChatWidget = () => {
             </React.Fragment>
           ))}
           
-          {/* Skeleton Loader - Render based on isLoading state */}
-          {isLoading && (
+          {/* Skeleton Loader - Show only when loading and waiting for first token */}
+          {isLoading && messages.length > 0 && messages[messages.length - 1].role === 'assistant' && messages[messages.length - 1].content === '' && (
             <div className={`${styles.message} ${styles.assistant}`} aria-live="polite"> 
               <div className={styles.skeletonContainer}>
                 <div className={`${styles.skeletonLine} ${styles.skeletonLineShort}`}></div>
